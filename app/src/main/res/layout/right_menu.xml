@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_frame_background5"
+    >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+            <Button
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:onClick="toggleMenu"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/img_menu"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/head_portrait"
+                android:background="@drawable/right_menu_img"/>
+            </RelativeLayout>
+
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:text="冯立昊\n爱好:羽毛球\\跑步\n跑龄:3年"
+            android:layout_weight="1"
+                android:textColor="#ffffff"/>
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2px"
+            android:layout_gravity="center_horizontal"
+            android:background="#00c7c1c1"
+            android:layout_weight="5"
+            android:layout_margin="0dp"/>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2px"
+            android:layout_gravity="center_horizontal"
+            android:background="#c7c1c1"
+            android:layout_weight="2"
+            android:layout_margin="0dp"/>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2px"
+            android:layout_gravity="center_horizontal"
+            android:background="#00c7c1c1"
+            android:layout_weight="5"
+            android:layout_margin="0dp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingBottom="80dp">
+
+        <Button
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:text="开始跑步"
+        android:id="@+id/button"
+        android:textSize="20dp"
+        android:onClick="change_alpha2"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/interface_main_button_color"/>
+        </LinearLayout>
+</LinearLayout>

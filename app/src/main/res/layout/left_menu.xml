@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--android:background="@drawable/img_frame_background" -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/id_img1_back"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/lm_button1_change"/>
+
+            <ImageView
+                android:id="@+id/id_img1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/img_my"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我的资料"
+                android:textColor="#ffffff"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/id_img1"
+                android:layout_marginLeft="20dp"
+                android:textSize="14dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/id_img2_back"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/lm_button2_change"/>
+
+            <ImageView
+                android:id="@+id/id_img2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/img_my_message"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我的消息"
+                android:textColor="#ffffff"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/id_img2"
+                android:layout_marginLeft="20dp"
+                android:textSize="14dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/id_img3_back"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/lm_button3_change"/>
+
+            <ImageView
+                android:id="@+id/id_img3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/img_my_position"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我的定位"
+                android:textColor="#ffffff"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/id_img3"
+                android:layout_marginLeft="20dp"
+                android:textSize="14dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/id_img4_back"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/lm_button4_change"/>
+
+            <ImageView
+                android:id="@+id/id_img4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/img_my_friends"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我的好友"
+                android:textColor="#ffffff"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/id_img4"
+                android:layout_marginLeft="20dp"
+                android:textSize="14dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/id_img5_back"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/lm_button5_change"/>
+
+            <ImageView
+                android:id="@+id/id_img5"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/img_share"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="分享"
+                android:textColor="#ffffff"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/id_img5"
+                android:layout_marginLeft="20dp"
+                android:textSize="14dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/id_img6_back"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/lm_button6_change"/>
+
+            <ImageView
+                android:id="@+id/id_img6"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/my_settings"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="设置"
+                android:textColor="#ffffff"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/id_img6"
+                android:layout_marginLeft="20dp"
+                android:textSize="14dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:gravity="left">
+
+            <Button
+                android:id="@+id/id_img7_back"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:onClick="change_alpha"
+                android:background="@drawable/lm_button5_change"/>
+
+            <ImageView
+                android:id="@+id/id_img7"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/img_loginout"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="注销"
+                android:textColor="#ffffff"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/id_img7"
+                android:layout_marginLeft="2dp"
+                android:textSize="14dp"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

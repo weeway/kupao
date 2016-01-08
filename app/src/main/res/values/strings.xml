@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">RunningMan</string>
+    <string name="running_time">00:00:00</string>
+    <string name="running_pace">0</string>
+    <string name="running_distance">0</string>
+    <string name="running_energy">0</string>
+    <!--<drawable name="sliding_menu_button1_normal">#ddba8557</drawable>-->
+    <!--<drawable name="sliding_menu_button1_pressed">#dd865b31</drawable>-->
+</resources>
