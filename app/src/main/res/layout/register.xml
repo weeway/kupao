@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="15dp"
             android:hint="密码"
-            
+
             android:textColorHint="#787c80"
             android:inputType="textPassword"
             android:background="@drawable/edit_frame_color"
