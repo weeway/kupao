@@ -10,9 +10,8 @@ import com.slidingmenu.view.SlidingMenu;
 /**
  * Created by Vonlion on 2015/11/26.
  */
-public class main_interface extends Activity{
+public class main_interface extends Activity  {
     private SlidingMenu mLeftMenu;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +33,21 @@ public class main_interface extends Activity{
     }
 
     public void change_alpha2(View v){//主界面返回登录界面
-        Intent intent = new Intent(this, RunningActivity.class);
+        Intent intent = new Intent(this, map.class);
 
         startActivity(intent);
 
         overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
     }
+
+//    public void onClick(View v) {
+//        jumpToAnotherActivity();
+//    }
+//
+//    public void jumpToAnotherActivity(){
+//        Intent intent = new Intent();
+//        intent.setClass(this, map.class);
+//        startActivity(intent);
+//    }
+
 }
