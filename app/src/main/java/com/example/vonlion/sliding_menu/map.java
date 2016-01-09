@@ -1,8 +1,10 @@
 package com.example.vonlion.sliding_menu;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
@@ -160,5 +162,13 @@ public class map extends Activity implements LocationSource, AMapLocationListene
         arcOptions.strokeWidth(10f);
         arcOptions.strokeColor(0xFF0080FF);
         aMap.addArc(arcOptions.point(latLngs[0],latLngs[1],latLngs[2]));
+    }
+
+    public void change_roll(View v){//登录跳转注册
+        Intent intent = new Intent(this, main_interface.class);
+
+        startActivity(intent);
+
+        overridePendingTransition(R.anim.lefttoright, R.anim.righttoleft);
     }
 }
