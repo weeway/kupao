@@ -164,7 +164,7 @@ public class map extends Activity implements LocationSource, AMapLocationListene
         aMap.addArc(arcOptions.point(latLngs[0],latLngs[1],latLngs[2]));
     }
 
-    public void change_roll(View v){//登录跳转注册
+    public void change_roll(View v){//地图界面跳转主界面
         Intent intent = new Intent(this, main_interface.class);
 
         startActivity(intent);

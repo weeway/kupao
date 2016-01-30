@@ -38,7 +38,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="5dp"
                         android:background="@drawable/register_back"
-                        android:onClick="change_roll"/><!--切换全图模式-->
+                        android:onClick="change_roll"/>
                 </LinearLayout>
     </FrameLayout>
 

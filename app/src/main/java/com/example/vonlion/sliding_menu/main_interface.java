@@ -39,15 +39,4 @@ public class main_interface extends Activity  {
 
         overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
     }
-
-//    public void onClick(View v) {
-//        jumpToAnotherActivity();
-//    }
-//
-//    public void jumpToAnotherActivity(){
-//        Intent intent = new Intent();
-//        intent.setClass(this, map.class);
-//        startActivity(intent);
-//    }
-
 }
