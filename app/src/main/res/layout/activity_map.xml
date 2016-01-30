@@ -45,11 +45,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:paddingTop="0dp"
-        android:paddingBottom="0dp"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp">
+        android:orientation="horizontal">
        <Button
            android:layout_width="match_parent"
            android:layout_height="match_parent"
@@ -57,147 +53,89 @@
            android:text="暂    停"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <LinearLayout
+
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/t_top"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:background="#11564789">
-               <ImageView
-                   android:layout_width="30dp"
-                   android:layout_height="30dp"
-                   android:layout_gravity="center"
-                   android:layout_marginTop="5dp"
-                   android:src="@drawable/running_time"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="用时"
-                    android:textColor="#ffffff"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/running_time"
-                    android:textColor="#ffffff"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="6dp"
-                    android:textSize="30dp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:background="#114060c9">
-
+            android:id="@+id/t_top">
+            <TableRow android:layout_weight="1">
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="6dp"
-                    android:src="@drawable/running_pace"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="步数"
-                    android:textColor="#ffffff"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="8dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/running_pace"
-                    android:textColor="#ffffff"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="6dp"
-                    android:textSize="30dp"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/b_bottom"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:background="#11819ad1">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:src="@drawable/running_time"
+                    android:id="@+id/imageView2"
                     android:layout_marginTop="5dp"
-                    android:src="@drawable/running_distance"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="距离"
-                    android:textColor="#ffffff"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="8dp"/>
+                    android:layout_weight="1"/>
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:src="@drawable/running_pace"
+                    android:id="@+id/imageView3"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"/>
+            </TableRow>
+
+                <TableRow android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/running_time"
+                        android:textColor="#ffffff"
+                        android:textSize="25dp"
+                        android:id="@+id/textView2"
+                        android:layout_weight="1"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/running_pace"
+                        android:textColor="#ffffff"
+                        android:textSize="25dp"
+                        android:id="@+id/textView8"
+                        android:layout_weight="1"
+                        android:gravity="center"/>
+                </TableRow>
+
+                <TableRow android:layout_weight="1">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:src="@drawable/running_distance"
+                        android:id="@+id/imageView5"
+                        android:layout_weight="1"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:src="@drawable/running_energy"
+                        android:id="@+id/imageView4"
+                        android:layout_weight="1"/>
+                </TableRow>
+
+
+            <TableRow android:layout_weight="1">
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/running_distance"
                     android:textColor="#ffffff"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="6dp"
-                    android:textSize="30dp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:background="#116630ac">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/running_energy"/>
+                    android:textSize="25dp"
+                    android:gravity="center"
+                    android:id="@+id/textView7"
+                    android:layout_weight="1"/>
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="能量"
-                    android:textColor="#ffffff"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="8dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/running_energy"
                     android:textColor="#ffffff"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="6dp"
-                    android:textSize="30dp"/>
-            </LinearLayout>
-        </LinearLayout>
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:layout_weight="1"/>
+            </TableRow>
 
 
-
-    </LinearLayout>
-
+        </TableLayout>
    </LinearLayout>

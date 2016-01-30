@@ -4,6 +4,10 @@
     <string name="running_pace">0</string>
     <string name="running_distance">0</string>
     <string name="running_energy">0</string>
-    <!--<drawable name="sliding_menu_button1_normal">#ddba8557</drawable>-->
-    <!--<drawable name="sliding_menu_button1_pressed">#dd865b31</drawable>-->
+    <string name="name">Vonlion</string>
+    <string name="head_portrait">@drawable/head_portrait</string>
+    <string name="height">180cm</string>
+    <string name="weight">140kg</string>
+    <string name="BMI">20.8</string>
+    <string name="target">10000步</string>
 </resources>

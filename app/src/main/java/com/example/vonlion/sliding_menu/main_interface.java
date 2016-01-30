@@ -39,4 +39,12 @@ public class main_interface extends Activity  {
 
         overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
     }
+
+    public void change1(View v){//左界面跳转到我的资料
+        Intent intent = new Intent(this, mydata.class);
+
+        startActivity(intent);
+
+        overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
+    }
 }

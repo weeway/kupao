@@ -34,7 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"
-            android:text="冯立昊\n爱好:羽毛球\\跑步\n跑龄:3年"
+            android:text="@string/name"
+                android:textSize="20dp"
             android:layout_weight="1"
                 android:textColor="#ffffff"/>
         </LinearLayout>
