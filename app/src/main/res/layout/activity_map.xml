@@ -47,10 +47,11 @@
         android:layout_height="40dp"
         android:orientation="horizontal">
        <Button
+           android:id="@+id/btStart"
            android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:background="#7031ae"
-           android:text="暂    停"/>
+           android:text="开始"/>
     </LinearLayout>
 
 
@@ -84,7 +85,7 @@
                         android:text="@string/running_time"
                         android:textColor="#ffffff"
                         android:textSize="25dp"
-                        android:id="@+id/textView2"
+                        android:id="@+id/tvTime"
                         android:layout_weight="1"
                         android:gravity="center"/>
 
@@ -93,9 +94,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/running_pace"
                         android:textColor="#ffffff"
-                        android:textSize="25dp"
-                        android:id="@+id/textView8"
-                        android:layout_weight="1"
+                        android:textSize="25sp"
+                        android:id="@+id/tvDistance"
                         android:gravity="center"/>
                 </TableRow>
 
