@@ -99,6 +99,7 @@ public class map extends Activity implements LocationSource,
             // 显示系统小蓝点
             mListener.onLocationChanged(loc);
             displayDistance(length);
+            displayCaloric();
             drawTrace(loc);
             camMoveToCurPos(loc);
         }
@@ -187,6 +188,26 @@ public class map extends Activity implements LocationSource,
         overridePendingTransition(R.anim.lefttoright, R.anim.righttoleft);
     }
 
+    public void displayCaloric(){
+        TextView tvWeight = (TextView) findViewById(R.id.tvWeight);
+        int weight = 100;
+        try{
+            weight = Integer.parseInt(tvWeight.getText().toString().substring(0,2));
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_SHORT).show();
+        }
+
+        TextView tvCaloric = (TextView) findViewById(R.id.tvCaloric);
+        double caloric = ((double) weight*(length/1000)*1.036);
+        if(caloric < 1000){
+            tvCaloric.setText((int)caloric+"J");
+        }else if(caloric >= 1000){
+            int firstPart = (int)caloric/1000;
+            int secondPart = ((int)caloric%1000)/100;
+            tvCaloric.setText(firstPart+"."+secondPart);
+        }
+
+    }
     //接收广播 开始定位
     private BroadcastReceiver alarmReceiver = new BroadcastReceiver(){
         @Override
@@ -247,14 +268,16 @@ public class map extends Activity implements LocationSource,
             msg.obj = loc;
             mListener.onLocationChanged(loc);
             mHandler.sendMessage(msg);
-            if(loc.getAccuracy() < 30f){
+            if(loc.getAccuracy() < 10f){
                 las[flag] = new LatLng(loc.getLatitude(),loc.getLongitude());
                 if(flag == 1){
                     length+= AMapUtils.calculateLineDistance(las[0],las[1]);
-                    flag = -1;
+                    las[0] = las[1];
+                    flag = 0;
                 }
                 flag++;
             }
+
         }
     }
 
