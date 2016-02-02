@@ -4,6 +4,7 @@
     <string name="running_pace">0</string>
     <string name="running_distance">0</string>
     <string name="running_energy">0</string>
+    <string name="name">Vonlion</string>
     <!--<drawable name="sliding_menu_button1_normal">#ddba8557</drawable>-->
     <!--<drawable name="sliding_menu_button1_pressed">#dd865b31</drawable>-->
 </resources>
