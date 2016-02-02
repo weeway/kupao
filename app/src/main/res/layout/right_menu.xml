@@ -2,11 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#55000000"
+    android:background="#dadada"
     >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="160dp"
+            android:background="#6eabcf">
             <Button
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -42,31 +43,30 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_height="wrap_content">
+
+        <!--<View-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="2px"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:background="#00c7c1c1"-->
+            <!--android:layout_weight="5"-->
+            <!--android:layout_margin="0dp"/>-->
 
         <View
-            android:layout_width="wrap_content"
-            android:layout_height="2px"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
             android:layout_gravity="center_horizontal"
-            android:background="#00c7c1c1"
-            android:layout_weight="5"
-            android:layout_margin="0dp"/>
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="2px"
-            android:layout_gravity="center_horizontal"
-            android:background="#c7c1c1"
+            android:background="#3e90c2"
             android:layout_weight="2"
             android:layout_margin="0dp"/>
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="2px"
-            android:layout_gravity="center_horizontal"
-            android:background="#00c7c1c1"
-            android:layout_weight="5"
-            android:layout_margin="0dp"/>
+        <!--<View-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="2px"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:background="#00c7c1c1"-->
+            <!--android:layout_weight="5"-->
+            <!--android:layout_margin="0dp"/>-->
 
     </LinearLayout>
 
@@ -81,7 +81,7 @@
             android:layout_height="75dp"
             android:text="今日排行"
             android:background="@drawable/interface_main_button_color"
-            android:layout_marginBottom="60dp"
+            android:layout_marginBottom="100dp"
             android:textSize="12dp"/>
 
         <Button
@@ -91,9 +91,7 @@
         android:id="@+id/button"
         android:textSize="20dp"
         android:onClick="change_alpha2"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/interface_main_button_color"/>
-
+        android:background="@drawable/interface_main_button_color"/>
 
         <Button
             android:layout_width="75dp"
