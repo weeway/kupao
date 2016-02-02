@@ -142,12 +142,14 @@
                 android:text="@string/mydata1"
                 android:textColor="#000000"
                 android:textSize="25dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"/>
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:src="@drawable/mydata1"
-                android:gravity="center"/>
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"/>
 
         </LinearLayout>
         <LinearLayout
@@ -170,12 +172,14 @@
                 android:text="@string/mydata2"
                 android:textColor="#000000"
                 android:textSize="25dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"/>
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:src="@drawable/mydata2"
-                android:gravity="center"/>
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"/>
 
         </LinearLayout>
 
@@ -204,12 +208,14 @@
                 android:text="@string/mydata3"
                 android:textColor="#000000"
                 android:textSize="25dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"/>
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
                 android:src="@drawable/mydata3"
-                android:gravity="center"/>
+                android:layout_marginTop="10dp"/>
 
         </LinearLayout>
         <LinearLayout
@@ -232,12 +238,14 @@
                 android:text="@string/mydata4"
                 android:textColor="#000000"
                 android:textSize="25dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"/>
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:src="@drawable/mydata4"
-                android:gravity="center"/>
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"/>
 
         </LinearLayout>
 
