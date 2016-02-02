@@ -83,6 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="4dp">
                 <TextView
+                    android:id="@+id/tvHigh"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -90,6 +91,7 @@
                     android:text="@string/height"
                     android:textColor="#FFFFFF"/>
                 <TextView
+                    android:id="@+id/tvWeight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -97,6 +99,7 @@
                     android:text="@string/weight"
                     android:textColor="#FFFFFF"/>
                 <TextView
+                    android:id="@+id/tvBMI"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -104,6 +107,7 @@
                     android:text="@string/BMI"
                     android:textColor="#FFFFFF"/>
                 <TextView
+                    android:id="@+id/tvTarget"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
