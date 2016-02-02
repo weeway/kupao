@@ -16,10 +16,11 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/id_img1_back"
+                android:id="@+id/id_my"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/lm_button1_change"/>
+                android:background="@drawable/lm_button1_change"
+                android:onClick="change1"/>
 
             <ImageView
                 android:id="@+id/id_img1"
