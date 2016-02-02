@@ -17,7 +17,7 @@ public class mydata extends Activity {
     }
 
         public void change_alpha(View v){
-            Intent intent = new Intent(this,left_menu.class);
+            Intent intent = new Intent(this,main_interface.class);
 
             startActivity(intent);
 
