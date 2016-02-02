@@ -83,6 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="4dp">
                 <TextView
+                    android:id="@+id/tvHigh"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -90,6 +91,7 @@
                     android:text="@string/height"
                     android:textColor="#FFFFFF"/>
                 <TextView
+                    android:id="@+id/tvWeight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -97,6 +99,7 @@
                     android:text="@string/weight"
                     android:textColor="#FFFFFF"/>
                 <TextView
+                    android:id="@+id/tvBMI"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -104,6 +107,7 @@
                     android:text="@string/BMI"
                     android:textColor="#FFFFFF"/>
                 <TextView
+                    android:id="@+id/tvTarget"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -114,12 +118,136 @@
         </TableLayout>
     </RelativeLayout>
 
-    <TableLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:horizontalSpacing="2dp">
-        <TableRow>
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/mydata_table">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="最长连续打卡"
+                android:textColor="#000000"
+                android:textSize="13dp"
+                android:gravity="center"
+                android:layout_marginTop="5dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mydata1"
+                android:textColor="#000000"
+                android:textSize="25dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"/>
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/mydata1"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"/>
 
-        </TableRow>
-    </TableLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/mydata_table">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="单日最长距离"
+                android:textColor="#000000"
+                android:textSize="13dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mydata2"
+                android:textColor="#000000"
+                android:textSize="25dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"/>
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/mydata2"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/mydata_table">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="累计步数"
+                android:textColor="#000000"
+                android:textSize="13dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mydata3"
+                android:textColor="#000000"
+                android:textSize="25dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"/>
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:src="@drawable/mydata3"
+                android:layout_marginTop="10dp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/mydata_table">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="累计完成目标"
+                android:textColor="#000000"
+                android:textSize="13dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mydata4"
+                android:textColor="#000000"
+                android:textSize="25dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"/>
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/mydata4"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 </LinearLayout>
