@@ -5,14 +5,15 @@
     <string name="running_distance">0</string>
     <string name="running_energy">0</string>
     <string name="name">Vonlion</string>
-<<<<<<< HEAD
     <!--<drawable name="sliding_menu_button1_normal">#ddba8557</drawable>-->
     <!--<drawable name="sliding_menu_button1_pressed">#dd865b31</drawable>-->
-=======
     <string name="head_portrait">@drawable/head_portrait</string>
     <string name="height">180cm</string>
     <string name="weight">140kg</string>
     <string name="BMI">20.8</string>
     <string name="target">10000步</string>
->>>>>>> 3fc9e44ddc4e4ed17d16abd52e484ef7960dd153
+    <string name="mydata1">188天</string>
+    <string name="mydata2">31200步</string>
+    <string name="mydata3">地球0.6圈</string>
+    <string name="mydata4">366天</string>
 </resources>

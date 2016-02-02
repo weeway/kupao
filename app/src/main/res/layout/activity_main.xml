@@ -9,7 +9,7 @@
     android:paddingTop="0dp"
     android:paddingBottom="0dp"
     tools:context=".MainActivity"
-    android:background="@drawable/img_frame_background7">
+    android:background="@drawable/img_frame_background5">
 
     <com.slidingmenu.view.SlidingMenu
         android:id="@+id/id_menu"

@@ -7,7 +7,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:background="#6eabcf">
+            android:background="@drawable/rm_bg">
             <Button
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -57,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_gravity="center_horizontal"
-            android:background="#3e90c2"
+            android:background="#357da9"
             android:layout_weight="2"
             android:layout_margin="0dp"/>
         <!--<View-->
