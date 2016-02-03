@@ -32,8 +32,16 @@ public class main_interface extends Activity  {
         overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
     }
 
-    public void change_alpha2(View v){//主界面返回登录界面
+    public void change_alpha2(View v){//主界面进入跑步界面
         Intent intent = new Intent(this, map.class);
+
+        startActivity(intent);
+
+        overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
+    }
+
+    public void change_alpha3(View v){//主界面进入历史界面
+        Intent intent = new Intent(this, Histroy.class);
 
         startActivity(intent);
 

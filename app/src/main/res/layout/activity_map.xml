@@ -5,41 +5,43 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               tools:context=".map">
-            <FrameLayout
+            <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="320dp"
+            android:layout_height="40dp"
             android:background="#66000000"
             android:gravity="center_horizontal"
-            android:orientation="vertical"
-            >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <com.amap.api.maps.MapView
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/map"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-
+            android:orientation="vertical">
                 <LinearLayout
-                    android:id="@+id/button_back_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="left">
-                    <Button
-                        android:id="@+id/button_back"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/register_back"
-                        android:onClick="change_roll"/>
+                    android:layout_height="40dp"
+                    android:background="#50b5e4">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="导航"
+                        android:textColor="#ffffff"
+                        android:textSize="16dp"/>
                 </LinearLayout>
-    </FrameLayout>
+                <Button
+                    android:id="@+id/button_back"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/img_back"
+                    android:onClick="change_roll"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="280dp">
+        <com.amap.api.maps.MapView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -38,7 +38,7 @@
         <activity android:name=".main_interface"></activity>
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".map"></activity>
-        <activity android:name=".left_menu"></activity>
+        <activity android:name=".Histroy"></activity>
         <activity android:name=".mydata"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
