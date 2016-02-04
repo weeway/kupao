@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,13 +29,20 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.ArcOptions;
+import com.amap.api.maps.model.BitmapDescriptor;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.MyLocationStyle;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class map extends Activity implements LocationSource,
+public class map extends Activity implements LocationSource,AMap.OnMapScreenShotListener,
         View.OnClickListener,AMapLocationListener{
     private MapView mapView;
     private AMap aMap;
@@ -43,15 +51,19 @@ public class map extends Activity implements LocationSource,
     private Intent alarmIntent = null;
     private PendingIntent alarmPi = null;
     private AlarmManager alarm = null;
-    private LatLng [] latLngs = new LatLng[3];
     private TextView tvDistance = null;
     private TextView tvSteps = null;
     private TextView tvShowTime = null;
-    private Button btStart;
-    private int totalSec = 0;
+    private Button btStop = null;
+    private Button btStart = null;
     private Timer timer = null;
     private Message msg = null;
     private TimerTask task = null;
+    private LatLng [] las = new LatLng[2];
+    private LatLng [] latLngs = new LatLng[3];
+    int flag = 0;
+    private int totalSec = 0;
+    double length = 0;
     int cnt = 0;
 
 
@@ -59,16 +71,22 @@ public class map extends Activity implements LocationSource,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+        initView(savedInstanceState);
+        initMap();
+        alarmStart();
+    }
 
+    //获取控件及设置监听
+    public void initView(Bundle savedInstanceState){
         tvDistance = (TextView) findViewById(R.id.tvDistance);
         tvShowTime = (TextView) findViewById(R.id.tvTime);
         tvSteps = (TextView) findViewById(R.id.tvSteps);
         btStart = (Button) findViewById(R.id.btStart);
+        btStop = (Button) findViewById(R.id.btStop);
         mapView = (MapView) findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
-
         btStart.setOnClickListener(this);
-        init();
+        btStop.setOnClickListener(this);
     }
 
     public void alarmStart(){
@@ -111,7 +129,7 @@ public class map extends Activity implements LocationSource,
     //显示步数
     public void displaySteps(){
         double steps = length*100/45;
-        tvSteps.setText((int)steps);
+        tvSteps.setText(""+(int)steps);
     }
 
     //显示跑步距离
@@ -171,11 +189,8 @@ public class map extends Activity implements LocationSource,
         aMap.animateCamera(cameraUpadate);
     }
 
-    /**
-     * 初始化AMap对象
-     */
-    private void init() {
-        alarmStart();
+    //初始化AMap对象
+    private void initMap() {
         locationClient = LocationManagerProxy.getInstance(map.this);
         locationClient.requestLocationData(
                 LocationProviderProxy.AMapNetwork, 1000, 3,map.this);
@@ -185,10 +200,11 @@ public class map extends Activity implements LocationSource,
         }
     }
 
+    //设置AMap属性
     private void setUpMap() {
         aMap.setLocationSource(this);
         CameraUpdateFactory.zoomTo(18.0f);
-
+//        changeLogo();
        // 设置默认定位按钮是否显示
         aMap.getUiSettings().setMyLocationButtonEnabled(true);
         aMap.setMyLocationEnabled(true);
@@ -198,6 +214,16 @@ public class map extends Activity implements LocationSource,
         aMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_FOLLOW);
     }
 
+    //修改小蓝点样式
+    private void changeLogo(){
+        MyLocationStyle myLocationStyle = new MyLocationStyle();
+        BitmapDescriptorFactory bitmapDescriptorFactory = new BitmapDescriptorFactory();
+        BitmapDescriptor bitmapDescriptor = bitmapDescriptorFactory.fromResource(R.drawable.ic_navigation_black_24dp);
+        myLocationStyle = myLocationStyle.myLocationIcon(bitmapDescriptor);
+        aMap.setMyLocationStyle(myLocationStyle);
+    }
+
+    //画弧线
     public void drawArc(LatLng [] latLngs){
         ArcOptions arcOptions;
         arcOptions = new ArcOptions();
@@ -207,15 +233,14 @@ public class map extends Activity implements LocationSource,
         aMap.addArc(arcOptions.point(latLngs[0],latLngs[1],latLngs[2]));
     }
 
-    public void change_roll(View v){//地图界面跳转主界面
+    //跳转至主界面
+    public void change_roll(View v){
         Intent intent = new Intent(this, main_interface.class);
 
         startActivity(intent);
 
         overridePendingTransition(R.anim.lefttoright, R.anim.righttoleft);
     }
-
-
 
     //接收广播 开始定位
     private BroadcastReceiver alarmReceiver = new BroadcastReceiver(){
@@ -267,9 +292,7 @@ public class map extends Activity implements LocationSource,
      * 定位成功后回调函数
      * 位置发生变化后，向Handler发送loc位置信息对象
      */
-    int flag = 0;
-    LatLng [] las = new LatLng[2];
-    double length = 0;
+
     @Override
     public void onLocationChanged(AMapLocation loc) {
         if(null != loc){
@@ -328,7 +351,6 @@ public class map extends Activity implements LocationSource,
             tvShowTime.setText(String.format(
                     "%1$02d:%2$02d:%3$02d",hour,min,sec
             ));
-
            super.handleMessage(msg);
         }
     };
@@ -336,9 +358,13 @@ public class map extends Activity implements LocationSource,
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.btStart){
-            if(btStart.getText().equals("开始")){
-                Toast.makeText(getApplicationContext(),"开始",Toast.LENGTH_SHORT).show();
-                btStart.setText("暂停");
+//            if(isFirstTime){
+//                isFirstTime = false;
+//                alarmStart();
+//            }
+            if(btStart.getText().equals("开始计时")){
+                Toast.makeText(getApplicationContext(),"开始计时",Toast.LENGTH_SHORT).show();
+                btStart.setText("暂停计时");
                 if (null == timer) {
                     if (null == task) {
                         task = new TimerTask() {
@@ -358,15 +384,70 @@ public class map extends Activity implements LocationSource,
                     timer.schedule(task, 1000, 1000);
                 }
             }
-            else if(btStart.getText().equals("暂停")){
-                Toast.makeText(getApplicationContext(),"暂停",Toast.LENGTH_SHORT).show();
-                btStart.setText("开始");
+            else if(btStart.getText().equals("暂停计时")){
+                Toast.makeText(getApplicationContext(),"暂停计时",Toast.LENGTH_SHORT).show();
+                btStart.setText("开始计时");
                 task.cancel();
                 task = null;
                 timer.cancel();
                 timer.purge();
                 timer = null;
             }
+        }
+        else if(v.getId() == R.id.btStop){
+            Toast.makeText(getApplicationContext(),"已停止\n可拖动地图查看轨迹",Toast.LENGTH_SHORT).show();
+
+            //获取轨迹截图
+            aMap.getMapScreenShot(this);
+
+            //取消定位
+            mListener = null;
+            if (locationClient != null) {
+                locationClient.removeUpdates(this);
+                locationClient.destroy();
+            }
+            locationClient = null;
+
+            //取消广播
+            if(null != alarmReceiver){
+                unregisterReceiver(alarmReceiver);
+                alarmReceiver = null;
+            }
+
+            //停止计时
+            if(task != null){
+                task.cancel();
+                task = null;
+            }
+            if(timer != null){
+                timer.cancel();
+                timer.purge();
+                timer = null;
+            }
+
+            //设按钮为不可用
+            btStart.setEnabled(false);
+            btStop.setEnabled(false);
+        }
+    }
+
+    @Override
+    public void onMapScreenShot(Bitmap bitmap) {
+        File f = new File("/sdcard/", "轨迹截图.png");
+        if (f.exists()) {
+            f.delete();
+        }
+        try {
+            FileOutputStream out = new FileOutputStream(f);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.flush();
+            out.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 }

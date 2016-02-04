@@ -16,6 +16,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
 
     <application
         android:allowBackup="true"
@@ -26,7 +28,6 @@
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="e83938d0e47543a7da3395e1b82cf48a" />
 
         <activity android:name=".MainActivity" >
             <intent-filter>
@@ -39,7 +40,8 @@
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".map"></activity>
         <activity android:name=".Histroy"></activity>
-        <activity android:name=".mydata"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+        <activity android:name=".mydata"></activity>
+        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
             android:name="com.google.android.gms.version"
