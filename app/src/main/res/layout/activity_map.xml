@@ -51,9 +51,23 @@
            android:id="@+id/btStart"
            android:layout_width="match_parent"
            android:layout_height="match_parent"
+           android:layout_weight="1"
            android:background="@drawable/map_button_color"
            android:text="开始"
-           android:textColor="#ffffff"/>
+           android:textColor="#ffffff"
+           android:layout_marginLeft="1dp"/>
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="#ffffff"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/map_button_color"
+            android:text="结束跑步"
+            android:textColor="#ffffff"
+            android:layout_marginRight="1dp"/>
     </LinearLayout>
 
 
