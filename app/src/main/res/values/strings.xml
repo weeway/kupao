@@ -16,4 +16,9 @@
     <string name="mydata2">31200步</string>
     <string name="mydata3">地球0.6圈</string>
     <string name="mydata4">366天</string>
+    <string name="histroy_distance">0.26</string>
+    <string name="histroy_time">4\'23\'\'</string>
+    <string name="histroy_pace">12000</string>
+    <string name="histroy_date1">2月3日</string>
+    <string name="histroy_date2">14:24</string>
 </resources>
