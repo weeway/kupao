@@ -45,7 +45,8 @@ public class map extends Activity implements LocationSource,
     private AlarmManager alarm = null;
     private LatLng [] latLngs = new LatLng[3];
     private TextView tvDistance = null;
-    private TextView tvShowTime;
+    private TextView tvSteps = null;
+    private TextView tvShowTime = null;
     private Button btStart;
     private int totalSec = 0;
     private Timer timer = null;
@@ -61,6 +62,7 @@ public class map extends Activity implements LocationSource,
 
         tvDistance = (TextView) findViewById(R.id.tvDistance);
         tvShowTime = (TextView) findViewById(R.id.tvTime);
+        tvSteps = (TextView) findViewById(R.id.tvSteps);
         btStart = (Button) findViewById(R.id.btStart);
         mapView = (MapView) findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
@@ -100,13 +102,16 @@ public class map extends Activity implements LocationSource,
             mListener.onLocationChanged(loc);
             displayDistance(length);
             displayCaloric();
+            displaySteps();
             drawTrace(loc);
             camMoveToCurPos(loc);
         }
     };
-    //显示跑步时间
-    public void displayTime(){
 
+    //显示步数
+    public void displaySteps(){
+        double steps = length*100/45;
+        tvSteps.setText((int)steps);
     }
 
     //显示跑步距离
@@ -119,6 +124,28 @@ public class map extends Activity implements LocationSource,
             int secondPart = ((int)length%1000)/100;
             tvDistance.setText(firstPart+"."+secondPart+"km");
         }
+    }
+
+    //显示热量
+    public void displayCaloric(){
+        TextView tvWeight = (TextView) findViewById(R.id.tvWeight);
+        int weight = 100;
+        try{
+            weight = Integer.parseInt(tvWeight.getText().toString().substring(0,2));
+        }catch (Exception e){
+//            Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_SHORT).show();
+        }
+
+        TextView tvCaloric = (TextView) findViewById(R.id.tvCaloric);
+        double caloric = ((double) weight*(length/1000)*1.036);
+        if(caloric < 1000){
+            tvCaloric.setText((int)caloric+"J");
+        }else if(caloric >= 1000){
+            int firstPart = (int)caloric/1000;
+            int secondPart = ((int)caloric%1000)/100;
+            tvCaloric.setText(firstPart+"."+secondPart);
+        }
+
     }
 
     //画轨迹
@@ -188,26 +215,8 @@ public class map extends Activity implements LocationSource,
         overridePendingTransition(R.anim.lefttoright, R.anim.righttoleft);
     }
 
-    public void displayCaloric(){
-        TextView tvWeight = (TextView) findViewById(R.id.tvWeight);
-        int weight = 100;
-        try{
-            weight = Integer.parseInt(tvWeight.getText().toString().substring(0,2));
-        }catch (Exception e){
-            Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_SHORT).show();
-        }
 
-        TextView tvCaloric = (TextView) findViewById(R.id.tvCaloric);
-        double caloric = ((double) weight*(length/1000)*1.036);
-        if(caloric < 1000){
-            tvCaloric.setText((int)caloric+"J");
-        }else if(caloric >= 1000){
-            int firstPart = (int)caloric/1000;
-            int secondPart = ((int)caloric%1000)/100;
-            tvCaloric.setText(firstPart+"."+secondPart);
-        }
 
-    }
     //接收广播 开始定位
     private BroadcastReceiver alarmReceiver = new BroadcastReceiver(){
         @Override
