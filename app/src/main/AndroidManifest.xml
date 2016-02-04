@@ -26,7 +26,7 @@
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="142d9acb0f492faaf2de9563b5b78a37" />
+            android:value="e83938d0e47543a7da3395e1b82cf48a" />
 
         <activity android:name=".MainActivity" >
             <intent-filter>
@@ -38,7 +38,7 @@
         <activity android:name=".main_interface"></activity>
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".map"></activity>
-        <activity android:name=".left_menu"></activity>
+        <activity android:name=".Histroy"></activity>
         <activity android:name=".mydata"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
