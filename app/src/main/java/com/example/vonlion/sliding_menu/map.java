@@ -61,10 +61,15 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
     private TimerTask task = null;
     private LatLng [] las = new LatLng[2];
     private LatLng [] latLngs = new LatLng[3];
-    int flag = 0;
+    private LatLng lonMin=new LatLng(0,0),lonMax = new LatLng(0,0),
+            latMin = new LatLng(0,0),latMax = new LatLng(0,0);
+    private int flag = 0;
     private int totalSec = 0;
-    double length = 0;
-    int cnt = 0;
+    private double length = 0;
+    private int cnt = 0;
+    private double averSpeed = 0;
+    private double sum = 0;
+    private int times = 0;
 
 
     @Override
@@ -184,7 +189,7 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
     public void camMoveToCurPos(AMapLocation loc){
         CameraPosition cameraPosition;
         CameraUpdate cameraUpadate;
-        cameraPosition = new CameraPosition(new LatLng(loc.getLatitude(), loc.getLongitude()), 18.0f, 0.0f, 0.0f);
+        cameraPosition = new CameraPosition(new LatLng(loc.getLatitude(), loc.getLongitude()), 16.0f, 0.0f, 0.0f);
         cameraUpadate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         aMap.animateCamera(cameraUpadate);
     }
@@ -231,6 +236,23 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
         arcOptions.strokeWidth(10f);
         arcOptions.strokeColor(0xFF0080FF);
         aMap.addArc(arcOptions.point(latLngs[0],latLngs[1],latLngs[2]));
+    }
+
+    //获得最大、最小经纬点
+    private void getMaxMinLatLng(AMapLocation location){
+        if(location.getLatitude() > latMax.latitude) latMax = new LatLng(location.getLatitude(),0);
+        if(location.getLatitude() < latMin.latitude) latMin = new LatLng(location.getLatitude(),0);
+        if(location.getLongitude() > lonMax.longitude) latMax = new LatLng(0,location.getLongitude());
+        if(location.getLongitude() < lonMin.longitude) latMin = new LatLng(0,location.getLongitude());
+    }
+
+    //获得合适的比例尺
+    private double getApproriateZoom(){
+        double zoom = 0;
+        double lenX = AMapUtils.calculateLineDistance(lonMax,lonMin);
+        double lenY = AMapUtils.calculateLineDistance(latMax,latMin);
+        double len = (lenX>lenY?lenX:lenY);
+        return zoom;
     }
 
     //跳转至主界面
@@ -301,6 +323,7 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
             mListener.onLocationChanged(loc);
             mHandler.sendMessage(msg);
             if(loc.getAccuracy() < 10f){
+                //累计距离
                 las[flag] = new LatLng(loc.getLatitude(),loc.getLongitude());
                 if(flag == 1){
                     length+= AMapUtils.calculateLineDistance(las[0],las[1]);
@@ -308,6 +331,13 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
                     flag = 0;
                 }
                 flag++;
+
+                //最大最小经纬
+                getMaxMinLatLng(loc);
+                if(totalSec%120 == 0){
+                    sum+=loc.getSpeed();
+                    times++;
+                }
             }
 
         }
@@ -358,10 +388,6 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.btStart){
-//            if(isFirstTime){
-//                isFirstTime = false;
-//                alarmStart();
-//            }
             if(btStart.getText().equals("开始计时")){
                 Toast.makeText(getApplicationContext(),"开始计时",Toast.LENGTH_SHORT).show();
                 btStart.setText("暂停计时");
@@ -397,9 +423,6 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
         else if(v.getId() == R.id.btStop){
             Toast.makeText(getApplicationContext(),"已停止\n可拖动地图查看轨迹",Toast.LENGTH_SHORT).show();
 
-            //获取轨迹截图
-            aMap.getMapScreenShot(this);
-
             //取消定位
             mListener = null;
             if (locationClient != null) {
@@ -428,6 +451,20 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
             //设按钮为不可用
             btStart.setEnabled(false);
             btStop.setEnabled(false);
+
+            //移动相机到合适位置
+            CameraPosition cameraPosition;
+            CameraUpdate cameraUpadate;
+            cameraPosition = new CameraPosition(new LatLng((latMax.latitude+latMax.latitude)/2
+                    ,(lonMax.longitude+lonMin.longitude)/2), 12.0f, 0.0f, 0.0f);
+            cameraUpadate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+            aMap.animateCamera(cameraUpadate);
+
+            //计算平均速度
+            averSpeed = sum/times;
+
+            //获取轨迹截图
+            aMap.getMapScreenShot(this);
         }
     }
 
