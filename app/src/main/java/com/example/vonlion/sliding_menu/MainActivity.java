@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
     private EditText password;
     String msg="pp";
     private SlidingMenu mLeftMenu;
-
+    public  static String  USER_NAME;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +84,7 @@ public class MainActivity extends Activity {
                 Looper.prepare();
                 Toast.makeText(MainActivity.this.getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
                 if(msg.equals("登陆成功")){
-
+                    USER_NAME = name;
                     startActivity(intent);
 
                     overridePendingTransition(R.anim.lefttoright, R.anim.righttoleft);
