@@ -4,15 +4,19 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -39,6 +43,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -54,6 +59,7 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
     private TextView tvDistance = null;
     private TextView tvSteps = null;
     private TextView tvShowTime = null;
+    private TextView tvCaloric;
     private Button btStop = null;
     private Button btStart = null;
     private Timer timer = null;
@@ -70,6 +76,7 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
     private double averSpeed = 0;
     private double sum = 0;
     private int times = 0;
+
 
 
     @Override
@@ -159,7 +166,7 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
 //            Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_SHORT).show();
         }
 
-        TextView tvCaloric = (TextView) findViewById(R.id.tvCaloric);
+        tvCaloric = (TextView) findViewById(R.id.tvCaloric);
         double caloric = ((double) weight*(length/1000)*1.036);
         if(caloric < 1000){
             tvCaloric.setText((int)caloric+"J");
@@ -465,6 +472,43 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
 
             //获取轨迹截图
             aMap.getMapScreenShot(this);
+=======
+            /**
+             * 存入数据
+             **/
+            SimpleDateFormat    sDateFormat    =   new SimpleDateFormat("yyyy-MM-dd    hh:mm:ss");
+            String    date    =    sDateFormat.format(new    java.util.Date());
+            String distance = tvDistance.getText().toString();
+            String time = tvShowTime.getText().toString();
+            String caloric = tvCaloric.getText().toString();
+            String steps = tvSteps.getText().toString();
+
+            DatabaseHelper database = new DatabaseHelper(this);
+            SQLiteDatabase db = database.getReadableDatabase();
+            ContentValues cv= new ContentValues();
+            cv.put("name",MainActivity.USER_NAME);
+            cv.put("date",date);
+            cv.put("distance",distance);
+            cv.put("time",time);
+            cv.put("theyCount",steps);
+            cv.put("energy",caloric);
+            cv.put("motionState","慢跑");
+            db.insert("usertb", null ,cv);
+            cv.clear();
+            Cursor cursor = db.query("usertb", null, "name like?", new String[]{MainActivity.USER_NAME}, null, null, "name");
+            if(cursor!=null){
+                while(cursor.moveToNext()){
+                    //Map<String, Object> map = new HashMap<String, Object>();
+                    Log.i("info",cursor.getString(cursor.getColumnIndex("name")));
+                    Log.i("info",cursor.getString(cursor.getColumnIndex("date")));
+                    Log.i("info",cursor.getString(cursor.getColumnIndex("distance")));
+                    Log.i("info",cursor.getString(cursor.getColumnIndex("time")));
+                    Log.i("info",cursor.getString(cursor.getColumnIndex("theyCount")));
+                    Log.i("info",cursor.getString(cursor.getColumnIndex("energy")));
+                }
+
+            }
+>>>>>>> 24b37507c9453080f825781cb9a06ac180d7f95c
         }
     }
 
