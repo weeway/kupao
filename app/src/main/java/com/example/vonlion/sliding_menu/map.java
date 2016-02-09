@@ -472,7 +472,6 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
 
             //获取轨迹截图
             aMap.getMapScreenShot(this);
-=======
             /**
              * 存入数据
              **/
@@ -486,7 +485,7 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
             DatabaseHelper database = new DatabaseHelper(this);
             SQLiteDatabase db = database.getReadableDatabase();
             ContentValues cv= new ContentValues();
-            cv.put("name",MainActivity.USER_NAME);
+            cv.put("name",Login.USER_NAME);
             cv.put("date",date);
             cv.put("distance",distance);
             cv.put("time",time);
@@ -495,7 +494,7 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
             cv.put("motionState","慢跑");
             db.insert("usertb", null ,cv);
             cv.clear();
-            Cursor cursor = db.query("usertb", null, "name like?", new String[]{MainActivity.USER_NAME}, null, null, "name");
+            Cursor cursor = db.query("usertb", null, "name like?", new String[]{Login.USER_NAME}, null, null, "name");
             if(cursor!=null){
                 while(cursor.moveToNext()){
                     //Map<String, Object> map = new HashMap<String, Object>();
@@ -508,7 +507,6 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
                 }
 
             }
->>>>>>> 24b37507c9453080f825781cb9a06ac180d7f95c
         }
     }
 

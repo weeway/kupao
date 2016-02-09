@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
@@ -21,77 +22,24 @@ import java.io.IOException;
 
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity{
+    private final int SPLASH_DISPLAY_LENGHT = 2500; //延迟2.5秒
 
-    private EditText username;
-    private EditText password;
-    String msg="pp";
-    private SlidingMenu mLeftMenu;
-    public  static String  USER_NAME;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
-        username = (EditText)findViewById(R.id.username);
-        password = (EditText)findViewById(R.id.password);
-        mLeftMenu = (SlidingMenu)findViewById(R.id.id_menu);
+        setContentView(R.layout.index);
+        new Handler().postDelayed(new Runnable(){
 
-        findViewById(R.id.traceroute_rootview).setOnClickListener(new View.OnClickListener() {
-            //点击屏幕外取消输入框
             @Override
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.traceroute_rootview:
-                        InputMethodManager imm = (InputMethodManager)
-                                getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                        break;
-                }
-
-            }
-        });
-
-
-    }
-    public void toggleMenu(View view){
-        mLeftMenu.toggle();
-    }
-
-    public void change_alpha(View v){//登录跳转注册
-        Intent intent = new Intent(this, RegisterActivity.class);
-
-        startActivity(intent);
-
-        overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
-    }
-
-    //登录进入主界面
-
-    public void change_roll(View v) throws ParseException, IOException, JSONException {
-        final String name = this.username.getText().toString();
-        final String pwd = this.password.getText().toString();
-        final Intent intent = new Intent(this, main_interface.class);
-        (new Thread(new Runnable() {
             public void run() {
-                Get get = new Get();
-                try {
-                    msg = get.loginb("http://115.159.120.123:8080/LoginServer/ReceiveServers?username=" + name + "&&password=" + pwd);
-                } catch (IOException var3) {
+                Intent mainIntent = new Intent(MainActivity.this,Login.class);
+                MainActivity.this.startActivity(mainIntent);
+//                MainActivity.this.finish();
+                overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
+            }
 
-                    var3.printStackTrace();
-                }
-
-                Looper.prepare();
-                Toast.makeText(MainActivity.this.getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-                if(msg.equals("登陆成功")){
-                    USER_NAME = name;
-                    startActivity(intent);
-
-                    overridePendingTransition(R.anim.lefttoright, R.anim.righttoleft);
-                }
-                Looper.loop();
-        }
-        })).start();
+        }, SPLASH_DISPLAY_LENGHT);
     }
 
 }

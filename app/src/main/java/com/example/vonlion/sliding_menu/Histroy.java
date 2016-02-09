@@ -29,7 +29,7 @@ public class Histroy  extends Activity {
         setContentView(R.layout.histroy);
         DatabaseHelper database = new DatabaseHelper(this);
         SQLiteDatabase db = database.getReadableDatabase();
-        cursor = db.query("usertb", null, "name like?", new String[]{MainActivity.USER_NAME}, null, null, "name");
+        cursor = db.query("usertb", null, "name like?", new String[]{Login.USER_NAME}, null, null, "name");
 
         ListView list = (ListView) findViewById(R.id.ListView01);
         SimpleAdapter adapter = new SimpleAdapter(this,getData(),R.layout.historyitem,
