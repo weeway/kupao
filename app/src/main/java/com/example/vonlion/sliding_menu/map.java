@@ -2,16 +2,20 @@ package com.example.vonlion.sliding_menu;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -38,17 +42,21 @@ import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class map extends Activity implements LocationSource,AMap.OnMapScreenShotListener,
-        View.OnClickListener,AMapLocationListener{
+public class map extends Activity  implements LocationSource, AMap.OnMapScreenShotListener,
+        View.OnClickListener, AMapLocationListener {
     private MapView mapView;
     private AMap aMap;
     private OnLocationChangedListener mListener;
@@ -65,10 +73,10 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
     private Timer timer = null;
     private Message msg = null;
     private TimerTask task = null;
-    private LatLng [] las = new LatLng[2];
-    private LatLng [] latLngs = new LatLng[3];
-    private LatLng lonMin=new LatLng(0,0),lonMax = new LatLng(0,0),
-            latMin = new LatLng(0,0),latMax = new LatLng(0,0);
+    private LatLng[] las = new LatLng[2];
+    private LatLng[] latLngs = new LatLng[3];
+    private LatLng lonMin = new LatLng(0, 0), lonMax = new LatLng(0, 0),
+            latMin = new LatLng(0, 0), latMax = new LatLng(0, 0);
     private int flag = 0;
     private int totalSec = 0;
     private double length = 0;
@@ -76,7 +84,12 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
     private double averSpeed = 0;
     private double sum = 0;
     private int times = 0;
-
+    private AlertDialog.Builder builder;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
 
     @Override
@@ -86,10 +99,16 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
         initView(savedInstanceState);
         initMap();
         alarmStart();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        builder  = new AlertDialog.Builder(map.this);
+
+
     }
 
     //获取控件及设置监听
-    public void initView(Bundle savedInstanceState){
+    public void initView(Bundle savedInstanceState) {
         tvDistance = (TextView) findViewById(R.id.tvDistance);
         tvShowTime = (TextView) findViewById(R.id.tvTime);
         tvSteps = (TextView) findViewById(R.id.tvSteps);
@@ -101,7 +120,7 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
         btStop.setOnClickListener(this);
     }
 
-    public void alarmStart(){
+    public void alarmStart() {
         // 创建Intent对象，action为LOCATION
         alarmIntent = new Intent();
         alarmIntent.setAction("LOCATION");
@@ -119,14 +138,14 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
         registerReceiver(alarmReceiver, filter);
 
         int alarmInterval = 5;
-        if(alarm != null){
-            alarm.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime()+2*1000,
-                    alarmInterval*1000,alarmPi);
+        if (alarm != null) {
+            alarm.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 2 * 1000,
+                    alarmInterval * 1000, alarmPi);
         }
     }
 
     Handler mHandler = new Handler() {
-        public void dispatchMessage(android.os.Message msg) {
+        public void dispatchMessage(Message msg) {
             AMapLocation loc = (AMapLocation) msg.obj;
             // 显示系统小蓝点
             mListener.onLocationChanged(loc);
@@ -139,48 +158,47 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
     };
 
     //显示步数
-    public void displaySteps(){
-        double steps = length*100/45;
-        tvSteps.setText(""+(int)steps);
+    public void displaySteps() {
+        double steps = length * 100 / 45;
+        tvSteps.setText("" + (int) steps);
     }
 
     //显示跑步距离
-    public void displayDistance(double length){
-        if(length < 1000){
-            tvDistance.setText((int)length+"m");
-        }
-        else if(length >= 1000){
-            int firstPart = (int)length/1000;
-            int secondPart = ((int)length%1000)/100;
-            tvDistance.setText(firstPart+"."+secondPart+"km");
+    public void displayDistance(double length) {
+        if (length < 1000) {
+            tvDistance.setText((int) length + "m");
+        } else if (length >= 1000) {
+            int firstPart = (int) length / 1000;
+            int secondPart = ((int) length % 1000) / 100;
+            tvDistance.setText(firstPart + "." + secondPart + "km");
         }
     }
 
     //显示热量
-    public void displayCaloric(){
+    public void displayCaloric() {
         TextView tvWeight = (TextView) findViewById(R.id.tvWeight);
         int weight = 100;
-        try{
-            weight = Integer.parseInt(tvWeight.getText().toString().substring(0,2));
-        }catch (Exception e){
+        try {
+            weight = Integer.parseInt(tvWeight.getText().toString().substring(0, 2));
+        } catch (Exception e) {
 //            Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_SHORT).show();
         }
 
         tvCaloric = (TextView) findViewById(R.id.tvCaloric);
-        double caloric = ((double) weight*(length/1000)*1.036);
-        if(caloric < 1000){
-            tvCaloric.setText((int)caloric+"J");
-        }else if(caloric >= 1000){
-            int firstPart = (int)caloric/1000;
-            int secondPart = ((int)caloric%1000)/100;
-            tvCaloric.setText(firstPart+"."+secondPart);
+        double caloric = ((double) weight * (length / 1000) * 1.036);
+        if (caloric < 1000) {
+            tvCaloric.setText((int) caloric + "J");
+        } else if (caloric >= 1000) {
+            int firstPart = (int) caloric / 1000;
+            int secondPart = ((int) caloric % 1000) / 100;
+            tvCaloric.setText(firstPart + "." + secondPart);
         }
 
     }
 
     //画轨迹
     public void drawTrace(AMapLocation loc) {
-         //需要一个全局计数器cnt
+        //需要一个全局计数器cnt
         if (loc.getAccuracy() < 10f) {
             latLngs[cnt] = new LatLng(loc.getLatitude(), loc.getLongitude());
         }
@@ -193,7 +211,7 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
     }
 
     //视图相机移动到当前位置
-    public void camMoveToCurPos(AMapLocation loc){
+    public void camMoveToCurPos(AMapLocation loc) {
         CameraPosition cameraPosition;
         CameraUpdate cameraUpadate;
         cameraPosition = new CameraPosition(new LatLng(loc.getLatitude(), loc.getLongitude()), 16.0f, 0.0f, 0.0f);
@@ -205,7 +223,7 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
     private void initMap() {
         locationClient = LocationManagerProxy.getInstance(map.this);
         locationClient.requestLocationData(
-                LocationProviderProxy.AMapNetwork, 1000, 3,map.this);
+                LocationProviderProxy.AMapNetwork, 1000, 3, map.this);
         if (aMap == null) {
             aMap = mapView.getMap();
             setUpMap();
@@ -217,7 +235,7 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
         aMap.setLocationSource(this);
         CameraUpdateFactory.zoomTo(18.0f);
 //        changeLogo();
-       // 设置默认定位按钮是否显示
+        // 设置默认定位按钮是否显示
         aMap.getUiSettings().setMyLocationButtonEnabled(true);
         aMap.setMyLocationEnabled(true);
 
@@ -227,7 +245,7 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
     }
 
     //修改小蓝点样式
-    private void changeLogo(){
+    private void changeLogo() {
         MyLocationStyle myLocationStyle = new MyLocationStyle();
         BitmapDescriptorFactory bitmapDescriptorFactory = new BitmapDescriptorFactory();
         BitmapDescriptor bitmapDescriptor = bitmapDescriptorFactory.fromResource(R.drawable.ic_navigation_black_24dp);
@@ -236,34 +254,38 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
     }
 
     //画弧线
-    public void drawArc(LatLng [] latLngs){
+    public void drawArc(LatLng[] latLngs) {
         ArcOptions arcOptions;
         arcOptions = new ArcOptions();
         arcOptions.visible(true);
         arcOptions.strokeWidth(10f);
         arcOptions.strokeColor(0xFF0080FF);
-        aMap.addArc(arcOptions.point(latLngs[0],latLngs[1],latLngs[2]));
+        aMap.addArc(arcOptions.point(latLngs[0], latLngs[1], latLngs[2]));
     }
 
     //获得最大、最小经纬点
-    private void getMaxMinLatLng(AMapLocation location){
-        if(location.getLatitude() > latMax.latitude) latMax = new LatLng(location.getLatitude(),0);
-        if(location.getLatitude() < latMin.latitude) latMin = new LatLng(location.getLatitude(),0);
-        if(location.getLongitude() > lonMax.longitude) latMax = new LatLng(0,location.getLongitude());
-        if(location.getLongitude() < lonMin.longitude) latMin = new LatLng(0,location.getLongitude());
+    private void getMaxMinLatLng(AMapLocation location) {
+        if (location.getLatitude() > latMax.latitude)
+            latMax = new LatLng(location.getLatitude(), 0);
+        if (location.getLatitude() < latMin.latitude)
+            latMin = new LatLng(location.getLatitude(), 0);
+        if (location.getLongitude() > lonMax.longitude)
+            latMax = new LatLng(0, location.getLongitude());
+        if (location.getLongitude() < lonMin.longitude)
+            latMin = new LatLng(0, location.getLongitude());
     }
 
     //获得合适的比例尺
-    private double getApproriateZoom(){
+    private double getApproriateZoom() {
         double zoom = 0;
-        double lenX = AMapUtils.calculateLineDistance(lonMax,lonMin);
-        double lenY = AMapUtils.calculateLineDistance(latMax,latMin);
-        double len = (lenX>lenY?lenX:lenY);
+        double lenX = AMapUtils.calculateLineDistance(lonMax, lonMin);
+        double lenY = AMapUtils.calculateLineDistance(latMax, latMin);
+        double len = (lenX > lenY ? lenX : lenY);
         return zoom;
     }
 
     //跳转至主界面
-    public void change_roll(View v){
+    public void change_roll(View v) {
         Intent intent = new Intent(this, main_interface.class);
 
         startActivity(intent);
@@ -272,10 +294,10 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
     }
 
     //接收广播 开始定位
-    private BroadcastReceiver alarmReceiver = new BroadcastReceiver(){
+    private BroadcastReceiver alarmReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals("LOCATION")){
+            if (intent.getAction().equals("LOCATION")) {
 //                Toast.makeText(getApplicationContext(),"BroadcastRecevier",Toast.LENGTH_SHORT).show();
                 locationClient = LocationManagerProxy.getInstance(map.this);
                 //此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
@@ -293,12 +315,14 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
         super.onResume();
         mapView.onResume();
     }
+
     @Override
     protected void onPause() {
         super.onPause();
         mapView.onPause();
         deactivate();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -311,7 +335,7 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
         }
         locationClient = null;
 
-        if(null != alarmReceiver){
+        if (null != alarmReceiver) {
             unregisterReceiver(alarmReceiver);
             alarmReceiver = null;
         }
@@ -324,16 +348,16 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
 
     @Override
     public void onLocationChanged(AMapLocation loc) {
-        if(null != loc){
+        if (null != loc) {
             Message msg = mHandler.obtainMessage();
             msg.obj = loc;
             mListener.onLocationChanged(loc);
             mHandler.sendMessage(msg);
-            if(loc.getAccuracy() < 10f){
+            if (loc.getAccuracy() < 10f) {
                 //累计距离
-                las[flag] = new LatLng(loc.getLatitude(),loc.getLongitude());
-                if(flag == 1){
-                    length+= AMapUtils.calculateLineDistance(las[0],las[1]);
+                las[flag] = new LatLng(loc.getLatitude(), loc.getLongitude());
+                if (flag == 1) {
+                    length += AMapUtils.calculateLineDistance(las[0], las[1]);
                     las[0] = las[1];
                     flag = 0;
                 }
@@ -341,8 +365,8 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
 
                 //最大最小经纬
                 getMaxMinLatLng(loc);
-                if(totalSec%120 == 0){
-                    sum+=loc.getSpeed();
+                if (totalSec % 120 == 0) {
+                    sum += loc.getSpeed();
                     times++;
                 }
             }
@@ -362,41 +386,46 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
      * 停止定位
      */
     @Override
-    public void deactivate() {}
+    public void deactivate() {
+    }
 
     @Override
-    public void onLocationChanged(Location location) {}
+    public void onLocationChanged(Location location) {
+    }
 
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {}
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+    }
 
     @Override
-    public void onProviderEnabled(String provider) {}
+    public void onProviderEnabled(String provider) {
+    }
 
     @Override
-    public void onProviderDisabled(String provider) {}
+    public void onProviderDisabled(String provider) {
+    }
 
-    Handler timerHandler = new Handler(){
+    Handler timerHandler = new Handler() {
         @Override
-        public void handleMessage(Message msg){
+        public void handleMessage(Message msg) {
             totalSec++;
 
-            int min = totalSec/60;
-            int sec = totalSec%60;
-            int hour = min/60;
-            min = min%60;
+            int min = totalSec / 60;
+            int sec = totalSec % 60;
+            int hour = min / 60;
+            min = min % 60;
             tvShowTime.setText(String.format(
-                    "%1$02d:%2$02d:%3$02d",hour,min,sec
+                    "%1$02d:%2$02d:%3$02d", hour, min, sec
             ));
-           super.handleMessage(msg);
+            super.handleMessage(msg);
         }
     };
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.btStart){
-            if(btStart.getText().equals("开始计时")){
-                Toast.makeText(getApplicationContext(),"开始计时",Toast.LENGTH_SHORT).show();
+        if (v.getId() == R.id.btStart) {
+            if (btStart.getText().equals("开始计时")) {
+                Toast.makeText(getApplicationContext(), "开始计时", Toast.LENGTH_SHORT).show();
                 btStart.setText("暂停计时");
                 if (null == timer) {
                     if (null == task) {
@@ -416,9 +445,8 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
                     timer = new Timer(true);
                     timer.schedule(task, 1000, 1000);
                 }
-            }
-            else if(btStart.getText().equals("暂停计时")){
-                Toast.makeText(getApplicationContext(),"暂停计时",Toast.LENGTH_SHORT).show();
+            } else if (btStart.getText().equals("暂停计时")) {
+                Toast.makeText(getApplicationContext(), "暂停计时", Toast.LENGTH_SHORT).show();
                 btStart.setText("开始计时");
                 task.cancel();
                 task = null;
@@ -426,9 +454,8 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
                 timer.purge();
                 timer = null;
             }
-        }
-        else if(v.getId() == R.id.btStop){
-            Toast.makeText(getApplicationContext(),"已停止\n可拖动地图查看轨迹",Toast.LENGTH_SHORT).show();
+        } else if (v.getId() == R.id.btStop) {
+            Toast.makeText(getApplicationContext(), "已停止\n可拖动地图查看轨迹", Toast.LENGTH_SHORT).show();
 
             //取消定位
             mListener = null;
@@ -439,17 +466,17 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
             locationClient = null;
 
             //取消广播
-            if(null != alarmReceiver){
+            if (null != alarmReceiver) {
                 unregisterReceiver(alarmReceiver);
                 alarmReceiver = null;
             }
 
             //停止计时
-            if(task != null){
+            if (task != null) {
                 task.cancel();
                 task = null;
             }
-            if(timer != null){
+            if (timer != null) {
                 timer.cancel();
                 timer.purge();
                 timer = null;
@@ -462,53 +489,60 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
             //移动相机到合适位置
             CameraPosition cameraPosition;
             CameraUpdate cameraUpadate;
-            cameraPosition = new CameraPosition(new LatLng((latMax.latitude+latMax.latitude)/2
-                    ,(lonMax.longitude+lonMin.longitude)/2), 12.0f, 0.0f, 0.0f);
+            cameraPosition = new CameraPosition(new LatLng((latMax.latitude + latMax.latitude) / 2
+                    , (lonMax.longitude + lonMin.longitude) / 2), 12.0f, 0.0f, 0.0f);
             cameraUpadate = CameraUpdateFactory.newCameraPosition(cameraPosition);
             aMap.animateCamera(cameraUpadate);
 
             //计算平均速度
-            averSpeed = sum/times;
+            averSpeed = sum / times;
 
             //获取轨迹截图
             aMap.getMapScreenShot(this);
+
+
             /**
-             * 存入数据
+             * 弹出弹窗存入数据
              **/
-            SimpleDateFormat    sDateFormat    =   new SimpleDateFormat("yyyy-MM-dd    hh:mm:ss");
-            String    date    =    sDateFormat.format(new    java.util.Date());
-            String distance = tvDistance.getText().toString();
-            String time = tvShowTime.getText().toString();
-            String caloric = tvCaloric.getText().toString();
-            String steps = tvSteps.getText().toString();
-
             DatabaseHelper database = new DatabaseHelper(this);
-            SQLiteDatabase db = database.getReadableDatabase();
-            ContentValues cv= new ContentValues();
-            cv.put("name",Login.USER_NAME);
-            cv.put("date",date);
-            cv.put("distance",distance);
-            cv.put("time",time);
-            cv.put("theyCount",steps);
-            cv.put("energy",caloric);
-            cv.put("motionState","慢跑");
-            db.insert("usertb", null ,cv);
-            cv.clear();
-            Cursor cursor = db.query("usertb", null, "name like?", new String[]{Login.USER_NAME}, null, null, "name");
-            if(cursor!=null){
-                while(cursor.moveToNext()){
-                    //Map<String, Object> map = new HashMap<String, Object>();
-                    Log.i("info",cursor.getString(cursor.getColumnIndex("name")));
-                    Log.i("info",cursor.getString(cursor.getColumnIndex("date")));
-                    Log.i("info",cursor.getString(cursor.getColumnIndex("distance")));
-                    Log.i("info",cursor.getString(cursor.getColumnIndex("time")));
-                    Log.i("info",cursor.getString(cursor.getColumnIndex("theyCount")));
-                    Log.i("info",cursor.getString(cursor.getColumnIndex("energy")));
-                }
+            final SQLiteDatabase db = database.getReadableDatabase();
+            builder.setTitle("确认" ) ;
+            builder.setMessage("是否保存？" ) ;
+            builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
 
-            }
+                public void onClick(DialogInterface dialog, int which) {
+                    SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd    hh:mm:ss");
+                    String date = sDateFormat.format(new Date());
+                    String distance = tvDistance.getText().toString();
+                    String time = tvShowTime.getText().toString();
+                    String caloric = tvCaloric.getText().toString();
+                    String steps = tvSteps.getText().toString();
+
+
+
+                    ContentValues cv = new ContentValues();
+                    cv.put("name", Login.USER_NAME);
+                    cv.put("date", date);
+                    cv.put("distance", distance);
+                    cv.put("time", time);
+                    cv.put("theyCount", steps);
+                    cv.put("energy", caloric);
+                    cv.put("motionState", "慢跑");
+                    db.insert("usertb", null, cv);
+                    cv.clear();
+                }
+            } );
+            builder.setNegativeButton("否", null);
+            builder.show();
+
+
+
         }
     }
+
+
+
+
 
     @Override
     public void onMapScreenShot(Bitmap bitmap) {
@@ -528,5 +562,45 @@ public class map extends Activity implements LocationSource,AMap.OnMapScreenShot
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "map Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.example.vonlion.sliding_menu/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "map Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.example.vonlion.sliding_menu/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
     }
 }
