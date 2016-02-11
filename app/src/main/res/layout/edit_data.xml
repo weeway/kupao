@@ -44,12 +44,11 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:orientation="horizontal"
-            android:layout_marginTop="25dp">
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/edit_item_select"
-                android:onClick="change_alpha1"/>
+            android:layout_marginTop="25dp"
+            android:clickable="true"
+            android:background="@drawable/edit_item_select"
+            android:onClick="change_alpha1" >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,7 +59,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp" />
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
@@ -71,7 +70,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp" />
         </RelativeLayout>
 
 
@@ -85,12 +84,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:orientation="horizontal">
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/edit_item_select"
-                android:onClick="change_alpha2" />
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:background="@drawable/edit_item_select"
+            android:onClick="change_alpha2" >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -122,40 +119,54 @@
             android:layout_height="1px"
             android:background="#dfdfdf"/>
 
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#dfdfdf"/>
+
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#dfdfdf"/>
+
+
+
         <!--身高-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:orientation="horizontal"
-            android:background="#ffffff"
-            android:paddingLeft="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingRight="10dp"
-            android:layout_marginTop="15dp">
-
-        <TextView android:id="@+id/spinnerText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:layout_centerVertical="true"
-            android:textSize="17dp"></TextView>
-        <Spinner android:id="@+id/Spinner01"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            ></Spinner>
+            android:layout_marginTop="15dp"
+            android:clickable="true"
+            android:background="@drawable/edit_item_select"
+            android:onClick="change_alpha3">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="身高"
                 android:textColor="#000000"
-                android:textSize="15dp"
-                android:text="cm"
+                android:textSize="17dp"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:text="@string/height"
                 android:layout_alignParentRight="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="2dp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="3dp"
+                android:gravity="center"/>
         </RelativeLayout>
 
         <View
@@ -166,51 +177,50 @@
         <!--体重-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:orientation="horizontal"
-            android:background="#ffffff"
-            android:paddingLeft="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingRight="10dp">
-            <TextView android:id="@+id/spinnerText2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#000000"
-                android:layout_centerVertical="true"
-                android:textSize="17dp"></TextView>
-            <Spinner android:id="@+id/Spinner02"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"></Spinner>
+            android:clickable="true"
+            android:background="@drawable/edit_item_select"
+            android:onClick="change_alpha4">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="体重"
                 android:textColor="#000000"
-                android:textSize="15dp"
-                android:text="Kg"
+                android:textSize="17dp"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:text="@string/weight"
                 android:layout_alignParentRight="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="2dp"
-                android:layout_centerVertical="true"/>
-
+                android:layout_centerVertical="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="3dp"
+                android:gravity="center"/>
         </RelativeLayout>
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:background="#dfdfdf"/>
 
+
         <!--目标-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:orientation="horizontal">
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/edit_item_select" />
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:background="@drawable/edit_item_select"
+            android:onClick="change_alpha5">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -242,16 +252,16 @@
             android:background="#dfdfdf"/>
 
 
+
         <!--地区-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal"
-            android:layout_marginTop="15dp">
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/edit_item_select" />
+            android:layout_marginTop="15dp"
+            android:clickable="true"
+            android:background="@drawable/edit_item_select"
+            android:onClick="change_alpha6">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -287,11 +297,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:orientation="horizontal">
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/edit_item_select" />
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:background="@drawable/edit_item_select"
+            android:onClick="change_alpha7">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -307,7 +316,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
-                android:text="未填写"
+                android:text="@string/adress"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="5dp"
@@ -326,11 +335,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:orientation="horizontal">
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/edit_item_select" />
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:background="@drawable/edit_item_select"
+            android:onClick="change_alpha8">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -346,7 +354,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
-                android:text="未填写"
+                android:text="@string/mark"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="5dp"

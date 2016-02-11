@@ -9,9 +9,9 @@
     <!--<drawable name="sliding_menu_button1_pressed">#dd865b31</drawable>-->
     <string name="head_portrait">@drawable/head_portrait</string>
     <string name="height">180cm</string>
-    <string name="weight">140kg</string>
+    <string name="weight">70kg</string>
     <string name="BMI">20.8</string>
-    <string name="target">10000步</string>
+    <string name="target">10000 步</string>
     <string name="mydata1">188天</string>
     <string name="mydata2">31200步</string>
     <string name="mydata3">地球0.6圈</string>
@@ -25,4 +25,6 @@
     <string name="histroy_date2">14:24</string>
     <string name="white">#ffffff</string>
     <string name="location">浙江嘉兴</string>
+    <string name="adress">金都上品1-1-1</string>
+    <string name="mark">时间就是生命</string>
 </resources>
