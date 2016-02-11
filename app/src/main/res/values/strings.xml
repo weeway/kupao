@@ -19,6 +19,10 @@
     <string name="histroy_distance">0.26</string>
     <string name="histroy_time">4\'23\'\'</string>
     <string name="histroy_pace">12000</string>
+    <string name="histroy_speed">10km/h</string>
+    <string name="histroy_energy">0J</string>
     <string name="histroy_date1">2月3日</string>
     <string name="histroy_date2">14:24</string>
+    <string name="white">#ffffff</string>
+    <string name="location">浙江嘉兴</string>
 </resources>

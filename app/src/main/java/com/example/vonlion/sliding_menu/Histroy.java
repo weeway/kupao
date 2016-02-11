@@ -81,8 +81,17 @@ public class Histroy  extends Activity {
      * 跳转
      * @param v
      */
+//    返回主界面
     public void change_alpha(View v){
         Intent intent = new Intent(this,main_interface.class);
+
+        startActivity(intent);
+
+        overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
+    }
+
+    public void change_alpha1(View v){
+        Intent intent = new Intent(this,Histroy_chart.class);
 
         startActivity(intent);
 
