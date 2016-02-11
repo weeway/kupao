@@ -42,6 +42,7 @@
         <activity android:name=".Histroy"></activity>
         <activity android:name=".mydata"></activity>
         <activity android:name=".Login"></activity>
+        <activity android:name=".Edit_data"></activity>
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data

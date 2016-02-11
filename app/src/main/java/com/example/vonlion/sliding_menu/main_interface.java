@@ -24,8 +24,8 @@ public class main_interface extends Activity  {
         mLeftMenu.toggle();
     }
 
-    public void change_alpha(View v){//主界面返回登录界面
-        Intent intent = new Intent(this, MainActivity.class);
+    public void change_alpha(View v){//注销
+        Intent intent = new Intent(this, Login.class);
 
         startActivity(intent);
 

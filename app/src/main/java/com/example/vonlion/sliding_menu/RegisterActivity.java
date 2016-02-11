@@ -52,7 +52,7 @@ public class RegisterActivity extends Activity {
     }
 
     public void change_alpha(View v){//注册老用户返回登录界面
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, Login.class);
 
         startActivity(intent);
 

@@ -37,6 +37,14 @@ public class mydata extends Activity {
         overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
     }
 
+    public void change_alpha2(View v){
+        Intent intent = new Intent(this,Edit_data.class);
+
+        startActivity(intent);
+
+        overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
+    }
+
     public void storeData(){
         SharedPreferences.Editor mydataEditor = mydata.edit();
         mydataEditor.putString("weight",tvWeight.getText().toString()
