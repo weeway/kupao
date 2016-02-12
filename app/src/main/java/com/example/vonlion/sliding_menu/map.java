@@ -84,7 +84,12 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     private double averSpeed = 0;
     private double sum = 0;
     private int times = 0;
+    int firstPart1;
+    int secondPart1;
+    int firstPart2 ;
+    int secondPart2;
     private AlertDialog.Builder builder;
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -168,9 +173,9 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         if (length < 1000) {
             tvDistance.setText((int) length + "m");
         } else if (length >= 1000) {
-            int firstPart = (int) length / 1000;
-            int secondPart = ((int) length % 1000) / 100;
-            tvDistance.setText(firstPart + "." + secondPart + "km");
+            int firstPart1 = (int) length / 1000;
+            int secondPart1 = ((int) length % 1000) / 100;
+            tvDistance.setText(firstPart1 + "." + secondPart1 + "km");
         }
     }
 
@@ -189,9 +194,9 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         if (caloric < 1000) {
             tvCaloric.setText((int) caloric + "J");
         } else if (caloric >= 1000) {
-            int firstPart = (int) caloric / 1000;
-            int secondPart = ((int) caloric % 1000) / 100;
-            tvCaloric.setText(firstPart + "." + secondPart);
+            int firstPart2 = (int) caloric / 1000;
+            int secondPart2 = ((int) caloric % 1000) / 100;
+            tvCaloric.setText(firstPart2 + "." + secondPart2);
         }
 
     }
@@ -513,12 +518,12 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                 public void onClick(DialogInterface dialog, int which) {
                     SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd    hh:mm:ss");
                     String date = sDateFormat.format(new Date());
-                    String distance = tvDistance.getText().toString();
+                   /* String distance = tvDistance.getText().toString();*/
                     String time = tvShowTime.getText().toString();
-                    String caloric = tvCaloric.getText().toString();
+                    /*String caloric = tvCaloric.getText().toString();*/
                     String steps = tvSteps.getText().toString();
-
-
+                    String distance = Integer.toString(firstPart1)+"."+Integer.toString(secondPart1);
+                    String caloric = Integer.toString(firstPart2)+"."+Integer.toString(secondPart2);
 
                     ContentValues cv = new ContentValues();
                     cv.put("name", Login.USER_NAME);
