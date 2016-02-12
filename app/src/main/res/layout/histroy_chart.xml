@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ececec">
+    android:background="#d1d1d1">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -34,172 +34,228 @@
             android:layout_alignParentRight="true" />
     </RelativeLayout>
 
+
+    <!--轨迹图-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="#d4d4d4"
-        android:orientation="horizontal"
-        android:id="@+id/linearLayout2">
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/histroy_date1"
-            android:textColor="#5b5b5b"
-            android:layout_marginLeft="12dp"
-            android:textSize="12dp"
-            android:gravity="center"/>
+        android:layout_height="140dp"
+        android:background="#636363"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff"
-        android:layout_below="@+id/linearLayout2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-        <ImageView
-            android:id="@+id/img1"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="4dp"
-            android:src="@drawable/run"
-            android:layout_gravity="center"/>
-        <!--运动状态-->
-        <TextView
-            android:id="@+id/state"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="慢跑"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
-            android:textStyle="italic"
-            android:textColor="#000000"
-            android:layout_gravity="center"
-            android:textSize="14dp"/>
-
-        <TextView
-            android:id="@+id/distance"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/histroy_distance"
-            android:textColor="#000000"
-            android:gravity="center"
-            android:textSize="30dp"
-            android:textStyle="bold|italic"
-            android:layout_marginLeft="10dp"/>
-
-
-
-        <ImageView
-            android:id="@+id/img2"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/time"
-            android:layout_gravity="center"
-            android:layout_marginLeft="25dp"/>
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/histroy_time"
-            android:layout_gravity="center"
-            android:layout_marginLeft="3dp"
-            android:textColor="#000000"
-            android:textStyle="italic"
-            android:textSize="12dp" />
-
-        <ImageView
-            android:id="@+id/img3"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/pace"
-            android:layout_gravity="center"
-            android:layout_marginLeft="20dp"/>
-        <TextView
-            android:id="@+id/step"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/histroy_pace"
-            android:layout_gravity="center"
-            android:layout_marginLeft="3dp"
-            android:textColor="#000000"
-            android:textStyle="italic"
-            android:textSize="12dp" />
-
-    </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="#ffffff">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="击败了50%的用户"
+                android:textColor="#000000"
+                android:layout_centerVertical="true"
+                android:textSize="14dp"
+                android:layout_marginLeft="30dp"/>
+            <Button
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:text="查看"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="30dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/interface_main_button_color"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
         android:background="#ffffff"
-        android:layout_marginTop="10dp">
-
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_weight="7">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp">
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="speed:"
-            android:textColor="#000000"
-            android:gravity="center"
-            android:textSize="14dp"
-            android:layout_marginLeft="10dp"/>
-
-
-        <TextView
-            android:id="@+id/speed"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/histroy_speed"
-            android:textColor="#000000"
-            android:gravity="center"
-            android:textSize="14dp"
-            android:layout_marginLeft="10dp"/>
-
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="distence:"
-            android:textColor="#000000"
-            android:gravity="center"
-            android:textSize="14dp"
-            android:layout_marginLeft="10dp"/>
-
-
-        <TextView
-            android:id="@+id/distance1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/histroy_distance"
             android:textColor="#000000"
-            android:gravity="center"
-            android:textSize="14dp"
-            android:layout_marginLeft="10dp"/>
+            android:textSize="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:textStyle="bold|italic"
+            android:background="@drawable/distence_bg"
+            android:padding="15dp"
+            android:id="@+id/distance1"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="energy:"
-            android:textColor="#000000"
-            android:gravity="center"
-            android:textSize="14dp"
-            android:layout_marginLeft="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Km"
+                android:textColor="#000000"
+                android:textSize="25dp"
+                android:layout_alignBottom="@+id/distance1"
+                android:layout_toRightOf="@+id/distance1"
+                android:layout_marginLeft="3dp" />
+        </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_weight="8"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#8f8f8f"
+                android:text="速度 :"
+                android:textSize="16dp"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:text="@string/histroy_speed"
+                android:textSize="25dp"
+                android:id="@+id/speed"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="7dp"
+                android:textStyle="italic"
+                android:layout_marginLeft="70dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#363636"
+                    android:text="km/h"
+                    android:textSize="15dp"
+                    android:layout_alignBottom="@+id/speed"
+                    android:layout_toRightOf="@+id/speed" />
+
+                    <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="#c7c7c7"
+                    android:layout_alignParentBottom="true" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#8f8f8f"
+                        android:text="时间 :"
+                        android:textSize="16dp"
+                        android:layout_centerVertical="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000000"
+                        android:text="@string/histroy_time"
+                        android:textSize="25dp"
+                        android:id="@+id/time"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="7dp"
+                        android:textStyle="italic"
+                        android:layout_marginLeft="60dp"/>
 
 
-        <TextView
-            android:id="@+id/energy"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/histroy_energy"
-            android:textColor="#000000"
-            android:gravity="center"
-            android:textSize="14dp"
-            android:layout_marginLeft="10dp"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="#c7c7c7"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
+                </RelativeLayout>
+            </LinearLayout>
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#8f8f8f"
+                        android:text="能量 :"
+                        android:textSize="16dp"
+                        android:layout_centerVertical="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000000"
+                        android:text="@string/histroy_energy"
+                        android:textSize="25dp"
+                        android:id="@+id/energy"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="80dp"
+                        android:layout_marginRight="18dp"
+                        android:textStyle="italic"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#363636"
+                        android:text="kJ"
+                        android:textSize="15dp"
+                        android:layout_alignBottom="@+id/energy"
+                        android:layout_toRightOf="@+id/energy" />
+
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <!--图表-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:background="#636363"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
     </LinearLayout>
+
+
 
 
 </LinearLayout>
