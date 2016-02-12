@@ -3,7 +3,6 @@ package com.example.vonlion.sliding_menu;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
@@ -11,7 +10,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.location.Location;
@@ -20,7 +18,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -199,15 +196,16 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     //画轨迹
     public void drawTrace(AMapLocation loc) {
         //需要一个全局计数器cnt
-        if (loc.getAccuracy() < 10f) {
+        if (loc.getAccuracy() < 20f) {
             latLngs[cnt] = new LatLng(loc.getLatitude(), loc.getLongitude());
+
+            if (cnt == 2) {
+                drawArc(latLngs);
+                latLngs[0] = latLngs[2];
+                cnt = 0;
+            }
+            cnt++;
         }
-        if (cnt == 2) {
-            drawArc(latLngs);
-            latLngs[0] = latLngs[2];
-            cnt = 0;
-        }
-        cnt++;
     }
 
     //视图相机移动到当前位置
