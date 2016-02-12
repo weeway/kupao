@@ -170,13 +170,13 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
 
     //显示跑步距离
     public void displayDistance(double length) {
-        if (length < 1000) {
+       /* if (length < 1000) {
             tvDistance.setText((int) length + "m");
-        } else if (length >= 1000) {
+        } else if (length >= 1000) {*/
             int firstPart1 = (int) length / 1000;
             int secondPart1 = ((int) length % 1000) / 100;
             tvDistance.setText(firstPart1 + "." + secondPart1 + "km");
-        }
+        //}
     }
 
     //显示热量
@@ -191,13 +191,13 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
 
         tvCaloric = (TextView) findViewById(R.id.tvCaloric);
         double caloric = ((double) weight * (length / 1000) * 1.036);
-        if (caloric < 1000) {
+        /*if (caloric < 1000) {
             tvCaloric.setText((int) caloric + "J");
-        } else if (caloric >= 1000) {
+        } else if (caloric >= 1000) {*/
             int firstPart2 = (int) caloric / 1000;
             int secondPart2 = ((int) caloric % 1000) / 100;
-            tvCaloric.setText(firstPart2 + "." + secondPart2);
-        }
+            tvCaloric.setText(firstPart2 + "." + secondPart2+"KJ");
+        //}
 
     }
 
