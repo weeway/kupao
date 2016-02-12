@@ -213,7 +213,8 @@
                 android:id="@+id/id_img6_back"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/lm_button6_change"/>
+                android:background="@drawable/lm_button6_change"
+                android:onClick="change6"/>
 
             <ImageView
                 android:id="@+id/id_img6"

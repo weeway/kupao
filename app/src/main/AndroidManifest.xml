@@ -40,6 +40,7 @@
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".map"></activity>
         <activity android:name=".Histroy"></activity>
+        <activity android:name=".Histroy_chart"></activity>
         <activity android:name=".mydata"></activity>
         <activity android:name=".Login"></activity>
         <activity android:name=".Edit_data"></activity>
