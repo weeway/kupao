@@ -10,11 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="70dp">
 
-        <Button
+       <!-- <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffffff"
-            android:onClick="change_alpha1"/>
+            android:onClick="change_alpha1"/>-->
 
     <LinearLayout
         android:layout_width="match_parent"

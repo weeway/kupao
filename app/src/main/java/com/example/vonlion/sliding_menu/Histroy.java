@@ -9,9 +9,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +25,8 @@ import java.util.Map;
  */
 public class Histroy  extends Activity {
     Cursor cursor;
+    ListView listview;
+    static String DATE;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +41,21 @@ public class Histroy  extends Activity {
                 new int[]{R.id.date,R.id.img1,R.id.state,R.id.distance,R.id.img2,R.id.time,R.id.img3,R.id.step});
         list.setAdapter(adapter);
 
+        //设置跳转到历史主界面
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                ListView listView = (ListView)parent;
+                HashMap<String, String> map1 = (HashMap<String, String>) listView.getItemAtPosition(position);
+                DATE = map1.get("date");
+                Toast.makeText(Histroy.this.getApplicationContext(), DATE, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Histroy.this,Histroy_chart.class);
+                startActivity(intent);
+
+            }
+
+        });
 
 
 
@@ -76,11 +95,10 @@ public class Histroy  extends Activity {
     }
 
 
-
     /**
-     * 跳转
-     * @param v
-     */
+ * 跳转
+ * @param v
+ */
 //    返回主界面
     public void change_alpha(View v){
         Intent intent = new Intent(this,main_interface.class);
@@ -90,11 +108,12 @@ public class Histroy  extends Activity {
         overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
     }
 
-    public void change_alpha1(View v){
+   /* public void change_alpha1(View v){
+
         Intent intent = new Intent(this,Histroy_chart.class);
 
         startActivity(intent);
 
         overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
-    }
+    }*/
 }

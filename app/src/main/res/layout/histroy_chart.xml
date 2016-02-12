@@ -147,6 +147,7 @@
 
 
         <TextView
+            android:id="@+id/speed"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/histroy_speed"
@@ -156,6 +157,7 @@
             android:layout_marginLeft="10dp"/>
 
         <TextView
+
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="distence:"
@@ -166,6 +168,7 @@
 
 
         <TextView
+            android:id="@+id/distance1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/histroy_distance"
@@ -185,6 +188,7 @@
 
 
         <TextView
+            android:id="@+id/energy"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/histroy_energy"
