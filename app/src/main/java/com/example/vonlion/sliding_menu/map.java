@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.location.Location;
@@ -82,8 +83,12 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     private double averSpeed = 0;
     private double sum = 0;
     private int times = 0;
+    int firstPart1;
+    int secondPart1;
+    int firstPart2 ;
+    int secondPart2;
     private AlertDialog.Builder builder;
-
+    private int IdRecord = 0;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -103,7 +108,17 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         builder  = new AlertDialog.Builder(map.this);
 
-
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("IdRecord",IdRecord);
+        editor.commit();
+    }
+    //设置记录数据的次数标志
+    public void setStoreDataFlag(){
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("IdRecoid", IdRecord);
+        editor.commit();
     }
 
     //获取控件及设置监听
@@ -181,13 +196,13 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
 
     //显示跑步距离
     public void displayDistance(double length) {
-        if (length < 1000) {
+       /* if (length < 1000) {
             tvDistance.setText((int) length + "m");
-        } else if (length >= 1000) {
-            int firstPart = (int) length / 1000;
-            int secondPart = ((int) length % 1000) / 100;
-            tvDistance.setText(firstPart + "." + secondPart + "km");
-        }
+        } else if (length >= 1000) {*/
+            int firstPart1 = (int) length / 1000;
+            int secondPart1 = ((int) length % 1000) / 100;
+            tvDistance.setText(firstPart1 + "." + secondPart1 + "km");
+        //}
     }
 
     //显示热量
@@ -202,13 +217,13 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
 
         tvCaloric = (TextView) findViewById(R.id.tvCaloric);
         double caloric = ((double) weight * (length / 1000) * 1.036);
-        if (caloric < 1000) {
+        /*if (caloric < 1000) {
             tvCaloric.setText((int) caloric + "J");
-        } else if (caloric >= 1000) {
-            int firstPart = (int) caloric / 1000;
-            int secondPart = ((int) caloric % 1000) / 100;
-            tvCaloric.setText(firstPart + "." + secondPart);
-        }
+        } else if (caloric >= 1000) {*/
+            int firstPart2 = (int) caloric / 1000;
+            int secondPart2 = ((int) caloric % 1000) / 100;
+            tvCaloric.setText(firstPart2 + "." + secondPart2+"KJ");
+        //}
 
     }
 
@@ -527,10 +542,13 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                 public void onClick(DialogInterface dialog, int which) {
                     SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd    hh:mm:ss");
                     String date = sDateFormat.format(new Date());
-                    String distance = tvDistance.getText().toString();
+                   /* String distance = tvDistance.getText().toString();*/
                     String time = tvShowTime.getText().toString();
-                    String caloric = tvCaloric.getText().toString();
+                    /*String caloric = tvCaloric.getText().toString();*/
                     String steps = tvSteps.getText().toString();
+
+                    String distance = Integer.toString(firstPart1)+"."+Integer.toString(secondPart1);
+                    String caloric = Integer.toString(firstPart2)+"."+Integer.toString(secondPart2);
 
                     ContentValues cv = new ContentValues();
                     cv.put("name", Login.USER_NAME);

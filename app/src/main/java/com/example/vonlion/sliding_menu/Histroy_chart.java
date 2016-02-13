@@ -40,26 +40,26 @@ public class Histroy_chart extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.histroy_chart);
-        distance = (TextView)findViewById(R.id.distance);
-        date = (TextView)findViewById(R.id.date);
+//        distance = (TextView)findViewById(R.id.distance);
+//        date = (TextView)findViewById(R.id.date);
         distance1 = (TextView)findViewById(R.id.distance1);
         time= (TextView)findViewById(R.id.time);
         speed = (TextView)findViewById(R.id.speed);
-        state = (TextView)findViewById(R.id.state);
+//        state = (TextView)findViewById(R.id.state);
         energy = (TextView)findViewById(R.id.energy);
-        step = (TextView)findViewById(R.id.step);
+//        step = (TextView)findViewById(R.id.step);
         DatabaseHelper database = new DatabaseHelper(this);
         SQLiteDatabase db = database.getReadableDatabase();
         Cursor cursor = db.query("usertb", null, "date like?", new String[]{Histroy.DATE}, null, null, "date");
 
         if(cursor!=null){
             while(cursor.moveToNext()){
-                date.setText(cursor.getString(cursor.getColumnIndex("date")));
-                state.setText(cursor.getString(cursor.getColumnIndex("motionState")));
-                distance.setText(cursor.getString(cursor.getColumnIndex("distance")));
+//                date.setText(cursor.getString(cursor.getColumnIndex("date")));
+//                state.setText(cursor.getString(cursor.getColumnIndex("motionState")));
+//                distance.setText(cursor.getString(cursor.getColumnIndex("distance")));
                 distance1.setText(cursor.getString(cursor.getColumnIndex("distance")));
                 time.setText(cursor.getString(cursor.getColumnIndex("time")));
-                step.setText(cursor.getString(cursor.getColumnIndex("theyCount"))+"步");
+//                step.setText(cursor.getString(cursor.getColumnIndex("theyCount"))+"步");
                 energy.setText(cursor.getString(cursor.getColumnIndex("energy")));
                 Toast.makeText(Histroy_chart.this.getApplicationContext(), "123", Toast.LENGTH_SHORT).show();
             }
@@ -79,7 +79,7 @@ public class Histroy_chart extends Activity {
         data=new LineData(xVals,dataSet);
         lineChart.setData(data);
         lineChart.setDescription("公司年度利润");
-        lineChart.animateY(3000);
+        lineChart.animateXY(3000,3000);
     }
 
     public void putPointsInChart(){
