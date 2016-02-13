@@ -530,12 +530,10 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             aMap.animateCamera(cameraUpadate);
 
             //计算平均速度
-<<<<<<< HEAD
+
             averSpeed = (sum / times)*3.6;
 
-=======
-            averSpeed = sum / times;
->>>>>>> 97ad17b214a3602638530098eb348931568b8e69
+
             //获取轨迹截图
             aMap.getMapScreenShot(this);
 
