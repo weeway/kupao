@@ -49,7 +49,8 @@ public class Histroy_chart extends Activity {
                 time.setText(cursor.getString(cursor.getColumnIndex("time")));
 //                step.setText(cursor.getString(cursor.getColumnIndex("theyCount"))+"步");
                 energy.setText(cursor.getString(cursor.getColumnIndex("energy")));
-                Toast.makeText(Histroy_chart.this.getApplicationContext(), "123", Toast.LENGTH_SHORT).show();
+                speed.setText(cursor.getString(cursor.getColumnIndex("speed")));
+                //Toast.makeText(Histroy_chart.this.getApplicationContext(), "123", Toast.LENGTH_SHORT).show();
 
             }
         }

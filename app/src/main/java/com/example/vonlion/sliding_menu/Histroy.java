@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ParseException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,9 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,14 +64,7 @@ public class Histroy  extends Activity {
 
 
 
-        if(cursor!=null){
-            while(cursor.moveToNext()){
-                //Map<String, Object> map = new HashMap<String, Object>();
-                Log.i("info",cursor.getString(cursor.getColumnIndex("date")));
-                Log.i("info",cursor.getString(cursor.getColumnIndex("time")));
-            }
 
-        }
     }
 
     /**
@@ -81,8 +78,24 @@ public class Histroy  extends Activity {
             while(cursor.moveToNext()){
                 Map<String, Object> map = new HashMap<String, Object>();
                 map.put("date", cursor.getString(cursor.getColumnIndex("date")));
-                map.put("img1", R.drawable.run);
+                String value =  cursor.getString(cursor.getColumnIndex("date"));
+                if(value!=null) {
+                    if (value.equals("慢跑")) {
+                        map.put("img1", R.drawable.walk);
+                    } else if (value.equals("快跑")) {
+                        map.put("img1", R.drawable.run);
+                    } else if (value.equals("骑车")) {
+                        map.put("img1", R.drawable.ride);
+                    } else {
+                        map.put("img1", R.drawable.walk);
+
+                    }
+                }
+
+
+
                 map.put("state", cursor.getString(cursor.getColumnIndex("motionState")));
+
                 map.put("distance", cursor.getString(cursor.getColumnIndex("distance")));
                 map.put("img2", R.drawable.time);
                 map.put("time", cursor.getString(cursor.getColumnIndex("time")));
