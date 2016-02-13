@@ -1,8 +1,6 @@
 package com.example.vonlion.sliding_menu;
 
 import android.app.Activity;
-import android.app.ListActivity;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,7 +11,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -29,12 +26,19 @@ import java.util.Map;
  */
 public class Histroy  extends Activity {
     Cursor cursor;
+//    int IdRecord = 0;
     ListView listview;
     static String DATE;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.histroy);
+
+//        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPref.edit();
+//        editor.putInt("IdRecord",IdRecord);
+//        editor.commit();
+
         DatabaseHelper database = new DatabaseHelper(this);
         SQLiteDatabase db = database.getReadableDatabase();
         cursor = db.query("usertb", null, "name like?", new String[]{Login.USER_NAME}, null, null, "name");
@@ -56,14 +60,22 @@ public class Histroy  extends Activity {
                 Toast.makeText(Histroy.this.getApplicationContext(), DATE, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Histroy.this,Histroy_chart.class);
                 startActivity(intent);
-
             }
 
         });
 
+<<<<<<< HEAD
 
 
 
+=======
+        if(cursor!=null){
+            while(cursor.moveToNext()){
+                //Map<String, Object> map = new HashMap<String, Object>();
+                Log.i("info",cursor.getString(cursor.getColumnIndex("date")));
+                Log.i("info",cursor.getString(cursor.getColumnIndex("time")));
+            }
+>>>>>>> 97ad17b214a3602638530098eb348931568b8e69
 
     }
 

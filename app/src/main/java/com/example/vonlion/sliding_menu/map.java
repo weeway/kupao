@@ -3,7 +3,6 @@ package com.example.vonlion.sliding_menu;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
@@ -11,7 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.Cursor;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.location.Location;
@@ -20,7 +19,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -79,6 +77,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             latMin = new LatLng(0, 0), latMax = new LatLng(0, 0);
     private int flag = 0;
     private int totalSec = 0;
+    private int secForStoreChartData = 0;
     private double length = 0;
     private int cnt = 0;
     private double averSpeed = 0;
@@ -89,7 +88,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     int firstPart2 ;
     int secondPart2;
     private AlertDialog.Builder builder;
-
+    private int IdRecord = 0;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -109,7 +108,17 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         builder  = new AlertDialog.Builder(map.this);
 
-
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("IdRecord",IdRecord);
+        editor.commit();
+    }
+    //设置记录数据的次数标志
+    public void setStoreDataFlag(){
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("IdRecoid", IdRecord);
+        editor.commit();
     }
 
     //获取控件及设置监听
@@ -152,6 +161,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     Handler mHandler = new Handler() {
         public void dispatchMessage(Message msg) {
             AMapLocation loc = (AMapLocation) msg.obj;
+            secForStoreChartData++;
             // 显示系统小蓝点
             mListener.onLocationChanged(loc);
             displayDistance(length);
@@ -159,8 +169,24 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             displaySteps();
             drawTrace(loc);
             camMoveToCurPos(loc);
+            if(secForStoreChartData%(60*10) == 0){
+                storeChartData(loc);
+            }
         }
     };
+
+    //储存画图表所需的数据
+    public void storeChartData(AMapLocation loc){
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("hh:mm");
+        String date = sDateFormat.format(new java.util.Date());
+        DatabaseHelper database = new DatabaseHelper(this);
+        SQLiteDatabase db = database.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+                    cv.put("curspeed", String.valueOf(loc.getSpeed()));
+                    cv.put("curtime",date);
+                    db.insert("charttb", null, cv);
+                    cv.clear();
+    }
 
     //显示步数
     public void displaySteps() {
@@ -208,15 +234,16 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     //画轨迹
     public void drawTrace(AMapLocation loc) {
         //需要一个全局计数器cnt
-        if (loc.getAccuracy() < 10f) {
+        if (loc.getAccuracy() < 20f) {
             latLngs[cnt] = new LatLng(loc.getLatitude(), loc.getLongitude());
+
+            if (cnt == 2) {
+                drawArc(latLngs);
+                latLngs[0] = latLngs[2];
+                cnt = 0;
+            }
+            cnt++;
         }
-        if (cnt == 2) {
-            drawArc(latLngs);
-            latLngs[0] = latLngs[2];
-            cnt = 0;
-        }
-        cnt++;
     }
 
     //视图相机移动到当前位置
@@ -379,7 +406,6 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                     times++;
                 }
             }
-
         }
     }
 
@@ -504,11 +530,14 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             aMap.animateCamera(cameraUpadate);
 
             //计算平均速度
+<<<<<<< HEAD
             averSpeed = (sum / times)*3.6;
 
+=======
+            averSpeed = sum / times;
+>>>>>>> 97ad17b214a3602638530098eb348931568b8e69
             //获取轨迹截图
             aMap.getMapScreenShot(this);
-
 
             /**
              * 弹出弹窗存入数据
@@ -526,6 +555,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                     String time = tvShowTime.getText().toString();
                     /*String caloric = tvCaloric.getText().toString();*/
                     String steps = tvSteps.getText().toString();
+
                     String distance = Integer.toString(firstPart1)+"."+Integer.toString(secondPart1);
                     String caloric = Integer.toString(firstPart2)+"."+Integer.toString(secondPart2);
                     String state;
@@ -554,15 +584,8 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             } );
             builder.setNegativeButton("否", null);
             builder.show();
-
-
-
         }
     }
-
-
-
-
 
     @Override
     public void onMapScreenShot(Bitmap bitmap) {
