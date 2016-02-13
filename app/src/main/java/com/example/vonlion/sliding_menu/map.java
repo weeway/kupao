@@ -76,12 +76,14 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             latMin = new LatLng(0, 0), latMax = new LatLng(0, 0);
     private int flag = 0;
     private int totalSec = 0;
+    private int secForStoreChartData = 0;
     private double length = 0;
     private int cnt = 0;
     private double averSpeed = 0;
     private double sum = 0;
     private int times = 0;
     private AlertDialog.Builder builder;
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -144,6 +146,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     Handler mHandler = new Handler() {
         public void dispatchMessage(Message msg) {
             AMapLocation loc = (AMapLocation) msg.obj;
+            secForStoreChartData++;
             // 显示系统小蓝点
             mListener.onLocationChanged(loc);
             displayDistance(length);
@@ -151,8 +154,24 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             displaySteps();
             drawTrace(loc);
             camMoveToCurPos(loc);
+            if(secForStoreChartData%(60*10) == 0){
+                storeChartData(loc);
+            }
         }
     };
+
+    //储存画图表所需的数据
+    public void storeChartData(AMapLocation loc){
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("hh:mm");
+        String date = sDateFormat.format(new java.util.Date());
+        DatabaseHelper database = new DatabaseHelper(this);
+        SQLiteDatabase db = database.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+                    cv.put("curspeed", String.valueOf(loc.getSpeed()));
+                    cv.put("curtime",date);
+                    db.insert("charttb", null, cv);
+                    cv.clear();
+    }
 
     //显示步数
     public void displaySteps() {
@@ -368,7 +387,6 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                     times++;
                 }
             }
-
         }
     }
 
@@ -494,10 +512,8 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
 
             //计算平均速度
             averSpeed = sum / times;
-
             //获取轨迹截图
             aMap.getMapScreenShot(this);
-
 
             /**
              * 弹出弹窗存入数据
@@ -516,8 +532,6 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                     String caloric = tvCaloric.getText().toString();
                     String steps = tvSteps.getText().toString();
 
-
-
                     ContentValues cv = new ContentValues();
                     cv.put("name", Login.USER_NAME);
                     cv.put("date", date);
@@ -532,15 +546,8 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             } );
             builder.setNegativeButton("否", null);
             builder.show();
-
-
-
         }
     }
-
-
-
-
 
     @Override
     public void onMapScreenShot(Bitmap bitmap) {

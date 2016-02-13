@@ -9,8 +9,14 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Vonlion on 2016/2/11.
@@ -24,6 +30,12 @@ public class Histroy_chart extends Activity {
     private TextView energy;
     private TextView state;
     private TextView speed;
+    private LineData data;
+    private ArrayList<String> xVals;
+    private LineDataSet dataSet;
+    private ArrayList<Entry> yVals;
+    private Random random;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,9 +62,28 @@ public class Histroy_chart extends Activity {
                 step.setText(cursor.getString(cursor.getColumnIndex("theyCount"))+"步");
                 energy.setText(cursor.getString(cursor.getColumnIndex("energy")));
                 Toast.makeText(Histroy_chart.this.getApplicationContext(), "123", Toast.LENGTH_SHORT).show();
-
             }
         }
+
+        LineChart lineChart = (LineChart)findViewById(R.id.lineChart);
+        xVals=new ArrayList<>();
+        yVals=new ArrayList<>();
+        random=new Random();
+        for(int i=0;i<12;i++){
+            float profix=random.nextFloat();
+            yVals.add(new Entry(profix,i));
+            xVals.add((i+1)+"月");
+        }
+        dataSet=new LineDataSet(yVals,"公司年度利润");
+        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        data=new LineData(xVals,dataSet);
+        lineChart.setData(data);
+        lineChart.setDescription("公司年度利润");
+        lineChart.animateY(3000);
+    }
+
+    public void putPointsInChart(){
+
     }
 
     public void change_alpha(View v){

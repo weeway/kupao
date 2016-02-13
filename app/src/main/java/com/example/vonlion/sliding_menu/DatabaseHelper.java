@@ -29,7 +29,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "motionState text,"
                 + "position text"
                 + ");";
+        String sqlChart = "create table if not exists charttb(_id integer primary key autoincrement,"
+                + "curspeed text,"
+                + "curtime text"
+                + ");";
         db.execSQL(sql);
+        db.execSQL(sqlChart);
     }
 
 
