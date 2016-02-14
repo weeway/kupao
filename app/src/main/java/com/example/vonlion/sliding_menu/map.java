@@ -195,13 +195,15 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
 
     //显示跑步距离
     public void displayDistance(double length) {
-       /* if (length < 1000) {
+        if (length < 1000) {
             tvDistance.setText((int) length + "m");
-        } else if (length >= 1000) {*/
-            int firstPart1 = (int) length / 1000;
-            int secondPart1 = ((int) length % 1000) / 100;
+            firstPart1 = (int) length / 1000;
+            secondPart1 = ((int) length % 1000) / 100;
+        } else if (length >= 1000) {
+             firstPart1 = (int) length / 1000;
+             secondPart1 = ((int) length % 1000) / 100;
             tvDistance.setText(firstPart1 + "." + secondPart1 + "km");
-        //}
+        }
     }
 
     //显示热量
@@ -216,13 +218,15 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
 
         tvCaloric = (TextView) findViewById(R.id.tvCaloric);
         double caloric = ((double) weight * (length / 1000) * 1.036);
-        /*if (caloric < 1000) {
+        if (caloric < 1000) {
             tvCaloric.setText((int) caloric + "J");
-        } else if (caloric >= 1000) {*/
-            int firstPart2 = (int) caloric / 1000;
-            int secondPart2 = ((int) caloric % 1000) / 100;
+            firstPart2 = (int) caloric / 1000;
+            secondPart2 = ((int) caloric % 1000) / 100;
+        } else if (caloric >= 1000) {
+             firstPart2 = (int) caloric / 1000;
+             secondPart2 = ((int) caloric % 1000) / 100;
             tvCaloric.setText(firstPart2 + "." + secondPart2+"KJ");
-        //}
+        }
 
     }
 
@@ -440,9 +444,9 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         public void handleMessage(Message msg) {
             totalSec++;
 
-            int min = totalSec / 60;
-            int sec = totalSec % 60;
-            int hour = min / 60;
+             int min = totalSec / 60;
+             int sec = totalSec % 60;
+             int hour = min / 60;
             min = min % 60;
             tvShowTime.setText(String.format(
                     "%1$02d:%2$02d:%3$02d", hour, min, sec
@@ -525,7 +529,10 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             aMap.animateCamera(cameraUpadate);
 
             //计算平均速度
-            averSpeed = sum / times;
+
+            averSpeed = (sum / times)*3.6;
+
+
             //获取轨迹截图
             aMap.getMapScreenShot(this);
 
@@ -548,15 +555,26 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
 
                     String distance = Integer.toString(firstPart1)+"."+Integer.toString(secondPart1);
                     String caloric = Integer.toString(firstPart2)+"."+Integer.toString(secondPart2);
-
+                    String state;
+                    if(averSpeed <=9){
+                         state = "慢跑";
+                    }
+                    else if(averSpeed >9&&averSpeed
+                            <=12){
+                         state = "快跑";
+                    }
+                    else{
+                         state = "骑车";
+                    }
                     ContentValues cv = new ContentValues();
                     cv.put("name", Login.USER_NAME);
+                    cv.put("speed",String.format("%.2f",averSpeed));
                     cv.put("date", date);
                     cv.put("distance", distance);
                     cv.put("time", time);
                     cv.put("theyCount", steps);
                     cv.put("energy", caloric);
-                    cv.put("motionState", "慢跑");
+                    cv.put("motionState", state);
                     db.insert("usertb", null, cv);
                     cv.clear();
                 }
