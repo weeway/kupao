@@ -57,7 +57,6 @@ public class Histroy  extends Activity {
                 Intent intent = new Intent(Histroy.this,Histroy_chart.class);
                 startActivity(intent);
             }
-
         });
 
         if(cursor!=null){
@@ -66,7 +65,6 @@ public class Histroy  extends Activity {
                 Log.i("info",cursor.getString(cursor.getColumnIndex("date")));
                 Log.i("info",cursor.getString(cursor.getColumnIndex("time")));
             }
-
         }
     }
 

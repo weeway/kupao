@@ -29,14 +29,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "motionState text,"
                 + "position text"
                 + ");";
+        db.execSQL(sql);
         String sqlChart = "create table if not exists charttb(_id integer primary key autoincrement,"
+                + "username text,"
+                + "starttime text,"
                 + "curspeed text,"
                 + "curtime text"
                 + ");";
-        db.execSQL(sql);
         db.execSQL(sqlChart);
     }
-
 
     public void onUpgrade(SQLiteDatabase arg0, int oldversion, int newversion) {
         // TODO Auto-generated method stub

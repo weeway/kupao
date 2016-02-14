@@ -88,7 +88,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     int firstPart2 ;
     int secondPart2;
     private AlertDialog.Builder builder;
-    private int IdRecord = 0;
+    private String starttime;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -108,16 +108,12 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         builder  = new AlertDialog.Builder(map.this);
 
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        starttime = sDateFormat.format(new java.util.Date());
+
+        SharedPreferences sharedPref = getSharedPreferences("startTimeFlag",0);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("IdRecord",IdRecord);
-        editor.commit();
-    }
-    //设置记录数据的次数标志
-    public void setStoreDataFlag(){
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("IdRecoid", IdRecord);
+        editor.putString("starttime",starttime);
         editor.commit();
     }
 
@@ -169,8 +165,9 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             displaySteps();
             drawTrace(loc);
             camMoveToCurPos(loc);
-            if(secForStoreChartData%(60*10) == 0){
+            if(secForStoreChartData%(10) == 0){
                 storeChartData(loc);
+                Toast.makeText(getApplicationContext(),"保存数据",Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -184,6 +181,8 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         ContentValues cv = new ContentValues();
                     cv.put("curspeed", String.valueOf(loc.getSpeed()));
                     cv.put("curtime",date);
+                    cv.put("starttime",starttime);
+                    cv.put("username",Login.USER_NAME);
                     db.insert("charttb", null, cv);
                     cv.clear();
     }

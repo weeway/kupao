@@ -2,9 +2,11 @@ package com.example.vonlion.sliding_menu;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,26 +66,52 @@ public class Histroy_chart extends Activity {
                 Toast.makeText(Histroy_chart.this.getApplicationContext(), "123", Toast.LENGTH_SHORT).show();
             }
         }
+        db.close();
+
+//        LineChart lineChart = (LineChart)findViewById(R.id.lineChart);
+//        xVals=new ArrayList<>();
+//        yVals=new ArrayList<>();
+//        random=new Random();
+//        for(int i=0;i<12;i++){
+//            float profix=random.nextFloat();
+//            yVals.add(new Entry(profix,i));
+//            xVals.add((i+1)+"月");
+//        }
+//        dataSet=new LineDataSet(yVals,"公司年度利润");
+//        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+//        data=new LineData(xVals,dataSet);
+//        lineChart.setData(data);
+//        lineChart.setDescription("公司年度利润");
+//        lineChart.animateXY(3000,3000);
+    }
+
+    public void putPointsInChart(){
+        SharedPreferences sharedPref = getSharedPreferences("startTimeFlag",0);
+        String starttime = sharedPref.getString("starttime","2016-02-23 20:07");
+        DatabaseHelper database = new DatabaseHelper(this);
+        SQLiteDatabase db = database.getReadableDatabase();
+        Cursor cursor = db.query("charttb", null, "starttime like?", new String[]{starttime}, null, null, "starttime");
 
         LineChart lineChart = (LineChart)findViewById(R.id.lineChart);
         xVals=new ArrayList<>();
         yVals=new ArrayList<>();
-        random=new Random();
-        for(int i=0;i<12;i++){
-            float profix=random.nextFloat();
-            yVals.add(new Entry(profix,i));
-            xVals.add((i+1)+"月");
+
+        int i = 0;
+        if(cursor!=null){
+            while (cursor.moveToNext()){
+                yVals.add(new Entry(cursor.getFloat(cursor.getColumnIndex("curspeed")),i));
+                xVals.add(cursor.getString(cursor.getColumnIndex("curtime")));
+                i++;
+                Log.i("DB",cursor.getString(cursor.getColumnIndex("curspeed")));
+                Log.i("DB",cursor.getString(cursor.getColumnIndex("curtime")));
+            }
         }
-        dataSet=new LineDataSet(yVals,"公司年度利润");
+        dataSet=new LineDataSet(yVals,"运动数据");
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         data=new LineData(xVals,dataSet);
         lineChart.setData(data);
         lineChart.setDescription("公司年度利润");
         lineChart.animateXY(3000,3000);
-    }
-
-    public void putPointsInChart(){
-
     }
 
     public void change_alpha(View v){
