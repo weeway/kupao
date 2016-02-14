@@ -63,17 +63,12 @@ public class Histroy_chart extends Activity {
                 time.setText(cursor.getString(cursor.getColumnIndex("time")));
 //                step.setText(cursor.getString(cursor.getColumnIndex("theyCount"))+"步");
                 energy.setText(cursor.getString(cursor.getColumnIndex("energy")));
-//<<<<<<< HEAD
                 speed.setText(cursor.getString(cursor.getColumnIndex("speed")));
                 //Toast.makeText(Histroy_chart.this.getApplicationContext(), "123", Toast.LENGTH_SHORT).show();
-
-//=======
-                Toast.makeText(Histroy_chart.this.getApplicationContext(), "123", Toast.LENGTH_SHORT).show();
-//>>>>>>> 97ad17b214a3602638530098eb348931568b8e69
             }
         }
         db.close();
-
+        putPointsInChart();
 //        LineChart lineChart = (LineChart)findViewById(R.id.lineChart);
 //        xVals=new ArrayList<>();
 //        yVals=new ArrayList<>();
@@ -112,11 +107,12 @@ public class Histroy_chart extends Activity {
                 Log.i("DB",cursor.getString(cursor.getColumnIndex("curtime")));
             }
         }
+        Toast.makeText(getApplicationContext(),i+"",Toast.LENGTH_LONG).show();
         dataSet=new LineDataSet(yVals,"运动数据");
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         data=new LineData(xVals,dataSet);
         lineChart.setData(data);
-        lineChart.setDescription("公司年度利润");
+        lineChart.setDescription("运动数据");
         lineChart.animateXY(3000,3000);
     }
 

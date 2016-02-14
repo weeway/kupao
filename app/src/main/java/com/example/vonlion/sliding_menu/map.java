@@ -147,7 +147,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         filter.addAction("LOCATION");
         registerReceiver(alarmReceiver, filter);
 
-        int alarmInterval = 5;
+        int alarmInterval = 2;
         if (alarm != null) {
             alarm.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 2 * 1000,
                     alarmInterval * 1000, alarmPi);
@@ -165,7 +165,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             displaySteps();
             drawTrace(loc);
             camMoveToCurPos(loc);
-            if(secForStoreChartData%(10) == 0){
+            if(secForStoreChartData%(5*60) == 0){
                 storeChartData(loc);
                 Toast.makeText(getApplicationContext(),"保存数据",Toast.LENGTH_SHORT).show();
             }

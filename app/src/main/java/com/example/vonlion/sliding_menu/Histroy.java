@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.ParseException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,9 +12,6 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,7 +59,6 @@ public class Histroy  extends Activity {
             }
         });
 
-<<<<<<< HEAD
         if(cursor!=null){
             while(cursor.moveToNext()){
                 //Map<String, Object> map = new HashMap<String, Object>();
@@ -71,9 +66,6 @@ public class Histroy  extends Activity {
                 Log.i("info",cursor.getString(cursor.getColumnIndex("time")));
             }
         }
-=======
-
->>>>>>> 9062ebc2204d2f8d416df70be4d097bad0f66ba8
     }
 
 
