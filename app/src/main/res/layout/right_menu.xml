@@ -85,6 +85,8 @@
             android:id="@+id/mapInRightMenu"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+        </com.amap.api.maps.MapView>
         <Button
             android:layout_width="75dp"
             android:layout_height="75dp"
@@ -95,13 +97,13 @@
             android:layout_toLeftOf="@+id/button" />
 
         <Button
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:text="开始跑步"
-        android:id="@+id/button"
-        android:textSize="20dp"
-        android:onClick="change_alpha2"
-        android:background="@drawable/interface_main_button_color"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:text="开始跑步"
+            android:id="@+id/button"
+            android:textSize="20dp"
+            android:onClick="change_alpha2"
+            android:background="@drawable/interface_main_button_color"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
 
@@ -111,7 +113,8 @@
             android:text="历史记录"
             android:background="@drawable/interface_main_button_color"
             android:textSize="12dp"
-            android:onClick="change_alpha3"/>
-        </com.amap.api.maps.MapView>
+            android:onClick="change_alpha3"
+            android:layout_below="@+id/button"
+            android:layout_toRightOf="@+id/button" />
     </RelativeLayout>
 </LinearLayout>
