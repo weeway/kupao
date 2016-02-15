@@ -54,13 +54,13 @@ public class Histroy  extends Activity {
             }
         });
 
-        if(cursor!=null){
+       /* if(cursor!=null){
             while(cursor.moveToNext()){
                 //Map<String, Object> map = new HashMap<String, Object>();
                 Log.i("info",cursor.getString(cursor.getColumnIndex("date")));
                 Log.i("info",cursor.getString(cursor.getColumnIndex("time")));
             }
-        }
+        }*/
     }
 
     /**
@@ -70,7 +70,7 @@ public class Histroy  extends Activity {
     private List<Map<String,Object>> getData() {
 
         List<Map<String, Object>> list1 = new ArrayList<Map<String, Object>>();
-        if(cursor!=null){
+        if(cursor.moveToFirst()){
             while(cursor.moveToNext()){
                 Map<String, Object> map = new HashMap<String, Object>();
                 map.put("date", cursor.getString(cursor.getColumnIndex("date")));
