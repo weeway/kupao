@@ -6,13 +6,15 @@
     >
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@drawable/rm_bg">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="#50b5e4">
+            android:layout_height="40dp"
+            android:background="#50b5e4">
+            <Button
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:onClick="toggleMenu"
+                android:layout_margin="3dp"
+                android:background="@drawable/img_menu"
+                android:id="@+id/button2" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -20,14 +22,26 @@
                     android:text="主页"
                     android:textColor="#ffffff"
                     android:textSize="16dp"/>
-            </LinearLayout>
-            <Button
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:onClick="toggleMenu"
-               android:layout_margin="3dp"
-                android:background="@drawable/img_menu"
-                android:id="@+id/button2" />
+        </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.amap.api.maps.MapView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/mapInRightMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </com.amap.api.maps.MapView>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:background="#aa000000"
+            android:id="@+id/rm_r1">
 
             <ImageView
                 android:layout_width="80dp"
@@ -35,8 +49,10 @@
                 android:src="@drawable/head_portrait"
                 android:background="@drawable/right_menu_img"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/button2"
-                android:layout_toEndOf="@+id/button2"/>
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,45 +64,12 @@
                 android:id="@+id/textView2"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
-            </RelativeLayout>
+        </RelativeLayout>
 
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <!--<View-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="2px"-->
-            <!--android:layout_gravity="center_horizontal"-->
-            <!--android:background="#00c7c1c1"-->
-            <!--android:layout_weight="5"-->
-            <!--android:layout_margin="0dp"/>-->
-
-        <View
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_gravity="center_horizontal"
-            android:background="#4fa4d9"
-            android:layout_weight="2"
-            android:layout_margin="0dp"/>
-    </LinearLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:background="#dfdfdf">
-        <com.amap.api.maps.MapView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/mapInRightMenu"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </com.amap.api.maps.MapView>
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rm_r1">
         <Button
             android:layout_width="75dp"
             android:layout_height="75dp"
@@ -116,5 +99,6 @@
             android:onClick="change_alpha3"
             android:layout_below="@+id/button"
             android:layout_toRightOf="@+id/button" />
+        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>
