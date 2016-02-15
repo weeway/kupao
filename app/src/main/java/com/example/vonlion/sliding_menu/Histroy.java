@@ -2,6 +2,7 @@ package com.example.vonlion.sliding_menu;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ public class Histroy  extends Activity {
 //    int IdRecord = 0;
     ListView listview;
     static String DATE;
+    String USER_NAME;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +34,14 @@ public class Histroy  extends Activity {
 
         DatabaseHelper database = new DatabaseHelper(this);
         SQLiteDatabase db = database.getReadableDatabase();
-        cursor = db.query("usertb", null, "name like?", new String[]{Login.USER_NAME}, null, null, "name");
-
+        SharedPreferences share = getSharedPreferences("User_date",map.MODE_PRIVATE);
+        USER_NAME =share.getString("username", "");
+        if(USER_NAME!=null) {
+            cursor = db.query("usertb", null, "name like?", new String[]{USER_NAME}, null, null, "name");
+        }
+        else {
+            Toast.makeText(Histroy.this.getApplicationContext(), "USER_NAME为空", Toast.LENGTH_SHORT).show();
+        }
         ListView list = (ListView) findViewById(R.id.ListView01);
         SimpleAdapter adapter = new SimpleAdapter(this, getData(), R.layout.historyitem,
                 new String[]{"date", "img1", "state", "distance", "img2", "time", "img3", "step"},
@@ -70,30 +78,37 @@ public class Histroy  extends Activity {
     private List<Map<String,Object>> getData() {
 
         List<Map<String, Object>> list1 = new ArrayList<Map<String, Object>>();
-        if(cursor.moveToFirst()){
-            while(cursor.moveToNext()){
-                Map<String, Object> map = new HashMap<String, Object>();
-                map.put("date", cursor.getString(cursor.getColumnIndex("date")));
-                String value =  cursor.getString(cursor.getColumnIndex("date"));
-                if(value!=null) {
-                    if (value.equals("慢跑")) {
-                        map.put("img1", R.drawable.walk);
-                    } else if (value.equals("快跑")) {
-                        map.put("img1", R.drawable.run);
-                    } else if (value.equals("骑车")) {
-                        map.put("img1", R.drawable.ride);
-                    } else {
-                        map.put("img1", R.drawable.walk);
+
+        if(USER_NAME!=null) {
+            if (cursor.moveToFirst()) {
+                while (cursor.moveToNext()) {
+                    Map<String, Object> map = new HashMap<String, Object>();
+                    map.put("date", cursor.getString(cursor.getColumnIndex("date")));
+                    String value = cursor.getString(cursor.getColumnIndex("motionState"));
+                    if (value != null) {
+                        if (value.equals("慢跑")) {
+                            map.put("img1", R.drawable.walk);
+                        } else if (value.equals("快跑")) {
+                            map.put("img1", R.drawable.run);
+                        } else if (value.equals("骑车")) {
+                            map.put("img1", R.drawable.ride);
+                        } else {
+                            map.put("img1", R.drawable.walk);
+
+                        }
                     }
+
+
+                    //map.put("state", cursor.getString(cursor.getColumnIndex("motionState")));
+                    map.put("state",value);
+                    map.put("distance", cursor.getString(cursor.getColumnIndex("distance")));
+                    map.put("img2", R.drawable.time);
+                    map.put("time", cursor.getString(cursor.getColumnIndex("time")));
+                    map.put("img3", R.drawable.pace);
+                    map.put("step", cursor.getString(cursor.getColumnIndex("theyCount")) + "步");
+                    list1.add(map);
                 }
 
-                map.put("state", cursor.getString(cursor.getColumnIndex("motionState")));
-                map.put("distance", cursor.getString(cursor.getColumnIndex("distance")));
-                map.put("img2", R.drawable.time);
-                map.put("time", cursor.getString(cursor.getColumnIndex("time")));
-                map.put("img3", R.drawable.pace);
-                map.put("step", cursor.getString(cursor.getColumnIndex("theyCount"))+"步");
-                list1.add(map);
             }
         }
         return list1;
