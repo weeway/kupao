@@ -3,6 +3,7 @@ package com.example.vonlion.sliding_menu;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ParseException;
 import android.os.Bundle;
 import android.os.Looper;
@@ -26,7 +27,7 @@ public class Login extends Activity {
     private EditText password;
     String msg="pp";
     private SlidingMenu mLeftMenu;
-    public  static String  USER_NAME;
+    //public  static String  USER_NAME;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +84,14 @@ public class Login extends Activity {
                 Looper.prepare();
                 Toast.makeText(Login.this.getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
                 if(msg.equals("登陆成功")){
-                    USER_NAME = name;
+                   // USER_NAME = name;
+
+                   //将用户名用SharedPreferences存储
+                    SharedPreferences sharedPreferences = getSharedPreferences("User_date",Login.MODE_PRIVATE); //私有数据
+                    SharedPreferences.Editor editor = sharedPreferences.edit();//获取编辑器
+                    editor.putString("username",name);
+                    editor.commit();//提交修改
+
                     startActivity(intent);
 
                     overridePendingTransition(R.anim.lefttoright, R.anim.righttoleft);
