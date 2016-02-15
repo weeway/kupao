@@ -583,13 +583,10 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                     }
 //                    SharedPreferences sharedPref = getSharedPreferences("startTimeFlag",0);
                     ContentValues cv = new ContentValues();
-<<<<<<< HEAD
                     cv.put("name", Login.USER_NAME);
                     cv.put("speed", String.format("%.2f", averSpeed));
-=======
                     cv.put("name", USER_NAME);
                     cv.put("speed",String.format("%.2f",averSpeed));
->>>>>>> de3838db50639aeb2de951f2ace6d76dff883b5e
                     cv.put("date", starttime);
                     cv.put("distance", distance);
                     cv.put("time", time);
