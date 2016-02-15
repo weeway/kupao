@@ -2,7 +2,6 @@ package com.example.vonlion.sliding_menu;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by Vonlion on 2016/2/11.
@@ -36,12 +34,14 @@ public class Histroy_chart extends Activity {
     private ArrayList<String> xVals;
     private LineDataSet dataSet;
     private ArrayList<Entry> yVals;
-    private Random random;
+    private String starttime;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.histroy_chart);
+        Intent intent = getIntent();
+        starttime = intent.getStringExtra("date");
 //        distance = (TextView)findViewById(R.id.distance);
 //        date = (TextView)findViewById(R.id.date);
         distance1 = (TextView)findViewById(R.id.distance1);
@@ -69,26 +69,9 @@ public class Histroy_chart extends Activity {
         }
         db.close();
         putPointsInChart();
-//        LineChart lineChart = (LineChart)findViewById(R.id.lineChart);
-//        xVals=new ArrayList<>();
-//        yVals=new ArrayList<>();
-//        random=new Random();
-//        for(int i=0;i<12;i++){
-//            float profix=random.nextFloat();
-//            yVals.add(new Entry(profix,i));
-//            xVals.add((i+1)+"月");
-//        }
-//        dataSet=new LineDataSet(yVals,"公司年度利润");
-//        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-//        data=new LineData(xVals,dataSet);
-//        lineChart.setData(data);
-//        lineChart.setDescription("公司年度利润");
-//        lineChart.animateXY(3000,3000);
     }
 
     public void putPointsInChart(){
-        SharedPreferences sharedPref = getSharedPreferences("startTimeFlag",0);
-        String starttime = sharedPref.getString("starttime","2016-02-23 20:07");
         DatabaseHelper database = new DatabaseHelper(this);
         SQLiteDatabase db = database.getReadableDatabase();
         Cursor cursor = db.query("charttb", null, "starttime like?", new String[]{starttime}, null, null, "starttime");

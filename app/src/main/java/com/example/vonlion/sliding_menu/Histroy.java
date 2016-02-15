@@ -30,11 +30,6 @@ public class Histroy  extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.histroy);
 
-//        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPref.edit();
-//        editor.putInt("IdRecord",IdRecord);
-//        editor.commit();
-
         DatabaseHelper database = new DatabaseHelper(this);
         SQLiteDatabase db = database.getReadableDatabase();
         cursor = db.query("usertb", null, "name like?", new String[]{Login.USER_NAME}, null, null, "name");
@@ -47,7 +42,6 @@ public class Histroy  extends Activity {
 
         //设置跳转到历史主界面
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 ListView listView = (ListView) parent;
@@ -55,6 +49,7 @@ public class Histroy  extends Activity {
                 DATE = map1.get("date");
                 Toast.makeText(Histroy.this.getApplicationContext(), DATE, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Histroy.this, Histroy_chart.class);
+                intent.putExtra("date",DATE);
                 startActivity(intent);
             }
         });
@@ -67,9 +62,6 @@ public class Histroy  extends Activity {
             }
         }
     }
-
-
-
 
     /**
      * 获取数据
@@ -92,14 +84,10 @@ public class Histroy  extends Activity {
                         map.put("img1", R.drawable.ride);
                     } else {
                         map.put("img1", R.drawable.walk);
-
                     }
                 }
 
-
-
                 map.put("state", cursor.getString(cursor.getColumnIndex("motionState")));
-
                 map.put("distance", cursor.getString(cursor.getColumnIndex("distance")));
                 map.put("img2", R.drawable.time);
                 map.put("time", cursor.getString(cursor.getColumnIndex("time")));
@@ -111,11 +99,10 @@ public class Histroy  extends Activity {
         return list1;
     }
 
-
     /**
- * 跳转
- * @param
- */
+    * 跳转
+    * @param
+    */
 //    返回主界面
     public void change_alpha(View v){
         Intent intent = new Intent(this,main_interface.class);
