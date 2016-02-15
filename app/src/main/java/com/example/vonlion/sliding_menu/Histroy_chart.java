@@ -44,7 +44,7 @@ public class Histroy_chart extends Activity {
         energy = (TextView)findViewById(R.id.energy);
         DatabaseHelper database = new DatabaseHelper(this);
         SQLiteDatabase db = database.getReadableDatabase();
-        Cursor cursor = db.query("usertb", null, "date like?", new String[]{Histroy.DATE}, null, null, "date");
+        Cursor cursor = db.query("usertb", null, "date like?", new String[]{starttime}, null, null, "date");
 
         if(cursor!=null){
             while(cursor.moveToNext()){

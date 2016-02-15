@@ -580,11 +580,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                         state = "骑车";
                     }
 //                    SharedPreferences sharedPref = getSharedPreferences("startTimeFlag",0);
-                    SharedPreferences sharedPreferences = getSharedPreferences("User_date",Login.MODE_PRIVATE);
-                    String username = sharedPreferences.getString("User_date","wythe");
                     ContentValues cv = new ContentValues();
-                    cv.put("name", username);
-                    cv.put("speed", String.format("%.2f", averSpeed));
                     cv.put("name", USER_NAME);
                     cv.put("speed",String.format("%.2f",averSpeed));
                     cv.put("date", starttime);
@@ -597,9 +593,8 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                     cv.clear();
 
                     Intent intent = new Intent(map.this, Histroy_chart.class);
-
+                    intent.putExtra("date",starttime);
                     startActivity(intent);
-
                     overridePendingTransition(R.anim.lefttoright, R.anim.righttoleft);
                 }
             } );

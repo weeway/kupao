@@ -12,9 +12,12 @@ import com.amap.api.location.AMapLocationListener;
 import com.amap.api.location.LocationManagerProxy;
 import com.amap.api.location.LocationProviderProxy;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.CameraPosition;
+import com.amap.api.maps.model.LatLng;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -28,6 +31,7 @@ public class main_interface extends Activity implements LocationSource,AMapLocat
     private MapView mapInRightMenu;
     private LocationManagerProxy locationClient;
     private AMap aMapInRightMenu;
+    private OnLocationChangedListener mListener;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -61,6 +65,7 @@ public class main_interface extends Activity implements LocationSource,AMapLocat
         aMapInRightMenu.setLocationSource(this);
         CameraUpdateFactory.zoomTo(16f);
         aMapInRightMenu.getUiSettings().setMyLocationButtonEnabled(false);
+        aMapInRightMenu.getUiSettings().setZoomControlsEnabled(false);
         aMapInRightMenu.setMyLocationEnabled(true);
         aMapInRightMenu.setMyLocationType(AMap.LOCATION_TYPE_MAP_FOLLOW);
     }
@@ -141,7 +146,7 @@ public class main_interface extends Activity implements LocationSource,AMapLocat
 
     @Override
     public void activate(OnLocationChangedListener onLocationChangedListener) {
-
+        mListener = onLocationChangedListener;
     }
 
     @Override
@@ -151,7 +156,7 @@ public class main_interface extends Activity implements LocationSource,AMapLocat
 
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
-
+        camMoveToCurPos(aMapLocation);
     }
 
     @Override
@@ -172,5 +177,39 @@ public class main_interface extends Activity implements LocationSource,AMapLocat
     @Override
     public void onProviderDisabled(String provider) {
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mapInRightMenu.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mapInRightMenu.onPause();
+        deactivate();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mapInRightMenu.onDestroy();
+
+        mListener = null;
+        if (locationClient != null) {
+            locationClient.removeUpdates(this);
+            locationClient.destroy();
+        }
+        locationClient = null;
+    }
+
+    public void camMoveToCurPos(AMapLocation loc) {
+        CameraPosition cameraPosition;
+        CameraUpdate cameraUpadate;
+        cameraPosition = new CameraPosition(new LatLng(loc.getLatitude(), loc.getLongitude()), 15.0f, 0.0f, 0.0f);
+        cameraUpadate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+        aMapInRightMenu.animateCamera(cameraUpadate);
     }
 }
