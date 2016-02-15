@@ -564,6 +564,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                     //String date = sDateFormat.format(new Date());
                     String time = tvShowTime.getText().toString();
                     String steps = tvSteps.getText().toString();
+                    String caloric = Integer.toString(calFirstPart)+"."+Integer.toString(calSecondPart);
                     String distance = Integer.toString(disFirstPart) + "." + Integer.toString(disSecondPart);
                     String caloric = Integer.toString(calFirstPart) + "." + Integer.toString(calSecondPart);
                     String state;
