@@ -74,7 +74,7 @@ public class Histroy  extends Activity {
     private List<Map<String,Object>> getData() {
 
         List<Map<String, Object>> list1 = new ArrayList<Map<String, Object>>();
-<<<<<<< HEAD
+
         if(Login.USER_NAME!=null) {
             if (cursor.moveToFirst()) {
                 while (cursor.moveToNext()) {
@@ -104,32 +104,7 @@ public class Histroy  extends Activity {
                     map.put("step", cursor.getString(cursor.getColumnIndex("theyCount")) + "步");
                     list1.add(map);
                 }
-=======
-        if(cursor.moveToFirst()){
-            while(cursor.moveToNext()){
-                Map<String, Object> map = new HashMap<String, Object>();
-                map.put("date", cursor.getString(cursor.getColumnIndex("date")));
-                String value =  cursor.getString(cursor.getColumnIndex("date"));
-                if(value!=null) {
-                    if (value.equals("慢跑")) {
-                        map.put("img1", R.drawable.walk);
-                    } else if (value.equals("快跑")) {
-                        map.put("img1", R.drawable.run);
-                    } else if (value.equals("骑车")) {
-                        map.put("img1", R.drawable.ride);
-                    } else {
-                        map.put("img1", R.drawable.walk);
-                    }
-                }
 
-                map.put("state", cursor.getString(cursor.getColumnIndex("motionState")));
-                map.put("distance", cursor.getString(cursor.getColumnIndex("distance")));
-                map.put("img2", R.drawable.time);
-                map.put("time", cursor.getString(cursor.getColumnIndex("time")));
-                map.put("img3", R.drawable.pace);
-                map.put("step", cursor.getString(cursor.getColumnIndex("theyCount"))+"步");
-                list1.add(map);
->>>>>>> f48bfff218da38995a3d4a21eaa37dc832b43e16
             }
         }
         return list1;
