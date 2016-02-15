@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.location.Location;
@@ -49,7 +48,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -83,10 +82,10 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     private double averSpeed = 0;
     private double sum = 0;
     private int times = 0;
-    int firstPart1;
-    int secondPart1;
-    int firstPart2 ;
-    int secondPart2;
+    int disFirstPart;
+    int disSecondPart;
+    int calFirstPart ;
+    int calSecondPart;
     private AlertDialog.Builder builder;
     private String starttime;
     /**
@@ -94,7 +93,6 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,13 +106,9 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         builder  = new AlertDialog.Builder(map.this);
 
-        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        //开始时间-24小时制
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         starttime = sDateFormat.format(new java.util.Date());
-
-        SharedPreferences sharedPref = getSharedPreferences("startTimeFlag",0);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("starttime",starttime);
-        editor.commit();
     }
 
     //获取控件及设置监听
@@ -166,6 +160,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             drawTrace(loc);
             camMoveToCurPos(loc);
             if(secForStoreChartData%(5*60) == 0){
+                // 每两秒进行一次广播，每十分钟记录一次速度、时间
                 storeChartData(loc);
                 Toast.makeText(getApplicationContext(),"保存数据",Toast.LENGTH_SHORT).show();
             }
@@ -197,12 +192,12 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     public void displayDistance(double length) {
         if (length < 1000) {
             tvDistance.setText((int) length + "m");
-            firstPart1 = (int) length / 1000;
-            secondPart1 = ((int) length % 1000) / 100;
+            disFirstPart = (int) length / 1000;
+            disSecondPart = ((int) length % 1000) / 100;
         } else if (length >= 1000) {
-             firstPart1 = (int) length / 1000;
-             secondPart1 = ((int) length % 1000) / 100;
-            tvDistance.setText(firstPart1 + "." + secondPart1 + "km");
+             disFirstPart = (int) length / 1000;
+             disSecondPart = ((int) length % 1000) / 100;
+            tvDistance.setText(disFirstPart + "." + disSecondPart + "km");
         }
     }
 
@@ -214,20 +209,20 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             weight = Integer.parseInt(tvWeight.getText().toString().substring(0, 2));
         } catch (Exception e) {
 //            Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_SHORT).show();
+            weight=100;
         }
 
         tvCaloric = (TextView) findViewById(R.id.tvCaloric);
         double caloric = ((double) weight * (length / 1000) * 1.036);
         if (caloric < 1000) {
             tvCaloric.setText((int) caloric + "J");
-            firstPart2 = (int) caloric / 1000;
-            secondPart2 = ((int) caloric % 1000) / 100;
+            calFirstPart = (int) caloric / 1000;
+            calSecondPart = ((int) caloric % 1000) / 100;
         } else if (caloric >= 1000) {
-             firstPart2 = (int) caloric / 1000;
-             secondPart2 = ((int) caloric % 1000) / 100;
-            tvCaloric.setText(firstPart2 + "." + secondPart2+"KJ");
+             calFirstPart = (int) caloric / 1000;
+             calSecondPart = ((int) caloric % 1000) / 100;
+            tvCaloric.setText(calFirstPart + "." + calSecondPart+"KJ");
         }
-
     }
 
     //画轨迹
@@ -249,7 +244,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     public void camMoveToCurPos(AMapLocation loc) {
         CameraPosition cameraPosition;
         CameraUpdate cameraUpadate;
-        cameraPosition = new CameraPosition(new LatLng(loc.getLatitude(), loc.getLongitude()), 16.0f, 0.0f, 0.0f);
+        cameraPosition = new CameraPosition(new LatLng(loc.getLatitude(), loc.getLongitude()), 18.0f, 0.0f, 0.0f);
         cameraUpadate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         aMap.animateCamera(cameraUpadate);
     }
@@ -293,7 +288,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         ArcOptions arcOptions;
         arcOptions = new ArcOptions();
         arcOptions.visible(true);
-        arcOptions.strokeWidth(10f);
+        arcOptions.strokeWidth(13f);
         arcOptions.strokeColor(0xFF0080FF);
         aMap.addArc(arcOptions.point(latLngs[0], latLngs[1], latLngs[2]));
     }
@@ -388,7 +383,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             msg.obj = loc;
             mListener.onLocationChanged(loc);
             mHandler.sendMessage(msg);
-            if (loc.getAccuracy() < 10f) {
+            if (loc.getAccuracy() < 36f) {
                 //累计距离
                 las[flag] = new LatLng(loc.getLatitude(), loc.getLongitude());
                 if (flag == 1) {
@@ -458,9 +453,9 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btStart) {
-            if (btStart.getText().equals("开始计时")) {
-                Toast.makeText(getApplicationContext(), "开始计时", Toast.LENGTH_SHORT).show();
-                btStart.setText("暂停计时");
+            if (btStart.getText().equals("开始跑步")) {
+                Toast.makeText(getApplicationContext(), "开始跑步", Toast.LENGTH_SHORT).show();
+                btStart.setText("暂停跑步");
                 if (null == timer) {
                     if (null == task) {
                         task = new TimerTask() {
@@ -479,14 +474,35 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                     timer = new Timer(true);
                     timer.schedule(task, 1000, 1000);
                 }
-            } else if (btStart.getText().equals("暂停计时")) {
-                Toast.makeText(getApplicationContext(), "暂停计时", Toast.LENGTH_SHORT).show();
-                btStart.setText("开始计时");
+            } else if (btStart.getText().equals("暂停跑步")) {
+                Toast.makeText(getApplicationContext(), "暂停跑步", Toast.LENGTH_SHORT).show();
+                btStart.setText("继续跑步");
                 task.cancel();
                 task = null;
                 timer.cancel();
                 timer.purge();
                 timer = null;
+            }else if(btStart.getText().equals("继续跑步")){
+                Toast.makeText(getApplicationContext(),"继续跑步",Toast.LENGTH_LONG).show();
+                btStart.setText("暂停跑步");
+                if (null == timer) {
+                    if (null == task) {
+                        task = new TimerTask() {
+                            @Override
+                            public void run() {
+                                // TODO Auto-generated method stub
+                                if (null == msg) {
+                                    msg = new Message();
+                                } else {
+                                    msg = Message.obtain();
+                                }
+                                timerHandler.sendMessage(msg);
+                            }
+                        };
+                    }
+                    timer = new Timer(true);
+                    timer.schedule(task, 1000, 1000);
+                }
             }
         } else if (v.getId() == R.id.btStop) {
             Toast.makeText(getApplicationContext(), "已停止\n可拖动地图查看轨迹", Toast.LENGTH_SHORT).show();
@@ -529,9 +545,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             aMap.animateCamera(cameraUpadate);
 
             //计算平均速度
-
             averSpeed = (sum / times)*3.6;
-
 
             //获取轨迹截图
             aMap.getMapScreenShot(this);
@@ -546,15 +560,12 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {
-                    SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd    hh:mm:ss");
-                    String date = sDateFormat.format(new Date());
-                   /* String distance = tvDistance.getText().toString();*/
+                    //SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd    hh:mm:ss");
+                    //String date = sDateFormat.format(new Date());
                     String time = tvShowTime.getText().toString();
-                    /*String caloric = tvCaloric.getText().toString();*/
                     String steps = tvSteps.getText().toString();
-
-                    String distance = Integer.toString(firstPart1)+"."+Integer.toString(secondPart1);
-                    String caloric = Integer.toString(firstPart2)+"."+Integer.toString(secondPart2);
+                    String distance = Integer.toString(disFirstPart)+"."+Integer.toString(disSecondPart);
+                    String caloric = Integer.toString(calFirstPart)+"."+Integer.toString(calSecondPart);
                     String state;
                     if(averSpeed <=9){
                          state = "慢跑";
@@ -566,10 +577,11 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                     else{
                          state = "骑车";
                     }
+//                    SharedPreferences sharedPref = getSharedPreferences("startTimeFlag",0);
                     ContentValues cv = new ContentValues();
                     cv.put("name", Login.USER_NAME);
                     cv.put("speed",String.format("%.2f",averSpeed));
-                    cv.put("date", date);
+                    cv.put("date", starttime);
                     cv.put("distance", distance);
                     cv.put("time", time);
                     cv.put("theyCount", steps);
