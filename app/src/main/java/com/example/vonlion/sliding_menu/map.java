@@ -564,23 +564,21 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                     //String date = sDateFormat.format(new Date());
                     String time = tvShowTime.getText().toString();
                     String steps = tvSteps.getText().toString();
-                    String distance = Integer.toString(disFirstPart)+"."+Integer.toString(disSecondPart);
-                    String caloric = Integer.toString(calFirstPart)+"."+Integer.toString(calSecondPart);
+                    String distance = Integer.toString(disFirstPart) + "." + Integer.toString(disSecondPart);
+                    String caloric = Integer.toString(calFirstPart) + "." + Integer.toString(calSecondPart);
                     String state;
-                    if(averSpeed <=9){
-                         state = "慢跑";
-                    }
-                    else if(averSpeed >9&&averSpeed
-                            <=12){
-                         state = "快跑";
-                    }
-                    else{
-                         state = "骑车";
+                    if (averSpeed <= 9) {
+                        state = "慢跑";
+                    } else if (averSpeed > 9 && averSpeed
+                            <= 12) {
+                        state = "快跑";
+                    } else {
+                        state = "骑车";
                     }
 //                    SharedPreferences sharedPref = getSharedPreferences("startTimeFlag",0);
                     ContentValues cv = new ContentValues();
                     cv.put("name", Login.USER_NAME);
-                    cv.put("speed",String.format("%.2f",averSpeed));
+                    cv.put("speed", String.format("%.2f", averSpeed));
                     cv.put("date", starttime);
                     cv.put("distance", distance);
                     cv.put("time", time);
@@ -589,6 +587,12 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                     cv.put("motionState", state);
                     db.insert("usertb", null, cv);
                     cv.clear();
+
+                    Intent intent = new Intent(map.this, Histroy_chart.class);
+
+                    startActivity(intent);
+
+                    overridePendingTransition(R.anim.lefttoright, R.anim.righttoleft);
                 }
             } );
             builder.setNegativeButton("否", null);
