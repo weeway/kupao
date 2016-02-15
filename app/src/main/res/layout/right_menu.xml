@@ -88,8 +88,12 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:background="#dfdfdf">
-
-        <Button
+        <com.amap.api.maps.MapView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/mapInRightMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Button
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:text="今日排行"
@@ -114,5 +118,7 @@
             android:layout_marginTop="100dp"
             android:textSize="12dp"
             android:onClick="change_alpha3"/>
+        </com.amap.api.maps.MapView>
+
     </LinearLayout>
 </LinearLayout>

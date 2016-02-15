@@ -208,7 +208,6 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         try {
             weight = Integer.parseInt(tvWeight.getText().toString().substring(0, 2));
         } catch (Exception e) {
-//            Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_SHORT).show();
             weight=100;
         }
 

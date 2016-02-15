@@ -5,13 +5,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +44,7 @@ public class Histroy  extends Activity {
                 ListView listView = (ListView) parent;
                 HashMap<String, String> map1 = (HashMap<String, String>) listView.getItemAtPosition(position);
                 DATE = map1.get("date");
-                Toast.makeText(Histroy.this.getApplicationContext(), DATE, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Histroy.this.getApplicationContext(), DATE, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Histroy.this, Histroy_chart.class);
                 intent.putExtra("date",DATE);
                 startActivity(intent);
@@ -111,13 +108,4 @@ public class Histroy  extends Activity {
 
         overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
     }
-
-   /* public void change_alpha1(View v){
-
-        Intent intent = new Intent(this,Histroy_chart.class);
-
-        startActivity(intent);
-
-        overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
-    }*/
 }
