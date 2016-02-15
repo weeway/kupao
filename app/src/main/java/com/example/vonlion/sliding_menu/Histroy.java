@@ -2,6 +2,7 @@ package com.example.vonlion.sliding_menu;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ public class Histroy  extends Activity {
 //    int IdRecord = 0;
     ListView listview;
     static String DATE;
+    String USER_NAME;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +34,10 @@ public class Histroy  extends Activity {
 
         DatabaseHelper database = new DatabaseHelper(this);
         SQLiteDatabase db = database.getReadableDatabase();
-        if(Login.USER_NAME!=null) {
-            cursor = db.query("usertb", null, "name like?", new String[]{Login.USER_NAME}, null, null, "name");
+        SharedPreferences share = getSharedPreferences("User_date",map.MODE_PRIVATE);
+        USER_NAME =share.getString("username", "");
+        if(USER_NAME!=null) {
+            cursor = db.query("usertb", null, "name like?", new String[]{USER_NAME}, null, null, "name");
         }
         else {
             Toast.makeText(Histroy.this.getApplicationContext(), "USER_NAME为空", Toast.LENGTH_SHORT).show();
@@ -75,7 +79,7 @@ public class Histroy  extends Activity {
 
         List<Map<String, Object>> list1 = new ArrayList<Map<String, Object>>();
 
-        if(Login.USER_NAME!=null) {
+        if(USER_NAME!=null) {
             if (cursor.moveToFirst()) {
                 while (cursor.moveToNext()) {
                     Map<String, Object> map = new HashMap<String, Object>();

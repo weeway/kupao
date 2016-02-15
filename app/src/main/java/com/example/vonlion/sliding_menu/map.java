@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.location.Location;
@@ -88,6 +89,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     int calSecondPart;
     private AlertDialog.Builder builder;
     private String starttime;
+    String USER_NAME;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -109,6 +111,9 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         //开始时间-24小时制
         SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         starttime = sDateFormat.format(new java.util.Date());
+        SharedPreferences share = getSharedPreferences("User_date",Login.MODE_PRIVATE);
+        USER_NAME =share.getString("username", "");
+        //Toast.makeText(map.this.getApplicationContext(),USER_NAME, Toast.LENGTH_SHORT).show();
     }
 
     //获取控件及设置监听
@@ -177,7 +182,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                     cv.put("curspeed", String.valueOf(loc.getSpeed()));
                     cv.put("curtime",date);
                     cv.put("starttime",starttime);
-                    cv.put("username",Login.USER_NAME);
+                    cv.put("username",USER_NAME);
                     db.insert("charttb", null, cv);
                     cv.clear();
     }
@@ -579,7 +584,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                     }
 //                    SharedPreferences sharedPref = getSharedPreferences("startTimeFlag",0);
                     ContentValues cv = new ContentValues();
-                    cv.put("name", Login.USER_NAME);
+                    cv.put("name", USER_NAME);
                     cv.put("speed",String.format("%.2f",averSpeed));
                     cv.put("date", starttime);
                     cv.put("distance", distance);
