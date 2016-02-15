@@ -568,7 +568,6 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                     //String date = sDateFormat.format(new Date());
                     String time = tvShowTime.getText().toString();
                     String steps = tvSteps.getText().toString();
-                    String caloric = Integer.toString(calFirstPart)+"."+Integer.toString(calSecondPart);
                     String distance = Integer.toString(disFirstPart) + "." + Integer.toString(disSecondPart);
                     String caloric = Integer.toString(calFirstPart) + "." + Integer.toString(calSecondPart);
                     String state;
@@ -581,8 +580,10 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                         state = "骑车";
                     }
 //                    SharedPreferences sharedPref = getSharedPreferences("startTimeFlag",0);
+                    SharedPreferences sharedPreferences = getSharedPreferences("User_date",Login.MODE_PRIVATE);
+                    String username = sharedPreferences.getString("User_date","wythe");
                     ContentValues cv = new ContentValues();
-                    cv.put("name", Login.USER_NAME);
+                    cv.put("name", username);
                     cv.put("speed", String.format("%.2f", averSpeed));
                     cv.put("name", USER_NAME);
                     cv.put("speed",String.format("%.2f",averSpeed));
