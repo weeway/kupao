@@ -161,7 +161,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             mListener.onLocationChanged(loc);
             displayDistance(length);
             displayCaloric();
-//            displaySteps();
+            displayRealtimeSpeed(loc);
             drawTrace(loc);
             camMoveToCurPos(loc);
             if(secForStoreChartData%(5) == 0){
@@ -173,37 +173,31 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     };
 
     //储存画图表所需的数据
-    public void storeChartData(AMapLocation loc){
+    public void storeChartData(AMapLocation loc) {
         SimpleDateFormat sDateFormat = new SimpleDateFormat("hh:mm");
         String date = sDateFormat.format(new java.util.Date());
         DatabaseHelper database = new DatabaseHelper(this);
         SQLiteDatabase db = database.getWritableDatabase();
         ContentValues cv = new ContentValues();
-                    cv.put("curspeed", String.valueOf(loc.getSpeed()));
-                    cv.put("curtime",date);
-                    cv.put("starttime",starttime);
-                    cv.put("username",USER_NAME);
-                    db.insert("charttb", null, cv);
-                    cv.clear();
+        cv.put("curspeed", String.valueOf(loc.getSpeed()));
+        cv.put("curtime", date);
+        cv.put("starttime", starttime);
+        cv.put("username", USER_NAME);
+        db.insert("charttb", null, cv);
+        cv.clear();
     }
 
-    //显示步数
-//    public void displaySteps() {
-//        double steps = length * 100 / 65;
-//        tvSteps.setText("" + (int) steps);
-//    }
+    public void displayRealtimeSpeed(AMapLocation loc){
+        TextView tvRealtimeSpeed = (TextView) findViewById(R.id.tvRealtimeSpeed);
+        String realtimeSpeed = String.format("%.1f",loc.getSpeed()*3.6);
+        tvRealtimeSpeed.setText(realtimeSpeed);
+    }
 
     //显示跑步距离
     public void displayDistance(double length) {
-        if (length < 1000) {
-            tvDistance.setText((int) length + "m");
-            disFirstPart = (int) length / 1000;
-            disSecondPart = ((int) length % 1000) / 100;
-        } else if (length >= 1000) {
-             disFirstPart = (int) length / 1000;
-             disSecondPart = ((int) length % 1000) / 100;
-            tvDistance.setText(disFirstPart + "." + disSecondPart + "km");
-        }
+        disFirstPart = (int) length / 1000;
+        disSecondPart = ((int) length % 1000) / 100;
+        tvDistance.setText(disFirstPart + "." + disSecondPart);
     }
 
     //显示热量
@@ -218,15 +212,9 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
 
         tvCaloric = (TextView) findViewById(R.id.tvCaloric);
         double caloric = ((double) weight * (length / 1000) * 1.036);
-        if (caloric < 1000) {
-            tvCaloric.setText((int) caloric + "J");
-            calFirstPart = (int) caloric / 1000;
-            calSecondPart = ((int) caloric % 1000) / 100;
-        } else if (caloric >= 1000) {
-             calFirstPart = (int) caloric / 1000;
-             calSecondPart = ((int) caloric % 1000) / 100;
-            tvCaloric.setText(calFirstPart + "." + calSecondPart+"KJ");
-        }
+        calFirstPart = (int) caloric / 1000;
+        calSecondPart = ((int) caloric % 1000) / 100;
+        tvCaloric.setText(calFirstPart + "." + calSecondPart);
     }
 
     //画轨迹
@@ -268,8 +256,8 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         aMap.setLocationSource(this);
         CameraUpdateFactory.zoomTo(18.0f);
 //        changeLogo();
-        // 设置默认定位按钮是否显示
-        aMap.getUiSettings().setMyLocationButtonEnabled(true);
+        aMap.getUiSettings().setMyLocationButtonEnabled(false);
+        aMap.getUiSettings().setZoomControlsEnabled(false);
         aMap.setMyLocationEnabled(true);
 
         // 设置定位的类型为定位模式：定位（AMap.LOCATION_TYPE_LOCATE）、跟随（AMap.LOCATION_TYPE_MAP_FOLLOW）
@@ -605,14 +593,14 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                     } else {
                         state = "骑车";
                     }
-//                    SharedPreferences sharedPref = getSharedPreferences("startTimeFlag",0);
                     ContentValues cv = new ContentValues();
+                    int steps = (int)length*100/65;
                     cv.put("name", USER_NAME);
                     cv.put("speed",String.format("%.2f",averSpeed));
                     cv.put("date", starttime);
                     cv.put("distance", distance);
                     cv.put("time", time);
-//                    cv.put("theyCount", steps);
+                    cv.put("theyCount", steps);
                     cv.put("energy", caloric);
                     cv.put("motionState", state);
                     db.insert("usertb", null, cv);
