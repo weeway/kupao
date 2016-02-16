@@ -146,7 +146,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         filter.addAction("LOCATION");
         registerReceiver(alarmReceiver, filter);
 
-        int alarmInterval = 2;
+        int alarmInterval = 1;
         if (alarm != null) {
             alarm.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 2 * 1000,
                     alarmInterval * 1000, alarmPi);
@@ -164,7 +164,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             displaySteps();
             drawTrace(loc);
             camMoveToCurPos(loc);
-            if(secForStoreChartData%(5*60) == 0){
+            if(secForStoreChartData%(5) == 0){
                 // 每两秒进行一次广播，每十分钟记录一次速度、时间
                 storeChartData(loc);
                 Toast.makeText(getApplicationContext(),"保存数据",Toast.LENGTH_SHORT).show();
@@ -290,41 +290,41 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     public void drawArc(LatLng[] latLngs,AMapLocation loc) {
         ArcOptions arcOptions;
         //ARGB
-        int Tomato = 0xFFFF6347;
-        int OrangeRed = 0xFFFF4500;
-        int Red = 0xFFFF0000;
-        int LightGreen = 0xFF90EE90;
-        int Yellow = 0xFFEEEE00;
-        int OliveDrab = 0xFFC0FF3E;
-        int Gold = 0xFFFFD700;
+//        int Tomato = 0xFFFF6347;
+//        int OrangeRed = 0xFFFF4500;
+//        int Red = 0xFFFF0000;
+//        int LightGreen = 0xFF90EE90;
+//        int Yellow = 0xFFEEEE00;
+//        int OliveDrab = 0xFFC0FF3E;
+//        int Gold = 0xFFFFD700;
         arcOptions = new ArcOptions();
         arcOptions.visible(true);
         arcOptions.strokeWidth(13f);
         arcOptions.strokeColor(0xFF0080FF);
-        if(0f<=loc.getSpeed()&&loc.getSpeed()<=0.5f){
-            arcOptions.strokeColor(LightGreen);
-        }
-        else if(0.5f<loc.getSpeed()&&loc.getSpeed()<=1f){
-            arcOptions.strokeColor(OliveDrab);
-        }
-        else if(1f<loc.getSpeed()&&loc.getSpeed()<=1.5f){
-            arcOptions.strokeColor(Gold);
-        }
-        else if(1.5f<loc.getSpeed()&&loc.getSpeed()<=1.8f){
-            arcOptions.strokeColor(Yellow);
-        }
-        else if(1.8f<loc.getSpeed()&&loc.getSpeed()<=2.1f){
-            arcOptions.strokeColor(Tomato);
-        }
-        else if(2.1f<loc.getSpeed()&&loc.getSpeed()<=2.5f){
-            arcOptions.strokeColor(OrangeRed);
-        }
-        else if(2.5f<loc.getSpeed()){
-            arcOptions.strokeColor(Red);
-        }
+        arcOptions.strokeColor(choseColor(loc));
         aMap.addArc(arcOptions.point(latLngs[0], latLngs[1], latLngs[2]));
     }
 
+    public int choseColor(AMapLocation loc){
+        int color = 0xFF4BEE12;
+        float interval = 0.2f;
+        int COLOR[] = { 0xff4bee12,0xff88ff16,0xffb4ff19,0xffdeff1d,0xffe9f71d,
+                        0xffeeec1d,0xfff2de1d,0xfff6ce1d,0xfff9bd1d,0xfffbae1d,
+                        0xfffb9e1d,0xfffc8d1d,0xfffd7e1d,0xfffc711d,0xfffe611d,
+                        0xfffd521d
+                      };
+        for(int index = 0; index < 16; index++){
+            if(index*interval<loc.getSpeed() && loc.getSpeed()<=(index+1)*interval){
+                color = COLOR[index];
+                break;
+            }
+            else if(3f<loc.getSpeed()){
+                color = COLOR[15];
+                break;
+            }
+        }
+        return color;
+    }
     //获得最大、最小经纬点
     private void getMaxMinLatLng(AMapLocation location) {
         if (location.getLatitude() > latMax.latitude)
@@ -349,9 +349,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     //跳转至主界面
     public void change_roll(View v) {
         Intent intent = new Intent(this, main_interface.class);
-
         startActivity(intent);
-
         overridePendingTransition(R.anim.lefttoright, R.anim.righttoleft);
     }
 
