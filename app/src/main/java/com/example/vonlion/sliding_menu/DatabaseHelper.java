@@ -37,6 +37,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "curtime text"
                 + ");";
         db.execSQL(sqlChart);
+        String sqlTrace = "create table if not exists tracetb(_id integer primary key autoincrement,"
+                + "starttime text,"
+                + "latitude text,"
+                + "longitude text,"
+                + "speed text"
+                + ");";
+        db.execSQL(sqlTrace);
     }
 
     public void onUpgrade(SQLiteDatabase arg0, int oldversion, int newversion) {

@@ -63,7 +63,6 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     private PendingIntent alarmPi = null;
     private AlarmManager alarm = null;
     private TextView tvDistance = null;
-    private TextView tvSteps = null;
     private TextView tvShowTime = null;
     private TextView tvCaloric;
     private Button btStop = null;
@@ -120,7 +119,6 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     public void initView(Bundle savedInstanceState) {
         tvDistance = (TextView) findViewById(R.id.tvDistance);
         tvShowTime = (TextView) findViewById(R.id.tvTime);
-//        tvSteps = (TextView) findViewById(R.id.tvSteps);
         btStart = (Button) findViewById(R.id.btStart);
         btStop = (Button) findViewById(R.id.btStop);
         mapView = (MapView) findViewById(R.id.map);
@@ -377,8 +375,8 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             mListener.onLocationChanged(loc);
             mHandler.sendMessage(msg);
             if (loc.getAccuracy() < 36f) {
-                //累计距离
                 las[flag] = new LatLng(loc.getLatitude(), loc.getLongitude());
+                storeDataForTrace(las[flag],loc.getSpeed());
                 if (flag == 1) {
                     length += AMapUtils.calculateLineDistance(las[0], las[1]);
                     las[0] = las[1];
@@ -393,6 +391,18 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                 }
             }
         }
+    }
+
+    public void storeDataForTrace(LatLng latLng,float speed){
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+            cv.put("starttime",starttime);
+            cv.put("latitude",String.valueOf(latLng.latitude));
+            cv.put("longitude",String.valueOf(latLng.longitude));
+            cv.put("speed",String.valueOf(speed));
+            db.insert("tracetb",null,cv);
+            cv.clear();
     }
 
     @Override
