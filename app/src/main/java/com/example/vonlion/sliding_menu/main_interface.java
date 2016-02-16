@@ -2,22 +2,10 @@ package com.example.vonlion.sliding_menu;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationListener;
-import com.amap.api.location.LocationManagerProxy;
-import com.amap.api.location.LocationProviderProxy;
-import com.amap.api.maps.AMap;
-import com.amap.api.maps.CameraUpdate;
-import com.amap.api.maps.CameraUpdateFactory;
-import com.amap.api.maps.LocationSource;
-import com.amap.api.maps.MapView;
-import com.amap.api.maps.model.CameraPosition;
-import com.amap.api.maps.model.LatLng;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -26,12 +14,8 @@ import com.slidingmenu.view.SlidingMenu;
 /**
  * Created by Vonlion on 2015/11/26.
  */
-public class main_interface extends Activity implements LocationSource,AMapLocationListener{
+public class main_interface extends Activity{
     private SlidingMenu mLeftMenu;
-    private MapView mapInRightMenu;
-    private LocationManagerProxy locationClient;
-    private AMap aMapInRightMenu;
-    private OnLocationChangedListener mListener;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -42,32 +26,10 @@ public class main_interface extends Activity implements LocationSource,AMapLocat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mapInRightMenu = (MapView) findViewById(R.id.mapInRightMenu);
-        mapInRightMenu.onCreate(savedInstanceState);
-        initMap();
         mLeftMenu = (SlidingMenu) findViewById(R.id.id_menu);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-    }
-
-    private void initMap() {
-        locationClient = LocationManagerProxy.getInstance(main_interface.this);
-        locationClient.requestLocationData(
-                LocationProviderProxy.AMapNetwork, 1000, 3, main_interface.this);
-        if (aMapInRightMenu == null) {
-            aMapInRightMenu = mapInRightMenu.getMap();
-            setUpMap();
-        }
-    }
-
-    private void setUpMap(){
-        aMapInRightMenu.setLocationSource(this);
-        CameraUpdateFactory.zoomTo(16f);
-        aMapInRightMenu.getUiSettings().setMyLocationButtonEnabled(false);
-        aMapInRightMenu.getUiSettings().setZoomControlsEnabled(false);
-        aMapInRightMenu.setMyLocationEnabled(true);
-        aMapInRightMenu.setMyLocationType(AMap.LOCATION_TYPE_MAP_FOLLOW);
     }
 
     public void toggleMenu(View view) {
@@ -142,74 +104,5 @@ public class main_interface extends Activity implements LocationSource,AMapLocat
         );
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
-    }
-
-    @Override
-    public void activate(OnLocationChangedListener onLocationChangedListener) {
-        mListener = onLocationChangedListener;
-    }
-
-    @Override
-    public void deactivate() {
-
-    }
-
-    @Override
-    public void onLocationChanged(AMapLocation aMapLocation) {
-        camMoveToCurPos(aMapLocation);
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mapInRightMenu.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mapInRightMenu.onPause();
-        deactivate();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mapInRightMenu.onDestroy();
-
-        mListener = null;
-        if (locationClient != null) {
-            locationClient.removeUpdates(this);
-            locationClient.destroy();
-        }
-        locationClient = null;
-    }
-
-    public void camMoveToCurPos(AMapLocation loc) {
-        CameraPosition cameraPosition;
-        CameraUpdate cameraUpadate;
-        cameraPosition = new CameraPosition(new LatLng(loc.getLatitude(), loc.getLongitude()), 15.0f, 0.0f, 0.0f);
-        cameraUpadate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-        aMapInRightMenu.animateCamera(cameraUpadate);
     }
 }

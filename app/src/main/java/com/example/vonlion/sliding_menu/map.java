@@ -189,7 +189,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
 
     //显示步数
     public void displaySteps() {
-        double steps = length * 100 / 45;
+        double steps = length * 100 / 65;
         tvSteps.setText("" + (int) steps);
     }
 
@@ -232,11 +232,10 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     //画轨迹
     public void drawTrace(AMapLocation loc) {
         //需要一个全局计数器cnt
-        if (loc.getAccuracy() < 20f) {
+        if (loc.getAccuracy() < 30f) {
             latLngs[cnt] = new LatLng(loc.getLatitude(), loc.getLongitude());
-
             if (cnt == 2) {
-                drawArc(latLngs);
+                drawArc(latLngs,loc);
                 latLngs[0] = latLngs[2];
                 cnt = 0;
             }
@@ -288,12 +287,41 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     }
 
     //画弧线
-    public void drawArc(LatLng[] latLngs) {
+    public void drawArc(LatLng[] latLngs,AMapLocation loc) {
         ArcOptions arcOptions;
+        //ARGB
+        int Tomato = 0xFFFF6347;
+        int OrangeRed = 0xFFFF4500;
+        int Red = 0xFFFF0000;
+        int LightGreen = 0xFF90EE90;
+        int Yellow = 0xFFEEEE00;
+        int OliveDrab = 0xFFC0FF3E;
+        int Gold = 0xFFFFD700;
         arcOptions = new ArcOptions();
         arcOptions.visible(true);
         arcOptions.strokeWidth(13f);
         arcOptions.strokeColor(0xFF0080FF);
+        if(0f<=loc.getSpeed()&&loc.getSpeed()<=0.5f){
+            arcOptions.strokeColor(LightGreen);
+        }
+        else if(0.5f<loc.getSpeed()&&loc.getSpeed()<=1f){
+            arcOptions.strokeColor(OliveDrab);
+        }
+        else if(1f<loc.getSpeed()&&loc.getSpeed()<=1.5f){
+            arcOptions.strokeColor(Gold);
+        }
+        else if(1.5f<loc.getSpeed()&&loc.getSpeed()<=1.8f){
+            arcOptions.strokeColor(Yellow);
+        }
+        else if(1.8f<loc.getSpeed()&&loc.getSpeed()<=2.1f){
+            arcOptions.strokeColor(Tomato);
+        }
+        else if(2.1f<loc.getSpeed()&&loc.getSpeed()<=2.5f){
+            arcOptions.strokeColor(OrangeRed);
+        }
+        else if(2.5f<loc.getSpeed()){
+            arcOptions.strokeColor(Red);
+        }
         aMap.addArc(arcOptions.point(latLngs[0], latLngs[1], latLngs[2]));
     }
 

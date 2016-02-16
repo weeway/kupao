@@ -80,17 +80,16 @@ public class Histroy_chart extends Activity {
         Toast.makeText(getApplicationContext(),"本次采集"+i+"个"+"数据",Toast.LENGTH_LONG).show();
         dataSet=new LineDataSet(yVals,"运动数据");
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        dataSet.setDrawCubic(true);
         data=new LineData(xVals,dataSet);
         lineChart.setData(data);
         lineChart.setDescription("运动数据");
-        lineChart.animateXY(3000,3000);
+        lineChart.animateXY(2000,2000);
     }
 
     public void change_alpha(View v){
         Intent intent = new Intent(this,Histroy.class);
-
         startActivity(intent);
-
         overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
     }
 }
