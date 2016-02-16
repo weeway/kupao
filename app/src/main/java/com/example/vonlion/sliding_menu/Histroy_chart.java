@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -78,12 +80,20 @@ public class Histroy_chart extends Activity {
             }
         }
         Toast.makeText(getApplicationContext(),"本次采集"+i+"个"+"数据",Toast.LENGTH_LONG).show();
-        dataSet=new LineDataSet(yVals,"运动数据");
-        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        dataSet=new LineDataSet(yVals,"速度-时间 数据");
+        dataSet.setColors(ColorTemplate.PASTEL_COLORS);
         dataSet.setDrawCubic(true);
         data=new LineData(xVals,dataSet);
+        XAxis xAxis = lineChart.getXAxis();
+        YAxis leftYAxis = lineChart.getAxisLeft();
+        YAxis rightYAxis = lineChart.getAxisRight();
+        xAxis.setDrawGridLines(false);
+        leftYAxis.setDrawGridLines(false);
+        rightYAxis.setEnabled(false);
+        lineChart.setDrawGridBackground(false);
+        lineChart.setBackgroundColor(0xFFF0FFFF);
         lineChart.setData(data);
-        lineChart.setDescription("运动数据");
+        lineChart.setDescription("");
         lineChart.animateXY(2000,2000);
     }
 

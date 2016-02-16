@@ -165,15 +165,13 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             drawTrace(loc);
             camMoveToCurPos(loc);
             if(secForStoreChartData%(5) == 0){
-                // 每两秒进行一次广播，每十分钟记录一次速度、时间
-                storeChartData(loc);
-                Toast.makeText(getApplicationContext(),"保存数据",Toast.LENGTH_SHORT).show();
+                stroeDataForChart(loc);
             }
         }
     };
 
     //储存画图表所需的数据
-    public void storeChartData(AMapLocation loc) {
+    public void stroeDataForChart(AMapLocation loc) {
         SimpleDateFormat sDateFormat = new SimpleDateFormat("hh:mm");
         String date = sDateFormat.format(new java.util.Date());
         DatabaseHelper database = new DatabaseHelper(this);
@@ -193,14 +191,12 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         tvRealtimeSpeed.setText(realtimeSpeed);
     }
 
-    //显示跑步距离
     public void displayDistance(double length) {
         disFirstPart = (int) length / 1000;
         disSecondPart = ((int) length % 1000) / 100;
         tvDistance.setText(disFirstPart + "." + disSecondPart);
     }
 
-    //显示热量
     public void displayCaloric() {
         TextView tvWeight = (TextView) findViewById(R.id.tvWeight);
         int weight = 100;
@@ -217,7 +213,6 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         tvCaloric.setText(calFirstPart + "." + calSecondPart);
     }
 
-    //画轨迹
     public void drawTrace(AMapLocation loc) {
         //需要一个全局计数器cnt
         if (loc.getAccuracy() < 30f) {
@@ -231,7 +226,6 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         }
     }
 
-    //视图相机移动到当前位置
     public void camMoveToCurPos(AMapLocation loc) {
         CameraPosition cameraPosition;
         CameraUpdate cameraUpadate;
@@ -240,7 +234,6 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         aMap.animateCamera(cameraUpadate);
     }
 
-    //初始化AMap对象
     private void initMap() {
         locationClient = LocationManagerProxy.getInstance(map.this);
         locationClient.requestLocationData(
@@ -251,7 +244,6 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         }
     }
 
-    //设置AMap属性
     private void setUpMap() {
         aMap.setLocationSource(this);
         CameraUpdateFactory.zoomTo(18.0f);
@@ -274,17 +266,8 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         aMap.setMyLocationStyle(myLocationStyle);
     }
 
-    //画弧线
     public void drawArc(LatLng[] latLngs,AMapLocation loc) {
         ArcOptions arcOptions;
-        //ARGB
-//        int Tomato = 0xFFFF6347;
-//        int OrangeRed = 0xFFFF4500;
-//        int Red = 0xFFFF0000;
-//        int LightGreen = 0xFF90EE90;
-//        int Yellow = 0xFFEEEE00;
-//        int OliveDrab = 0xFFC0FF3E;
-//        int Gold = 0xFFFFD700;
         arcOptions = new ArcOptions();
         arcOptions.visible(true);
         arcOptions.strokeWidth(13f);
@@ -295,7 +278,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
 
     public int choseColor(AMapLocation loc){
         int color = 0xFF4BEE12;
-        float interval = 0.2f;
+        float interval = 0.25f;
         int COLOR[] = { 0xff4bee12,0xff88ff16,0xffb4ff19,0xffdeff1d,0xffe9f71d,
                         0xffeeec1d,0xfff2de1d,0xfff6ce1d,0xfff9bd1d,0xfffbae1d,
                         0xfffb9e1d,0xfffc8d1d,0xfffd7e1d,0xfffc711d,0xfffe611d,
@@ -313,8 +296,8 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         }
         return color;
     }
-    //获得最大、最小经纬点
-    private void getMaxMinLatLng(AMapLocation location) {
+
+    private void calMaxMinLatLng(AMapLocation location) {
         if (location.getLatitude() > latMax.latitude)
             latMax = new LatLng(location.getLatitude(), 0);
         if (location.getLatitude() < latMin.latitude)
@@ -325,7 +308,6 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             latMin = new LatLng(0, location.getLongitude());
     }
 
-    //获得合适的比例尺
     private double getApproriateZoom() {
         double zoom = 0;
         double lenX = AMapUtils.calculateLineDistance(lonMax, lonMin);
@@ -341,12 +323,10 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         overridePendingTransition(R.anim.lefttoright, R.anim.righttoleft);
     }
 
-    //接收广播 开始定位
     private BroadcastReceiver alarmReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("LOCATION")) {
-//                Toast.makeText(getApplicationContext(),"BroadcastRecevier",Toast.LENGTH_SHORT).show();
                 locationClient = LocationManagerProxy.getInstance(map.this);
                 //此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
                 //注意设置合适的定位时间的间隔，并且在合适时间调用removeUpdates()方法来取消定位请求
@@ -389,11 +369,6 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         }
     }
 
-    /**
-     * 定位成功后回调函数
-     * 位置发生变化后，向Handler发送loc位置信息对象
-     */
-
     @Override
     public void onLocationChanged(AMapLocation loc) {
         if (null != loc) {
@@ -411,8 +386,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                 }
                 flag++;
 
-                //最大最小经纬
-                getMaxMinLatLng(loc);
+                calMaxMinLatLng(loc);
                 if (totalSec % 120 == 0) {
                     sum += loc.getSpeed();
                     times++;
@@ -421,17 +395,11 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         }
     }
 
-    /**
-     * 激活定位
-     */
     @Override
     public void activate(OnLocationChangedListener listener) {
         mListener = listener;
     }
 
-    /**
-     * 停止定位
-     */
     @Override
     public void deactivate() {
     }
@@ -523,8 +491,6 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                 }
             }
         } else if (v.getId() == R.id.btStop) {
-            Toast.makeText(getApplicationContext(), "已停止\n可拖动地图查看轨迹", Toast.LENGTH_SHORT).show();
-
             //取消定位
             mListener = null;
             if (locationClient != null) {
@@ -578,10 +544,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {
-                    //SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd    hh:mm:ss");
-                    //String date = sDateFormat.format(new Date());
                     String time = tvShowTime.getText().toString();
-//                    String steps = tvSteps.getText().toString();
                     String distance = Integer.toString(disFirstPart) + "." + Integer.toString(disSecondPart);
                     String caloric = Integer.toString(calFirstPart) + "." + Integer.toString(calSecondPart);
                     String state;
