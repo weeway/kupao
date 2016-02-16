@@ -44,7 +44,7 @@
    <RelativeLayout
        android:layout_width="match_parent"
        android:layout_height="70dp"
-       android:background="#cc000000"
+       android:background="#bb000000"
        android:id="@+id/relativeLayout">
        <TextView
            android:layout_width="wrap_content"
@@ -70,7 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:layout_below="@+id/relativeLayout"
-        android:background="#cc000000"
+        android:background="#bb000000"
         android:orientation="horizontal"
         android:id="@+id/linearLayout3">
         <RelativeLayout
@@ -80,7 +80,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="时速"
+            android:text="时速 (km/h)"
             android:textColor="#dedede"
             android:textSize="15dp"
             android:layout_centerVertical="true"
@@ -93,7 +93,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="路程"
+                android:text="路程(km)"
                 android:textColor="#dedede"
                 android:textSize="15dp"
                 android:layout_centerVertical="true"
@@ -106,7 +106,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="能量"
+                android:text="能量(kJ)"
                 android:textColor="#dedede"
                 android:textSize="15dp"
                 android:layout_centerVertical="true"
@@ -120,7 +120,7 @@
         android:layout_height="40dp"
         android:layout_weight="1"
         android:layout_below="@+id/linearLayout3"
-        android:background="#cc000000"
+        android:background="#bb000000"
         android:id="@+id/linearLayout4">
         <RelativeLayout
             android:layout_width="match_parent"
