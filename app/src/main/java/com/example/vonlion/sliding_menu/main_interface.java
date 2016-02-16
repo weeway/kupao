@@ -48,14 +48,15 @@ public class main_interface extends Activity{
         overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
     }
 
-    public void change_alpha3(View v) {//主界面进入历史界面
-        Intent intent = new Intent(this, Histroy.class);
+
+    public void change1(View v) {//左界面跳转到我的资料
+        Intent intent = new Intent(this, mydata.class);
         startActivity(intent);
         overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
     }
 
-    public void change1(View v) {//左界面跳转到我的资料
-        Intent intent = new Intent(this, mydata.class);
+    public void change2(View v) {//左界面跳转到历史界面
+        Intent intent = new Intent(this,Histroy.class);
         startActivity(intent);
         overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
     }

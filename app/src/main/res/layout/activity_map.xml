@@ -1,217 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              tools:context=".map">
-            <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="#66000000"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="#50b5e4">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="导航"
-                        android:textColor="#ffffff"
-                        android:textSize="16dp"/>
-                </LinearLayout>
-                <Button
-                    android:id="@+id/button_back"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_margin="3dp"
-                    android:background="@drawable/img_back"
-                    android:onClick="change_roll"/>
-    </RelativeLayout>
+              tools:context=".map"
+              android:background="#ffffff">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="280dp">
+            <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:background="#66000000"-->
+            <!--android:gravity="center_horizontal"-->
+            <!--android:orientation="vertical">-->
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="40dp"-->
+                    <!--android:background="#50b5e4">-->
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="导航"-->
+                        <!--android:textColor="#ffffff"-->
+                        <!--android:textSize="16dp"/>-->
+                <!--</LinearLayout>-->
+                <!--<Button-->
+                    <!--android:id="@+id/button_back"-->
+                    <!--android:layout_width="35dp"-->
+                    <!--android:layout_height="35dp"-->
+                    <!--android:layout_margin="3dp"-->
+                    <!--android:background="@drawable/img_back"-->
+                    <!--android:onClick="change_roll"/>-->
+    <!--</RelativeLayout>-->
+
+
         <com.amap.api.maps.MapView
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/map"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+    
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="70dp"
+       android:background="#cc000000"
+       android:id="@+id/relativeLayout">
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="用时:"
+           android:textColor="#dedede"
+           android:textSize="15dp"
+           android:layout_centerVertical="true"
+           android:layout_toLeftOf="@+id/tvTime"
+           android:layout_marginRight="10dp"/>
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/running_time"
+           android:textSize="40dp"
+           android:textColor="#ffffff"
+           android:layout_centerVertical="true"
+           android:layout_centerHorizontal="true"
+           android:id="@+id/tvTime" />
+   </RelativeLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_below="@+id/relativeLayout"
+        android:background="#cc000000"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout3">
+        <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="时速"
+            android:textColor="#dedede"
+            android:textSize="15dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="路程"
+                android:textColor="#dedede"
+                android:textSize="15dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="能量"
+                android:textColor="#dedede"
+                android:textSize="15dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
     </LinearLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:orientation="horizontal">
-       <Button
-           android:id="@+id/btStart"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:layout_weight="1"
-           android:background="@drawable/map_button_color"
-           android:text="开始跑步"
-           android:textColor="#ffffff"
-           android:layout_marginLeft="1dp"/>
-        <View
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:background="#ffffff"/>
-        <Button
-            android:id="@+id/btStop"
+        android:layout_weight="1"
+        android:layout_below="@+id/linearLayout3"
+        android:background="#cc000000"
+        android:id="@+id/linearLayout4">
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/map_button_color"
-            android:text="结束跑步"
+            android:layout_weight="1">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/running_speed"
             android:textColor="#ffffff"
-            android:layout_marginRight="1dp"/>
+            android:textSize="25dp"
+            android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/running_distance"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:layout_gravity="center_vertical"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/tvDistance"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/running_energy"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:layout_gravity="center_vertical"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/tvCaloric"/>
+        </RelativeLayout>
     </LinearLayout>
 
 
-        <TableLayout
-            android:background="#6eabcf"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/t_top">
-            <TableRow android:layout_weight="1">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:src="@drawable/running_time"
-                    android:id="@+id/imageView2"
-                    android:layout_marginTop="8dp"
-                    android:layout_weight="1" />
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:src="@drawable/running_pace"
-                    android:id="@+id/imageView3"
-                    android:layout_marginTop="8dp"
-                    android:layout_weight="1"/>
-            </TableRow>
 
-            <TableRow android:layout_weight="1">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="时间"
-                    android:textColor="#ffffff"
-                    android:textSize="16dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_gravity="center_vertical" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_alignParentBottom="true"
+    android:layout_marginBottom="50dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="right">
+       <Button
+           android:id="@+id/btStart"
+           android:layout_width="120dp"
+           android:layout_height="50dp"
+           android:background="@drawable/map_button_color"
+           android:text="开始跑步"
+           android:textColor="#ffffff"
+           android:layout_marginRight="20dp"/>
+    </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="步数"
-                    android:textColor="#ffffff"
-                    android:textSize="16dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_gravity="center_vertical" />
-            </TableRow>
-
-                <TableRow android:layout_weight="1">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/running_time"
-                        android:textColor="#ffffff"
-                        android:textSize="25dp"
-                        android:id="@+id/tvTime"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:layout_gravity="center_vertical" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/running_pace"
-                        android:textColor="#ffffff"
-                        android:textSize="25dp"
-                        android:id="@+id/tvSteps"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:layout_gravity="center_vertical" />
-                </TableRow>
-
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="1px"
-                android:layout_gravity="center_horizontal"
-                android:background="#ffffff" />
-
-                <TableRow android:layout_weight="1">
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:src="@drawable/running_distance"
-                        android:id="@+id/imageView5"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="1"/>
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:src="@drawable/running_energy"
-                        android:id="@+id/imageView4"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="1"/>
-                </TableRow>
-
-            <TableRow android:layout_weight="1">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="路程"
-                    android:textColor="#ffffff"
-                    android:textSize="16dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_gravity="center_vertical" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="能量"
-                    android:textColor="#ffffff"
-                    android:textSize="16dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_gravity="center_vertical" />
-            </TableRow>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="left">
+        <Button
+            android:id="@+id/btStop"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:background="@drawable/map_button2_color"
+            android:text="结束跑步"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="20dp"/>
+    </LinearLayout>
+</LinearLayout>
 
 
-
-
-
-                <TableRow android:layout_weight="1">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/running_distance"
-                        android:textColor="#ffffff"
-                        android:textSize="25dp"
-                        android:layout_weight="1"
-                        android:id="@+id/tvDistance"
-                        android:gravity="center"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/running_energy"
-                        android:textColor="#ffffff"
-                        android:textSize="25dp"
-                        android:id="@+id/tvCaloric"
-                        android:gravity="center"
-                        android:layout_weight="1"/>
-                </TableRow>
-
-        </TableLayout>
-   </LinearLayout>
+   </RelativeLayout>

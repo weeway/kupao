@@ -85,7 +85,8 @@
                 android:id="@+id/id_img2_back"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/lm_button2_change"/>
+                android:background="@drawable/lm_button2_change"
+                android:onClick="change2"/>
 
             <ImageView
                 android:id="@+id/id_img2"
@@ -94,12 +95,12 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="30dp"
-                android:background="@drawable/img_my_message"/>
+                android:background="@drawable/img_histroy"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="我的消息"
+                android:text="跑步历史"
                 android:textColor="#ffffff"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/id_img2"

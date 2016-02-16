@@ -120,7 +120,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     public void initView(Bundle savedInstanceState) {
         tvDistance = (TextView) findViewById(R.id.tvDistance);
         tvShowTime = (TextView) findViewById(R.id.tvTime);
-        tvSteps = (TextView) findViewById(R.id.tvSteps);
+//        tvSteps = (TextView) findViewById(R.id.tvSteps);
         btStart = (Button) findViewById(R.id.btStart);
         btStop = (Button) findViewById(R.id.btStop);
         mapView = (MapView) findViewById(R.id.map);
@@ -161,7 +161,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             mListener.onLocationChanged(loc);
             displayDistance(length);
             displayCaloric();
-            displaySteps();
+//            displaySteps();
             drawTrace(loc);
             camMoveToCurPos(loc);
             if(secForStoreChartData%(5*60) == 0){
@@ -188,10 +188,10 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     }
 
     //显示步数
-    public void displaySteps() {
-        double steps = length * 100 / 65;
-        tvSteps.setText("" + (int) steps);
-    }
+//    public void displaySteps() {
+//        double steps = length * 100 / 65;
+//        tvSteps.setText("" + (int) steps);
+//    }
 
     //显示跑步距离
     public void displayDistance(double length) {
@@ -595,7 +595,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                     //SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd    hh:mm:ss");
                     //String date = sDateFormat.format(new Date());
                     String time = tvShowTime.getText().toString();
-                    String steps = tvSteps.getText().toString();
+//                    String steps = tvSteps.getText().toString();
                     String distance = Integer.toString(disFirstPart) + "." + Integer.toString(disSecondPart);
                     String caloric = Integer.toString(calFirstPart) + "." + Integer.toString(calSecondPart);
                     String state;
@@ -614,7 +614,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                     cv.put("date", starttime);
                     cv.put("distance", distance);
                     cv.put("time", time);
-                    cv.put("theyCount", steps);
+//                    cv.put("theyCount", steps);
                     cv.put("energy", caloric);
                     cv.put("motionState", state);
                     db.insert("usertb", null, cv);
