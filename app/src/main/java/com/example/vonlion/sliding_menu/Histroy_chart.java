@@ -98,37 +98,50 @@ public class Histroy_chart extends Activity {
         Toast.makeText(getApplicationContext(),"本次采集"+i+"个"+"数据",Toast.LENGTH_LONG).show();
         dataSet=new LineDataSet(yVals,"速度-时间 数据");
 //        dataSet.setDrawFilled(true);
-        dataSet.setColors(new int[]{0xff00ffff});
-        dataSet.setDrawCubic(true);
-        dataSet.setDrawValues(false);
-        dataSet.setCircleSize(3.4f);
-        dataSet.setLineWidth(3f);
-        dataSet.setCircleColor(0x77caff70);
-        dataSet.setCircleColorHole(0x77caff70);
-        dataSet.setDrawCircles(false);
+        dataSet.setColors(new int[]{0xff00ffff});//设置曲线颜色
+        dataSet.setDrawCubic(true);//将折线设置成曲线
+        dataSet.setDrawValues(false);//不显示曲线上的数据
+        dataSet.setCircleSize(3.4f);//数据点大小
+        dataSet.setLineWidth(3f);//曲线宽度
+        dataSet.setCircleColor(0x77caff70);//数据点外围颜色
+        dataSet.setCircleColorHole(0x77caff70);//数据点中心颜色
+        dataSet.setDrawCircles(false);//不显示数据点
         data=new LineData(xVals,dataSet);
         XAxis xAxis = lineChart.getXAxis();
         YAxis leftYAxis = lineChart.getAxisLeft();
         YAxis rightYAxis = lineChart.getAxisRight();
-        rightYAxis.setStartAtZero(true);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.chart_bg2);
-        BitmapDrawable bitmapDrawable = new BitmapDrawable(bitmap);
-        Drawable drawable = bitmapDrawable;
+        rightYAxis.setStartAtZero(true);//Y轴从0开始
+
+        Bitmap bitmap;
+        BitmapDrawable bitmapDrawable;
+        Drawable drawable = null;
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inDither=false;                     //Disable Dithering mode
+        options.inPurgeable=true;                   //Tell to gc that whether it needs free memory, the Bitmap can be cleared
+        options.inMutable = true;
+        options.inSampleSize = 4;
+        options.inTempStorage=new byte[32 * 1024];
+
+        bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.chart_bg2,options);
+        bitmapDrawable = new BitmapDrawable(bitmap);
+        drawable = bitmapDrawable;
+        System.gc();
+
         xAxis.setDrawGridLines(false);
         xAxis.setTextColor(0xeeffffff);
         leftYAxis.setDrawGridLines(false);
         leftYAxis.setTextColor(0xeeffffff);
-        rightYAxis.setEnabled(false);
-        lineChart.setDrawGridBackground(false);
-        lineChart.setBackgroundColor(0x08000000);
+        rightYAxis.setEnabled(false);//取消显示右Y轴
+        lineChart.setDrawGridBackground(false);//取消显示网格背景
+        lineChart.setBackgroundColor(0x08000000);//地图背景颜色
         lineChart.setData(data);
         lineChart.setSelected(false);
         lineChart.dispatchSetSelected(false);
-        lineChart.setDescriptionColor(0x11ffffff);
-        lineChart.setBackground(drawable);
+        lineChart.setDescriptionColor(0x11ffffff);//图表介绍文本的颜色
+        lineChart.setBackground(drawable); //图表背景图片
         lineChart.setDescription("");
-        lineChart.setBorderColor(0xeeffffff);
-        lineChart.animateXY(2000,2000);
+        lineChart.setBorderColor(0xeeffffff);//轴线颜色
+        lineChart.animateXY(2000,2000);//X、Y轴动画2s、2s
 
         showTrace();
     }
@@ -200,7 +213,7 @@ public class Histroy_chart extends Activity {
     public void camMoveToCurPos(LatLng latLng) {
         CameraPosition cameraPosition;
         CameraUpdate cameraUpadate;
-        cameraPosition = new CameraPosition(latLng, 12.0f, 0.0f, 0.0f);
+        cameraPosition = new CameraPosition(latLng, 16.0f, 0.0f, 0.0f);
         cameraUpadate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         aMap.animateCamera(cameraUpadate);
     }
