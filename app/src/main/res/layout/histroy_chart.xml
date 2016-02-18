@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/img_frame_background3">
+    android:background="@drawable/img_frame_background5"
+    android:layout_height="match_parent">
+    <!--android:background="@drawable/img_frame_background5"-->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,10 +36,13 @@
     </RelativeLayout>
 
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp">
     <!--轨迹图-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="170dp"
+        android:layout_height="match_parent"
         android:background="#636363">
         <com.amap.api.maps.MapView
             android:id="@+id/traceMap"
@@ -49,9 +53,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginTop="5dp"
-        android:background="#77000000"
-        android:orientation="horizontal">
+        android:background="#aa000000"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout5">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -108,9 +112,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:background="#77000000"
+        android:background="#aa000000"
         android:orientation="horizontal"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="4dp"
+        android:layout_below="@id/linearLayout5"
+        android:id="@+id/linearLayout6">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -158,7 +164,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:background="#77000000">
+        android:background="#aa000000"
+        android:layout_below="@id/linearLayout6">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -205,161 +212,7 @@
                 android:id="@+id/energy"/>
         </RelativeLayout>
     </LinearLayout>
-
-
-
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="120dp"-->
-        <!--android:background="#ffffff"-->
-        <!--android:orientation="horizontal">-->
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="120dp"-->
-            <!--android:layout_weight="7">-->
-        <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="120dp">-->
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/histroy_distance"-->
-            <!--android:textColor="#000000"-->
-            <!--android:textSize="50dp"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:layout_marginLeft="30dp"-->
-            <!--android:textStyle="bold|italic"-->
-            <!--android:id="@+id/distance1"/>-->
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="km"-->
-                <!--android:textColor="#000000"-->
-                <!--android:textSize="21dp"-->
-                <!--android:layout_alignBottom="@+id/distance1"-->
-                <!--android:layout_toRightOf="@+id/distance1"-->
-                <!--android:layout_marginLeft="11dp" />-->
-        <!--</RelativeLayout>-->
-        <!--</LinearLayout>-->
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="120dp"-->
-            <!--android:layout_weight="8"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1">-->
-                <!--<RelativeLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent">-->
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textColor="#8f8f8f"-->
-                <!--android:text="时速(km/h) :"-->
-                <!--android:textSize="13dp"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:id="@+id/textView6"-->
-                <!--android:layout_marginRight="10dp"/>-->
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textColor="#000000"-->
-                <!--android:text="@string/histroy_speed"-->
-                <!--android:textSize="20dp"-->
-                <!--android:id="@+id/speed"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_toRightOf="@+id/textView6" />-->
-
-
-                    <!--<View-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="1px"-->
-                    <!--android:background="#c7c7c7"-->
-                    <!--android:layout_alignParentBottom="true" />-->
-                <!--</RelativeLayout>-->
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1">-->
-                <!--<RelativeLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent">-->
-
-                    <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:textColor="#8f8f8f"-->
-                        <!--android:text="时间(min) :   "-->
-                        <!--android:textSize="13dp"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:id="@+id/textView7"-->
-                        <!--android:layout_marginRight="10dp"/>-->
-
-                    <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:textColor="#000000"-->
-                        <!--android:text="@string/histroy_time"-->
-                        <!--android:textSize="20dp"-->
-                        <!--android:id="@+id/time"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:layout_toRightOf="@+id/textView7" />-->
-
-
-                    <!--<View-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="1px"-->
-                        <!--android:background="#c7c7c7"-->
-                        <!--android:layout_alignParentBottom="true"-->
-                        <!--android:layout_alignParentLeft="true" />-->
-                <!--</RelativeLayout>-->
-            <!--</LinearLayout>-->
-
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1">-->
-                <!--<RelativeLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent">-->
-
-                    <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:textColor="#8f8f8f"-->
-                        <!--android:text="能量(kJ) :     "-->
-                        <!--android:textSize="13dp"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:id="@+id/textView8"-->
-                        <!--android:layout_marginRight="11dp"/>-->
-
-                    <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:textColor="#000000"-->
-                        <!--android:text="@string/histroy_energy"-->
-                        <!--android:textSize="20dp"-->
-                        <!--android:id="@+id/energy"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:layout_toRightOf="@+id/textView8" />-->
-
-
-                <!--</RelativeLayout>-->
-            <!--</LinearLayout>-->
-        <!--</LinearLayout>-->
-    <!--</LinearLayout>-->
-
+    </RelativeLayout>
 
     <!--图表-->
     <LinearLayout

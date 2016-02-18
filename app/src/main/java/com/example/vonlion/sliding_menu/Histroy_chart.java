@@ -72,7 +72,7 @@ public class Histroy_chart extends Activity {
             }
         }
         db.close();
-        putPointsInChart();
+//        putPointsInChart();
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
