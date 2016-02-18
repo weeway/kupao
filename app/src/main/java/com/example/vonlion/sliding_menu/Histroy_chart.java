@@ -1,9 +1,15 @@
 package com.example.vonlion.sliding_menu;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,7 +29,6 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
@@ -70,6 +75,7 @@ public class Histroy_chart extends Activity {
         putPointsInChart();
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void putPointsInChart(){
         DatabaseHelper database = new DatabaseHelper(this);
         SQLiteDatabase db = database.getReadableDatabase();
@@ -91,19 +97,37 @@ public class Histroy_chart extends Activity {
         }
         Toast.makeText(getApplicationContext(),"本次采集"+i+"个"+"数据",Toast.LENGTH_LONG).show();
         dataSet=new LineDataSet(yVals,"速度-时间 数据");
-        dataSet.setColors(ColorTemplate.PASTEL_COLORS);
+//        dataSet.setDrawFilled(true);
+        dataSet.setColors(new int[]{0xff00ffff});
         dataSet.setDrawCubic(true);
+        dataSet.setDrawValues(false);
+        dataSet.setCircleSize(3.4f);
+        dataSet.setLineWidth(3f);
+        dataSet.setCircleColor(0x77caff70);
+        dataSet.setCircleColorHole(0x77caff70);
+        dataSet.setDrawCircles(false);
         data=new LineData(xVals,dataSet);
         XAxis xAxis = lineChart.getXAxis();
         YAxis leftYAxis = lineChart.getAxisLeft();
         YAxis rightYAxis = lineChart.getAxisRight();
+        rightYAxis.setStartAtZero(true);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.chart_bg2);
+        BitmapDrawable bitmapDrawable = new BitmapDrawable(bitmap);
+        Drawable drawable = bitmapDrawable;
         xAxis.setDrawGridLines(false);
+        xAxis.setTextColor(0xeeffffff);
         leftYAxis.setDrawGridLines(false);
+        leftYAxis.setTextColor(0xeeffffff);
         rightYAxis.setEnabled(false);
         lineChart.setDrawGridBackground(false);
-        lineChart.setBackgroundColor(0xFFF0FFFF);
+        lineChart.setBackgroundColor(0x08000000);
         lineChart.setData(data);
+        lineChart.setSelected(false);
+        lineChart.dispatchSetSelected(false);
+        lineChart.setDescriptionColor(0x11ffffff);
+        lineChart.setBackground(drawable);
         lineChart.setDescription("");
+        lineChart.setBorderColor(0xeeffffff);
         lineChart.animateXY(2000,2000);
 
         showTrace();
@@ -193,5 +217,6 @@ public class Histroy_chart extends Activity {
         aMap.getUiSettings().setMyLocationButtonEnabled(false);
         aMap.getUiSettings().setZoomControlsEnabled(false);
         aMap.setMyLocationEnabled(true);
+//        aMap.setMapType(AMap.MAP_TYPE_NIGHT);
     }
 }
