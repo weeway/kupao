@@ -72,7 +72,7 @@ public class Histroy_chart extends Activity {
             }
         }
         db.close();
-        putPointsInChart();
+//        putPointsInChart();
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -125,7 +125,7 @@ public class Histroy_chart extends Activity {
         lineChart.setSelected(false);
         lineChart.dispatchSetSelected(false);
         lineChart.setDescriptionColor(0x11ffffff);
-        lineChart.setBackground(drawable);
+//        lineChart.setBackground(drawable);
         lineChart.setDescription("");
         lineChart.setBorderColor(0xeeffffff);
         lineChart.animateXY(2000,2000);
