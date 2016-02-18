@@ -268,7 +268,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         ArcOptions arcOptions;
         arcOptions = new ArcOptions();
         arcOptions.visible(true);
-        arcOptions.strokeWidth(13f);
+        arcOptions.strokeWidth(18f);
         arcOptions.strokeColor(0xFF0080FF);
         arcOptions.strokeColor(choseColor(loc));
         aMap.addArc(arcOptions.point(latLngs[0], latLngs[1], latLngs[2]));
@@ -374,7 +374,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             msg.obj = loc;
             mListener.onLocationChanged(loc);
             mHandler.sendMessage(msg);
-            if (loc.getAccuracy() < 36f) {
+            if (loc.getAccuracy() < 200f) {
                 las[flag] = new LatLng(loc.getLatitude(), loc.getLongitude());
                 storeDataForTrace(las[flag],loc.getSpeed());
                 if (flag == 1) {

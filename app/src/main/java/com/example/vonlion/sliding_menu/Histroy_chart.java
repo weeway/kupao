@@ -120,7 +120,6 @@ public class Histroy_chart extends Activity {
         LatLng[] latLng = new LatLng[3];
         int cnt = 0;
         latLng[1] = new LatLng(31.231706,121.472644);
-
         DatabaseHelper database = new DatabaseHelper(this);
         SQLiteDatabase db = database.getReadableDatabase();
         Cursor cursor = db.query("tracetb", null, "starttime like?", new String[]{starttime}, null, null, "starttime");
@@ -138,6 +137,7 @@ public class Histroy_chart extends Activity {
                 Log.i("DataBase",cursor.getString(cursor.getColumnIndex("starttime")));
                 Log.i("DataBase",cursor.getString(cursor.getColumnIndex("latitude")));
                 Log.i("DataBase",cursor.getString(cursor.getColumnIndex("longitude")));
+                Log.i("DataBase",cursor.getString(cursor.getColumnIndex("speed")));
             }
             camMoveToCurPos(latLng[1]);
         }
