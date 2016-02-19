@@ -99,16 +99,16 @@ public class Histroy_chart extends Activity {
             }
         }
         Toast.makeText(getApplicationContext(),"本次采集"+i+"个"+"数据",Toast.LENGTH_LONG).show();
-        dataSet=new LineDataSet(yVals,"速度-时间 数据");
-//        dataSet.setDrawFilled(true);
-        dataSet.setColors(new int[]{0xff00ffff});//设置曲线颜色
+        dataSet=new LineDataSet(yVals,"");
+        dataSet.setDrawFilled(true);
+        dataSet.setColors(new int[]{0xffffffff});//设置曲线颜色
         dataSet.setDrawCubic(true);//将折线设置成曲线
         dataSet.setDrawValues(false);//不显示曲线上的数据
-        dataSet.setCircleSize(3.4f);//数据点大小
-        dataSet.setLineWidth(3f);//曲线宽度
-        dataSet.setCircleColor(0x77caff70);//数据点外围颜色
-        dataSet.setCircleColorHole(0x77caff70);//数据点中心颜色
-        dataSet.setDrawCircles(false);//不显示数据点
+        dataSet.setCircleSize(3f);//数据点大小
+        dataSet.setLineWidth(2.6f);//曲线宽度
+        dataSet.setCircleColor(0xffffffff);//数据点外围颜色
+        dataSet.setCircleColorHole(0xffffffff);//数据点中心颜色
+        dataSet.setDrawCircles(true);//显示数据点
         data=new LineData(xVals,dataSet);
         XAxis xAxis = lineChart.getXAxis();
         YAxis leftYAxis = lineChart.getAxisLeft();
@@ -122,10 +122,10 @@ public class Histroy_chart extends Activity {
         options.inDither=false;                     //Disable Dithering mode
         options.inPurgeable=true;                   //Tell to gc that whether it needs free memory, the Bitmap can be cleared
         options.inMutable = true;
-        options.inSampleSize = 3;
+        options.inSampleSize = 1;
         options.inTempStorage=new byte[32 * 1024];
 
-        bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.chart_bg2,options);
+        bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.chart_bg3,options);
         bitmapDrawable = new BitmapDrawable(bitmap);
         drawable = bitmapDrawable;
         System.gc();

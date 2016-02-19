@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@drawable/backgroind_map"
     android:layout_height="match_parent">
     <!--android:background="@drawable/img_frame_background5"-->
 
@@ -215,17 +214,29 @@
                 android:id="@+id/energy"/>
         </RelativeLayout>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/backgroind_map"
+        android:layout_above="@+id/linearLayout7"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="23dp"
+        android:background="@drawable/chart_bg3"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/linearLayout7"
+        android:orientation="horizontal"/>
     </RelativeLayout>
 
     <!--图表-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
-        android:background="#636363">
+        android:background="@drawable/chart_bg">
+
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/lineChart"
-            android:background="#44000000"
+            android:background="@drawable/chart_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
