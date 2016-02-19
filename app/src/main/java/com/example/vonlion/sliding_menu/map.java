@@ -374,7 +374,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             msg.obj = loc;
             mListener.onLocationChanged(loc);
             mHandler.sendMessage(msg);
-            if (loc.getAccuracy() < 200f) {
+            if (loc.getAccuracy() < 15f) {
                 las[flag] = new LatLng(loc.getLatitude(), loc.getLongitude());
                 storeDataForTrace(las[flag],loc.getSpeed());
                 if (flag == 1) {
@@ -501,19 +501,19 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                 }
             }
         } else if (v.getId() == R.id.btStop) {
-            //取消定位
+            //取消广播
+            if (null != alarmReceiver) {
+                unregisterReceiver(alarmReceiver);
+                alarmReceiver = null;
+            }
+
+               //取消定位
             mListener = null;
             if (locationClient != null) {
                 locationClient.removeUpdates(this);
                 locationClient.destroy();
             }
             locationClient = null;
-
-            //取消广播
-            if (null != alarmReceiver) {
-                unregisterReceiver(alarmReceiver);
-                alarmReceiver = null;
-            }
 
             //停止计时
             if (task != null) {

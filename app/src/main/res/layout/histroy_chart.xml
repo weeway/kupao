@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@drawable/img_frame_background5"
+    android:background="@drawable/backgroind_map"
     android:layout_height="match_parent">
     <!--android:background="@drawable/img_frame_background5"-->
 
@@ -43,9 +43,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#636363">
+        android:background="@drawable/backgroind_map">
+        <!--android:background="#636363">-->
         <com.amap.api.maps.MapView
             android:id="@+id/traceMap"
+            android:background="@drawable/backgroind_map"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
@@ -53,7 +55,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="#aa000000"
+        android:background="#44000000"
         android:orientation="horizontal"
         android:id="@+id/linearLayout5">
         <LinearLayout
@@ -76,7 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" km"
-                    android:textColor="#b7b7b7"
+                    android:textColor="#dedede"
                     android:textSize="21dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="10dp"/>
@@ -93,13 +95,14 @@
                 android:text="@string/histroy_pace"
                 android:textColor="#ffffff"
                 android:textSize="40dp"
+                android:id="@+id/steps"
                 android:layout_marginLeft="30dp"
                 android:layout_gravity="center_vertical"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" 步"
-                android:textColor="#b7b7b7"
+                android:textColor="#dedede"
                 android:textSize="16dp"
                 android:id="@+id/pace"
                 android:layout_gravity="center_vertical"
@@ -112,7 +115,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:background="#aa000000"
+        android:background="#44000000"
         android:orientation="horizontal"
         android:layout_marginTop="4dp"
         android:layout_below="@id/linearLayout5"
@@ -164,7 +167,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:background="#aa000000"
+        android:background="#44000000"
         android:layout_below="@id/linearLayout6">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -222,6 +225,7 @@
         android:background="#636363">
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/lineChart"
+            android:background="#44000000"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>

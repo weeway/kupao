@@ -47,6 +47,7 @@ public class Histroy_chart extends Activity {
     private String starttime;
     private AMap aMap;
     private MapView traceMapView;
+    private TextView steps;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class Histroy_chart extends Activity {
         speed = (TextView)findViewById(R.id.speed);
         energy = (TextView)findViewById(R.id.energy);
         traceMapView = (MapView) findViewById(R.id.traceMap);
+        steps = (TextView) findViewById(R.id.steps);
         traceMapView.onCreate(savedInstanceState);
         DatabaseHelper database = new DatabaseHelper(this);
         SQLiteDatabase db = database.getReadableDatabase();
@@ -69,10 +71,11 @@ public class Histroy_chart extends Activity {
                 time.setText(cursor.getString(cursor.getColumnIndex("time")));
                 energy.setText(cursor.getString(cursor.getColumnIndex("energy")));
                 speed.setText(cursor.getString(cursor.getColumnIndex("speed")));
+                steps.setText(cursor.getString(cursor.getColumnIndex("theyCount")));
             }
         }
         db.close();
-//        putPointsInChart();
+        putPointsInChart();
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -119,7 +122,7 @@ public class Histroy_chart extends Activity {
         options.inDither=false;                     //Disable Dithering mode
         options.inPurgeable=true;                   //Tell to gc that whether it needs free memory, the Bitmap can be cleared
         options.inMutable = true;
-        options.inSampleSize = 4;
+        options.inSampleSize = 3;
         options.inTempStorage=new byte[32 * 1024];
 
         bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.chart_bg2,options);
@@ -230,6 +233,6 @@ public class Histroy_chart extends Activity {
         aMap.getUiSettings().setMyLocationButtonEnabled(false);
         aMap.getUiSettings().setZoomControlsEnabled(false);
         aMap.setMyLocationEnabled(true);
-//        aMap.setMapType(AMap.MAP_TYPE_NIGHT);
+        aMap.setMapType(AMap.MAP_TYPE_NORMAL);
     }
 }
