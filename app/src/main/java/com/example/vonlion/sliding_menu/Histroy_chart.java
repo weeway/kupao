@@ -147,7 +147,7 @@ public class Histroy_chart extends Activity {
         Legend legend = lineChart.getLegend();
         legend.setEnabled(false);
         lineChart.setBorderColor(0xeeffffff);//轴线颜色
-        lineChart.animateXY(2000,2000);//X、Y轴动画2s、2s
+        lineChart.animateXY(3000,3000);//X、Y轴动画2s、2s
 
         showTrace();
     }

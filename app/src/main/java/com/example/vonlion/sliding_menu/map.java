@@ -401,6 +401,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             cv.put("latitude",String.valueOf(latLng.latitude));
             cv.put("longitude",String.valueOf(latLng.longitude));
             cv.put("speed",String.valueOf(speed));
+            cv.put("username",USER_NAME);
             db.insert("tracetb",null,cv);
             cv.clear();
     }

@@ -38,6 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + ");";
         db.execSQL(sqlChart);
         String sqlTrace = "create table if not exists tracetb(_id integer primary key autoincrement,"
+                + "username text,"
                 + "starttime text,"
                 + "latitude text,"
                 + "longitude text,"
