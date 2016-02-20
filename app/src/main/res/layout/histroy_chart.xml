@@ -31,7 +31,8 @@
             android:layout_height="35dp"
             android:layout_margin="3dp"
             android:background="@drawable/img_share"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"
+            android:onClick="share"/>
     </RelativeLayout>
 
 
