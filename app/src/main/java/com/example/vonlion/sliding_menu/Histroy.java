@@ -37,6 +37,7 @@ public class Histroy  extends Activity {
         USER_NAME =share.getString("username", "");
         if(USER_NAME!=null) {
             cursor = db.query("usertb", null, "name like?", new String[]{USER_NAME}, null, null, "name");
+            Toast.makeText(Histroy.this.getApplicationContext(), "USER_NAME不为为空", Toast.LENGTH_SHORT).show();
         }
         else {
             Toast.makeText(Histroy.this.getApplicationContext(), "USER_NAME为空", Toast.LENGTH_SHORT).show();
@@ -79,7 +80,7 @@ public class Histroy  extends Activity {
         List<Map<String, Object>> list1 = new ArrayList<Map<String, Object>>();
 
         if(USER_NAME!=null) {
-            if (cursor.moveToFirst()) {
+           // if (cursor.moveToFirst()) {
                 while (cursor.moveToNext()) {
                     Map<String, Object> map = new HashMap<String, Object>();
                     map.put("date", cursor.getString(cursor.getColumnIndex("date")));
@@ -108,7 +109,7 @@ public class Histroy  extends Activity {
                     list1.add(map);
                 }
 
-            }
+            //}
         }
         return list1;
     }
