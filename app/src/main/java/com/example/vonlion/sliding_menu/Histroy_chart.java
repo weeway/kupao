@@ -24,6 +24,7 @@ import com.amap.api.maps.model.ArcOptions;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -143,6 +144,8 @@ public class Histroy_chart extends Activity {
         lineChart.setDescriptionColor(0x11ffffff);//图表介绍文本的颜色
         lineChart.setBackground(drawable); //图表背景图片
         lineChart.setDescription("");
+        Legend legend = lineChart.getLegend();
+        legend.setEnabled(false);
         lineChart.setBorderColor(0xeeffffff);//轴线颜色
         lineChart.animateXY(2000,2000);//X、Y轴动画2s、2s
 
