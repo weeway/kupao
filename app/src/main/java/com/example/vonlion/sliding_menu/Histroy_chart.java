@@ -3,16 +3,22 @@ package com.example.vonlion.sliding_menu;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,18 +30,31 @@ import com.amap.api.maps.model.ArcOptions;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.squareup.okhttp.internal.Util;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXImageObject;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+
 
 /**
  * Created by Vonlion on 2016/2/11.
  */
 public class Histroy_chart extends Activity {
+    private static final String APP_ID = "wx701d502de528777e";
+    private IWXAPI api;
     private TextView distance1;
     private TextView time;
     private TextView energy;
@@ -62,6 +81,11 @@ public class Histroy_chart extends Activity {
         traceMapView = (MapView) findViewById(R.id.traceMap);
         steps = (TextView) findViewById(R.id.steps);
         traceMapView.onCreate(savedInstanceState);
+
+        //接入微信
+        api = WXAPIFactory.createWXAPI(this,APP_ID,true);
+        api.registerApp(APP_ID);
+
         DatabaseHelper database = new DatabaseHelper(this);
         SQLiteDatabase db = database.getReadableDatabase();
         Cursor cursor = db.query("usertb", null, "date like?", new String[]{starttime}, null, null, "date");
@@ -143,8 +167,10 @@ public class Histroy_chart extends Activity {
         lineChart.setDescriptionColor(0x11ffffff);//图表介绍文本的颜色
         lineChart.setBackground(drawable); //图表背景图片
         lineChart.setDescription("");
+        Legend legend = lineChart.getLegend();
+        legend.setEnabled(false);
         lineChart.setBorderColor(0xeeffffff);//轴线颜色
-        lineChart.animateXY(2000,2000);//X、Y轴动画2s、2s
+        lineChart.animateXY(3000,3000);//X、Y轴动画2s、2s
 
         showTrace();
     }
@@ -234,5 +260,104 @@ public class Histroy_chart extends Activity {
         aMap.getUiSettings().setZoomControlsEnabled(false);
         aMap.setMyLocationEnabled(true);
         aMap.setMapType(AMap.MAP_TYPE_NORMAL);
+    }
+
+    // 获取截图
+    private static Bitmap myShot(Activity activity) {
+
+        // View是你需要截图的View
+        View view = activity.getWindow().getDecorView();
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache();
+        Bitmap b1 = view.getDrawingCache();
+
+        // 获取状态栏高度
+        Rect frame = new Rect();
+        activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+        int statusBarHeight = frame.top;
+        System.out.println(statusBarHeight);
+
+        // 获取屏幕长和高
+        int width = activity.getWindowManager().getDefaultDisplay().getWidth();
+        int height = activity.getWindowManager().getDefaultDisplay()
+                .getHeight();
+        DisplayMetrics dm = activity.getResources().getDisplayMetrics();
+        int displayWidth = dm.widthPixels;
+        int displayHeight = dm.heightPixels;
+
+        //
+        int contentTop = activity.getWindow()
+                .findViewById(Window.ID_ANDROID_CONTENT).getTop();
+        // statusBarHeight是上面所求的状态栏的高度
+        int titleBarHeight = contentTop - statusBarHeight;
+        int cutHeight = titleBarHeight + statusBarHeight;
+
+        int bHeight = b1.getHeight();
+        int nHeight=height - cutHeight;
+      if((cutHeight +nHeight)>bHeight){
+            nHeight = bHeight - cutHeight;
+        }
+                // 去掉标题栏
+                // Bitmap b = Bitmap.createBitmap(b1, 0, 25, 320, 455);
+                Bitmap b = Bitmap.createBitmap(b1, 0, cutHeight, width,  nHeight);
+        view.destroyDrawingCache();
+        //问题
+//       if (y + height > source.getHeight()) {
+//              throw new IllegalArgumentException("y + height must be <= bitmap.height()");
+//          }
+        return b;
+    }
+
+    //将bitmap转为byte格式数组
+   public byte[] bmpToByteArray(final Bitmap bitmap,final boolean needRecycle){
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100,output);
+        if(needRecycle){
+            bitmap.recycle();
+        }
+        byte[] result = output.toByteArray();
+        try{
+            output.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+   //获取唯一标识请求
+    private String buildTransaction(final String type){
+        return (type == null)?String.valueOf(System.currentTimeMillis()):type+System.currentTimeMillis();
+    }
+
+    //分享到微信朋友圈n
+
+    public void share(View view) {
+        (new Thread(new Runnable() {
+            public void run() {
+               // Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.drawable.index);
+                Bitmap bmp = myShot(Histroy_chart.this);
+                WXImageObject imgObj = new WXImageObject(bmp);
+                WXMediaMessage msg = new WXMediaMessage();
+                msg.mediaObject = imgObj;
+
+                //设置缩列图
+                Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp,120,150,true);
+                bmp.recycle();
+                msg.thumbData = bmpToByteArray(thumbBmp,true);
+
+                //构造一个Req
+                SendMessageToWX.Req req = new SendMessageToWX.Req();
+                req.transaction = buildTransaction("img");
+                req.message = msg;
+                req.scene = SendMessageToWX.Req.WXSceneTimeline;
+
+                api.sendReq(req);
+                //api.openWXApp();
+
+            }
+        })).start();
+        //Bitmap bmp = myShot(this);
+
     }
 }
