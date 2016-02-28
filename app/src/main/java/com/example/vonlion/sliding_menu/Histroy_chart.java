@@ -146,8 +146,8 @@ public class Histroy_chart extends Activity {
         options.inDither=false;                     //Disable Dithering mode
         options.inPurgeable=true;                   //Tell to gc that whether it needs free memory, the Bitmap can be cleared
         options.inMutable = true;
-        options.inSampleSize = 1;
-        options.inTempStorage=new byte[32 * 1024];
+        options.inSampleSize = 2;
+        options.inTempStorage=new byte[16 * 1024];
 
         bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.chart_bg3,options);
         bitmapDrawable = new BitmapDrawable(bitmap);
