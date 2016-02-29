@@ -2,6 +2,7 @@ package com.example.vonlion.sliding_menu;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -43,6 +44,10 @@ public class main_interface extends Activity{
     }
 
     public void change_alpha(View v) {//注销
+        SharedPreferences share = getSharedPreferences("user-password", map.MODE_PRIVATE);
+        SharedPreferences.Editor editor = share.edit();
+        editor.putBoolean("isCheck",false);
+        editor.commit();
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);
         overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);

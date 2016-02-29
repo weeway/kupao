@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,8 +27,11 @@ public class Login extends Activity {
 
     private EditText username;
     private EditText password;
-    String msg="pp";
+    String msg="网络不可用";
     private SlidingMenu mLeftMenu;
+    private CheckBox cbStorePass;
+    private Button bt;
+
     //public  static String  USER_NAME;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +39,10 @@ public class Login extends Activity {
         setContentView(R.layout.login);
         username = (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
+        cbStorePass = (CheckBox) findViewById(R.id.cbStorePass);
         mLeftMenu = (SlidingMenu)findViewById(R.id.id_menu);
-
+        bt = (Button) findViewById(R.id.button_left);
+        SharedPreferences sharedPreferences = getSharedPreferences("user-password",map.MODE_PRIVATE);
         findViewById(R.id.traceroute_rootview).setOnClickListener(new View.OnClickListener() {
             //点击屏幕外取消输入框
             @Override
@@ -47,11 +54,21 @@ public class Login extends Activity {
                         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                         break;
                 }
-
             }
         });
 
-
+        if(sharedPreferences.contains("username")&&sharedPreferences.contains("password")
+                &&sharedPreferences.getBoolean("isCheck",false)){
+            username.setText(sharedPreferences.getString("username",""));
+            password.setText(sharedPreferences.getString("password",""));
+            try {
+                change_roll(bt);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
     public void toggleMenu(View view){
         mLeftMenu.toggle();
@@ -70,6 +87,14 @@ public class Login extends Activity {
     public void change_roll(View v) throws ParseException, IOException, JSONException {
         final String name = this.username.getText().toString();
         final String pwd = this.password.getText().toString();
+
+        SharedPreferences share = getSharedPreferences("user-password", map.MODE_PRIVATE);
+        SharedPreferences.Editor editor = share.edit();
+        editor.putString("username",name);
+        editor.putString("password",pwd);
+        editor.putBoolean("isCheck",cbStorePass.isChecked()?true:false);
+        editor.commit();
+
         final Intent intent = new Intent(this, main_interface.class);
         (new Thread(new Runnable() {
             public void run() {
