@@ -362,7 +362,6 @@ public class Histroy_chart extends Activity implements AMap.OnMapScreenShotListe
                 options.inTempStorage=new byte[16 * 1024];
                 Bitmap bitmap1 = BitmapFactory.decodeFile("/sdcard/history_map_trace.png/",options);
                 Bitmap bitmap2 = BitmapFactory.decodeFile("/sdcard/朋友圈.png/",options);
-
                 JointBitmapView jointBitmapView = new JointBitmapView(getApplicationContext(),bitmap1,bitmap2);
 
                 Bitmap bmp = jointBitmapView.bitmap;
@@ -414,7 +413,6 @@ public class Histroy_chart extends Activity implements AMap.OnMapScreenShotListe
             bitmap = newBitmap(bit1,bit2);
         }
         public Bitmap newBitmap(Bitmap bit1,Bitmap bit2){
-
             int width = bit1.getWidth();
             int height = bit1.getHeight() + bit2.getHeight();
             //创建一个空的Bitmap(内存区域),宽度等于第一张图片的宽度，高度等于两张图片高度总和
