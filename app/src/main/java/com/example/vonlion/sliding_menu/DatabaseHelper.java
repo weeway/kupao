@@ -45,6 +45,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "speed text"
                 + ");";
         db.execSQL(sqlTrace);
+
+        //用户资料表
+        String sqldata = "create table if not exists userdata(_id integer primary key autoincrement,"
+                + "username text,"
+                + "nickname text,"
+                + "height text,"
+                + "weight text,"
+                + "goal text,"
+                + "adress1 text,"
+                + "adress2 text,"
+                + "signature text"
+                + ")";
+        db.execSQL(sqldata);
     }
 
     public void onUpgrade(SQLiteDatabase arg0, int oldversion, int newversion) {

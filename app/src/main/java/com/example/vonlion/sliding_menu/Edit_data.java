@@ -1,7 +1,10 @@
 package com.example.vonlion.sliding_menu;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,14 +16,51 @@ import android.widget.TextView;
  * Created by fmq-pc on 2016/2/10.
  */
 public class Edit_data extends Activity {
+    TextView nickname;
+    TextView height;
+    TextView weight;
+    TextView goal;
+    TextView adress1;
+    TextView adress2;
+    TextView signature;
+    String  USER_NAME;
     @Override
+
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_data);
+        SharedPreferences share = getSharedPreferences("User_date",Login.MODE_PRIVATE);
+        USER_NAME =share.getString("username", "");
+
+        nickname = (TextView) findViewById(R.id.nickname);
+        height = (TextView) findViewById(R.id.height);
+        weight = (TextView) findViewById(R.id.weight);
+        goal = (TextView) findViewById(R.id.goal);
+        adress1 = (TextView) findViewById(R.id.adress1);
+        adress2 = (TextView) findViewById(R.id.adress2);
+        signature = (TextView) findViewById(R.id.signature);
+
 
     }
 
     public void change_alpha(View v){
+        DatabaseHelper database = new DatabaseHelper(this);
+        SQLiteDatabase db = database.getReadableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put("name", USER_NAME);
+        cv.put("nickname",nickname.getText().toString());
+        cv.put("height",height.getText().toString());
+        cv.put("weight",weight.getText().toString());
+        cv.put("goal",goal.getText().toString());
+        cv.put("adress1",adress1.getText().toString());
+        cv.put("adress2",adress2.getText().toString());
+        cv.put("signature",signature.getText().toString());
+
+        db.insert("userdata", null, cv);
+        cv.clear();
+        
         Intent intent = new Intent(this,main_interface.class);
 
         startActivity(intent);
