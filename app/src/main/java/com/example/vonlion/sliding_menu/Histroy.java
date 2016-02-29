@@ -25,7 +25,6 @@ import java.util.Map;
  */
 public class Histroy  extends Activity implements AdapterView.OnItemLongClickListener,ActionMode.Callback{
     Cursor cursor;
-    ListView listview;
     static String DATE;
     String USER_NAME;
     ActionMode mActionMode = null;
@@ -47,14 +46,14 @@ public class Histroy  extends Activity implements AdapterView.OnItemLongClickLis
 //        else {
 ////            Toast.makeText(Histroy.this.getApplicationContext(), "USER_NAME为空", Toast.LENGTH_SHORT).show();
 //        }
-//        ListView list = (ListView) findViewById(R.id.ListView01);
+//        ListView listView = (ListView) findViewById(R.id.ListView01);
 //        SimpleAdapter adapter = new SimpleAdapter(this, getData(), R.layout.historyitem,
 //                new String[]{"date", "img1", "state", "distance", "img2", "time", "img3", "step"},
 //                new int[]{R.id.date, R.id.img1, R.id.state, R.id.distance, R.id.img2, R.id.time, R.id.img3, R.id.step});
-//        list.setAdapter(adapter);
+//        listView.setAdapter(adapter);
 //
 //        //设置跳转到历史主界面
-//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            public void onItemClick(AdapterView<?> parent, View view,
 //                                    int position, long id) {
 //                ListView listView = (ListView) parent;
@@ -66,7 +65,7 @@ public class Histroy  extends Activity implements AdapterView.OnItemLongClickLis
 //            }
 //        });
 
-//        list.setOnItemLongClickListener(this);
+//        listView.setOnItemLongClickListener(this);
         refreshListView();
     }
 
@@ -81,14 +80,13 @@ public class Histroy  extends Activity implements AdapterView.OnItemLongClickLis
         SharedPreferences share = getSharedPreferences("User_date", map.MODE_PRIVATE);
         USER_NAME = share.getString("username", "");
         cursor = db.query("usertb", null, "name like?", new String[]{USER_NAME}, null, null, "name");
-        final ListView list = (ListView) findViewById(R.id.ListView01);
+        final ListView listView = (ListView) findViewById(R.id.ListView01);
         SimpleAdapter adapter = new SimpleAdapter(this, getData(), R.layout.historyitem,
                 new String[]{"date", "img1", "state", "distance", "img2", "time", "img3", "step"},
                 new int[]{R.id.date, R.id.img1, R.id.state, R.id.distance, R.id.img2, R.id.time, R.id.img3, R.id.step});
-        list.setAdapter(adapter);
-
+        listView.setAdapter(adapter);
         //设置跳转到历史主界面
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 ListView listView = (ListView) parent;
@@ -99,8 +97,7 @@ public class Histroy  extends Activity implements AdapterView.OnItemLongClickLis
                 startActivity(intent);
             }
         });
-
-        list.setOnItemLongClickListener(this);
+        listView.setOnItemLongClickListener(this);
     }
     
     private List<Map<String,Object>> getData() {

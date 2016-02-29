@@ -161,12 +161,24 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             displayCaloric();
             displayRealtimeSpeed(loc);
             drawTrace(loc);
+            collectAndStoreDataForTrace(loc);
             camMoveToCurPos(loc);
             if(secForStoreChartData%(5) == 0){
                 stroeDataForChart(loc);
             }
         }
     };
+
+    private void collectAndStoreDataForTrace(AMapLocation loc){
+        las[flag] = new LatLng(loc.getLatitude(), loc.getLongitude());
+        storeDataForTrace(las[flag], loc.getSpeed());
+        if (flag == 1) {
+            length += AMapUtils.calculateLineDistance(las[0], las[1]);
+            las[0] = las[1];
+            flag = 0;
+        }
+        flag++;
+    }
 
     //储存画图表所需的数据
     public void stroeDataForChart(AMapLocation loc) {
@@ -367,6 +379,8 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
         }
     }
 
+    int flagLength = 0;
+    LatLng[] lasForLength = new LatLng[2];
     @Override
     public void onLocationChanged(AMapLocation loc) {
         if (null != loc) {
@@ -375,14 +389,14 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             mListener.onLocationChanged(loc);
             mHandler.sendMessage(msg);
             if (loc.getAccuracy() < 15f) {
-                las[flag] = new LatLng(loc.getLatitude(), loc.getLongitude());
-                storeDataForTrace(las[flag],loc.getSpeed());
-                if (flag == 1) {
-                    length += AMapUtils.calculateLineDistance(las[0], las[1]);
-                    las[0] = las[1];
-                    flag = 0;
+                lasForLength[flagLength] = new LatLng(loc.getLatitude(), loc.getLongitude());
+//                storeDataForTrace(las[flag],loc.getSpeed());
+                if (flagLength == 1) {
+                    length += AMapUtils.calculateLineDistance(lasForLength[0], lasForLength[1]);
+                    lasForLength[0] = lasForLength[1];
+                    flagLength = 0;
                 }
-                flag++;
+                flagLength++;
 
                 calMaxMinLatLng(loc);
                 if (totalSec % 120 == 0) {
@@ -540,7 +554,7 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             aMap.animateCamera(cameraUpadate);
 
             //计算平均速度
-            averSpeed = (sum / times)*3.6;
+            averSpeed = (length/totalSec)*3.6;
 
             //获取轨迹截图
             aMap.getMapScreenShot(this);

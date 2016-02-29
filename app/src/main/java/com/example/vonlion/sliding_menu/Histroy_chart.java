@@ -2,21 +2,20 @@ package com.example.vonlion.sliding_menu;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
@@ -36,15 +35,16 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.squareup.okhttp.internal.Util;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXImageObject;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
-
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -52,7 +52,7 @@ import java.util.ArrayList;
 /**
  * Created by Vonlion on 2016/2/11.
  */
-public class Histroy_chart extends Activity {
+public class Histroy_chart extends Activity implements AMap.OnMapScreenShotListener{
     private static final String APP_ID = "wx701d502de528777e";
     private IWXAPI api;
     private TextView distance1;
@@ -99,11 +99,12 @@ public class Histroy_chart extends Activity {
             }
         }
         db.close();
-        putPointsInChart();
+        showTrace();
+        drawLineChart();
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public void putPointsInChart(){
+    public void drawLineChart(){
         DatabaseHelper database = new DatabaseHelper(this);
         SQLiteDatabase db = database.getReadableDatabase();
         Cursor cursor = db.query("charttb", null, "starttime like?", new String[]{starttime}, null, null, "starttime");
@@ -171,8 +172,6 @@ public class Histroy_chart extends Activity {
         legend.setEnabled(false);
         lineChart.setBorderColor(0xeeffffff);//轴线颜色
         lineChart.animateXY(3000,3000);//X、Y轴动画2s、2s
-
-        showTrace();
     }
 
     public void change_alpha(View v){
@@ -213,7 +212,7 @@ public class Histroy_chart extends Activity {
         ArcOptions arcOptions;
         arcOptions = new ArcOptions();
         arcOptions.visible(true);
-        arcOptions.strokeWidth(13f);
+        arcOptions.strokeWidth(18f);
         arcOptions.strokeColor(choseColor(speed));
         aMap.addArc(arcOptions.point(latLngs[0], latLngs[1], latLngs[2]));
     }
@@ -222,10 +221,10 @@ public class Histroy_chart extends Activity {
         int color = 0xFF4BEE12;
         float interval = 0.25f;
         int COLOR[] = { 0xff4bee12,0xff88ff16,0xffb4ff19,0xffdeff1d,0xffe9f71d,
-                        0xffeeec1d,0xfff2de1d,0xfff6ce1d,0xfff9bd1d,0xfffbae1d,
-                        0xfffb9e1d,0xfffc8d1d,0xfffd7e1d,0xfffc711d,0xfffe611d,
-                        0xfffd521d
-                      };
+                0xffeeec1d,0xfff2de1d,0xfff6ce1d,0xfff9bd1d,0xfffbae1d,
+                0xfffb9e1d,0xfffc8d1d,0xfffd7e1d,0xfffc711d,0xfffe611d,
+                0xfffd521d
+        };
         for(int index = 0; index < 16; index++){
             if(index*interval<speed && speed<=(index+1)*interval){
                 color = COLOR[index];
@@ -242,7 +241,7 @@ public class Histroy_chart extends Activity {
     public void camMoveToCurPos(LatLng latLng) {
         CameraPosition cameraPosition;
         CameraUpdate cameraUpadate;
-        cameraPosition = new CameraPosition(latLng, 16.0f, 0.0f, 0.0f);
+        cameraPosition = new CameraPosition(latLng, 17.0f, 0.0f, 0.0f);
         cameraUpadate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         aMap.animateCamera(cameraUpadate);
     }
@@ -294,22 +293,38 @@ public class Histroy_chart extends Activity {
 
         int bHeight = b1.getHeight();
         int nHeight=height - cutHeight;
-      if((cutHeight +nHeight)>bHeight){
+        if((cutHeight +nHeight)>bHeight){
             nHeight = bHeight - cutHeight;
         }
-                // 去掉标题栏
-                // Bitmap b = Bitmap.createBitmap(b1, 0, 25, 320, 455);
-                Bitmap b = Bitmap.createBitmap(b1, 0, cutHeight, width,  nHeight);
+        // 去掉标题栏
+        // Bitmap b = Bitmap.createBitmap(b1, 0, 25, 320, 455);
+        Bitmap b = Bitmap.createBitmap(b1, 0, cutHeight, width,  nHeight);
         view.destroyDrawingCache();
         //问题
-//       if (y + height > source.getHeight()) {
-//              throw new IllegalArgumentException("y + height must be <= bitmap.height()");
-//          }
+        //       if (y + height > source.getHeight()) {
+        //              throw new IllegalArgumentException("y + height must be <= bitmap.height()");
+        //          }
+        File f = new File("/sdcard/", "朋友圈.png");
+        if (f.exists()) {
+            f.delete();
+        }
+        try {
+            FileOutputStream out = new FileOutputStream(f);
+            b.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.flush();
+            out.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return b;
     }
 
     //将bitmap转为byte格式数组
-   public byte[] bmpToByteArray(final Bitmap bitmap,final boolean needRecycle){
+    public byte[] bmpToByteArray(final Bitmap bitmap,final boolean needRecycle){
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG,100,output);
         if(needRecycle){
@@ -325,18 +340,31 @@ public class Histroy_chart extends Activity {
         return result;
     }
 
-   //获取唯一标识请求
+    //获取唯一标识请求
     private String buildTransaction(final String type){
         return (type == null)?String.valueOf(System.currentTimeMillis()):type+System.currentTimeMillis();
     }
 
     //分享到微信朋友圈n
-
     public void share(View view) {
         (new Thread(new Runnable() {
             public void run() {
-               // Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.drawable.index);
-                Bitmap bmp = myShot(Histroy_chart.this);
+                // Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.drawable.index);
+                aMap.getMapScreenShot(Histroy_chart.this);
+//                Bitmap bmp = myShot(Histroy_chart.this);
+                myShot(Histroy_chart.this);
+
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inDither=false;                     //Disable Dithering mode
+                options.inPurgeable=true;                   //Tell to gc that whether it needs free memory, the Bitmap can be cleared
+                options.inMutable = true;
+                options.inSampleSize = 1;
+                options.inTempStorage=new byte[16 * 1024];
+                Bitmap bitmap1 = BitmapFactory.decodeFile("/sdcard/history_map_trace.png/",options);
+                Bitmap bitmap2 = BitmapFactory.decodeFile("/sdcard/朋友圈.png/",options);
+                JointBitmapView jointBitmapView = new JointBitmapView(getApplicationContext(),bitmap1,bitmap2);
+
+                Bitmap bmp = jointBitmapView.bitmap;
                 WXImageObject imgObj = new WXImageObject(bmp);
                 WXMediaMessage msg = new WXMediaMessage();
                 msg.mediaObject = imgObj;
@@ -353,11 +381,53 @@ public class Histroy_chart extends Activity {
                 req.scene = SendMessageToWX.Req.WXSceneTimeline;
 
                 api.sendReq(req);
-                //api.openWXApp();
 
             }
         })).start();
-        //Bitmap bmp = myShot(this);
+    }
 
+    @Override
+    public void onMapScreenShot(Bitmap bitmap) {
+        File f = new File("/sdcard/", "history_map_trace.png");
+        if (f.exists()) {
+            f.delete();
+        }
+        try {
+            FileOutputStream out = new FileOutputStream(f);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 80, out);
+            out.flush();
+            out.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public class JointBitmapView extends View {
+        public Bitmap bitmap;
+        public JointBitmapView(Context context, Bitmap bit1, Bitmap bit2) {
+            super(context);
+            bitmap = newBitmap(bit1,bit2);
+        }
+        public Bitmap newBitmap(Bitmap bit1,Bitmap bit2){
+            int width = bit1.getWidth();
+            int height = bit1.getHeight() + bit2.getHeight();
+            //创建一个空的Bitmap(内存区域),宽度等于第一张图片的宽度，高度等于两张图片高度总和
+            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            //将bitmap放置到绘制区域,并将要拼接的图片绘制到指定内存区域
+            Canvas canvas = new Canvas(bitmap);
+            canvas.drawBitmap(bit2, 0, 0, null);
+            canvas.drawBitmap(bit1, 0, 100, null);
+            return bitmap;
+        }
+        @Override
+        protected void onDraw(Canvas canvas) {
+            super.onDraw(canvas);
+            canvas.drawBitmap(bitmap, 0, 0, null);
+            bitmap.recycle();
+        }
     }
 }
