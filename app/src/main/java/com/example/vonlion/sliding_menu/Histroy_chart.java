@@ -304,6 +304,22 @@ public class Histroy_chart extends Activity implements AMap.OnMapScreenShotListe
         //       if (y + height > source.getHeight()) {
         //              throw new IllegalArgumentException("y + height must be <= bitmap.height()");
         //          }
+        File f = new File("/sdcard/", "朋友圈.png");
+        if (f.exists()) {
+            f.delete();
+        }
+        try {
+            FileOutputStream out = new FileOutputStream(f);
+            b.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.flush();
+            out.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return b;
     }
 
@@ -336,16 +352,16 @@ public class Histroy_chart extends Activity implements AMap.OnMapScreenShotListe
                 // Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.drawable.index);
                 aMap.getMapScreenShot(Histroy_chart.this);
 //                Bitmap bmp = myShot(Histroy_chart.this);
-//                Bitmap bitmap = myShot(Histroy_chart.this);
+                myShot(Histroy_chart.this);
+
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inDither=false;                     //Disable Dithering mode
                 options.inPurgeable=true;                   //Tell to gc that whether it needs free memory, the Bitmap can be cleared
                 options.inMutable = true;
-                options.inSampleSize = 3;
+                options.inSampleSize = 1;
                 options.inTempStorage=new byte[16 * 1024];
                 Bitmap bitmap1 = BitmapFactory.decodeFile("/sdcard/history_map_trace.png/",options);
                 Bitmap bitmap2 = BitmapFactory.decodeFile("/sdcard/朋友圈.png/",options);
-
                 JointBitmapView jointBitmapView = new JointBitmapView(getApplicationContext(),bitmap1,bitmap2);
 
                 Bitmap bmp = jointBitmapView.bitmap;
@@ -365,12 +381,9 @@ public class Histroy_chart extends Activity implements AMap.OnMapScreenShotListe
                 req.scene = SendMessageToWX.Req.WXSceneTimeline;
 
                 api.sendReq(req);
-                //api.openWXApp();
 
             }
         })).start();
-        //Bitmap bmp = myShot(this);
-
     }
 
     @Override
@@ -400,7 +413,6 @@ public class Histroy_chart extends Activity implements AMap.OnMapScreenShotListe
             bitmap = newBitmap(bit1,bit2);
         }
         public Bitmap newBitmap(Bitmap bit1,Bitmap bit2){
-
             int width = bit1.getWidth();
             int height = bit1.getHeight() + bit2.getHeight();
             //创建一个空的Bitmap(内存区域),宽度等于第一张图片的宽度，高度等于两张图片高度总和
@@ -408,7 +420,7 @@ public class Histroy_chart extends Activity implements AMap.OnMapScreenShotListe
             //将bitmap放置到绘制区域,并将要拼接的图片绘制到指定内存区域
             Canvas canvas = new Canvas(bitmap);
             canvas.drawBitmap(bit2, 0, 0, null);
-            canvas.drawBitmap(bit1, 0, 50, null);
+            canvas.drawBitmap(bit1, 0, 100, null);
             return bitmap;
         }
         @Override
