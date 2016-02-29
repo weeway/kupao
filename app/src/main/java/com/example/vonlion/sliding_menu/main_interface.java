@@ -36,6 +36,12 @@ public class main_interface extends Activity{
         mLeftMenu.toggle();
     }
 
+    public void change_alpha0(View v) {//主界面进入资料界面
+        Intent intent = new Intent(this, mydata.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
+    }
+
     public void change_alpha(View v) {//注销
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);
@@ -49,8 +55,8 @@ public class main_interface extends Activity{
     }
 
 
-    public void change1(View v) {//左界面跳转到我的资料
-        Intent intent = new Intent(this, mydata.class);
+    public void change1(View v) {//左界面跳转到修改资料
+        Intent intent = new Intent(this, Edit_data.class);
         startActivity(intent);
         overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
     }
