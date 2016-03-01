@@ -141,7 +141,6 @@ public class main_interface extends Activity{
     @Override
     public void onStop() {
         super.onStop();
-
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         Action viewAction = Action.newAction(
@@ -157,4 +156,5 @@ public class main_interface extends Activity{
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
     }
+
 }
