@@ -1,4 +1,4 @@
-package com.example.vonlion.sliding_menu;
+package com.example.vonlion.wooker;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -93,7 +93,7 @@ public class main_interface extends Activity{
                 // Otherwise, set the URL to null.
                 Uri.parse("http://host/path"),
                 // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.example.vonlion.sliding_menu/http/host/path")
+                Uri.parse("android-app://com.example.vonlion.wooker/http/host/path")
         );
         AppIndex.AppIndexApi.start(client, viewAction);
     }
@@ -112,7 +112,7 @@ public class main_interface extends Activity{
                 // Otherwise, set the URL to null.
                 Uri.parse("http://host/path"),
                 // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.example.vonlion.sliding_menu/http/host/path")
+                Uri.parse("android-app://com.example.vonlion.wooker/http/host/path")
         );
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();

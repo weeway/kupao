@@ -1,4 +1,4 @@
-package com.example.vonlion.sliding_menu;
+package com.example.vonlion.wooker;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -7,9 +7,6 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 /**

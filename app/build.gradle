@@ -5,7 +5,7 @@ android {
     buildToolsVersion '23.0.2'
 
     defaultConfig {
-        applicationId "com.example.vonlion.sliding_menu"
+        applicationId "com.example.vonlion.wooker"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1

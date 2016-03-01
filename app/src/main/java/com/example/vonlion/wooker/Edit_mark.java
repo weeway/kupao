@@ -1,4 +1,4 @@
-package com.example.vonlion.sliding_menu;
+package com.example.vonlion.wooker;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,11 +8,11 @@ import android.view.View;
 /**
  * Created by Vonlion on 2016/2/11.
  */
-public class Edit_target extends Activity {
+public class Edit_mark extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_targent);
+        setContentView(R.layout.edit_mark);
     }
 
     public void change_alpha(View v){

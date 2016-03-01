@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
-import com.example.vonlion.sliding_menu.R;
+import com.example.vonlion.wooker.R;
 import com.nineoldandroids.view.ViewHelper;
 
 public class SlidingMenu extends HorizontalScrollView{

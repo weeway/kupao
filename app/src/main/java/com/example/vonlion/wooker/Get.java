@@ -1,11 +1,8 @@
-package com.example.vonlion.sliding_menu;
+package com.example.vonlion.wooker;
 
 /**
  * Created by hbs on 2016/1/7.
  */
-
-import
-        android.util.Log;
 
 import java.io.IOException;
 import com.squareup.okhttp.OkHttpClient;

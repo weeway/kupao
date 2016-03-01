@@ -1,4 +1,4 @@
-package com.example.vonlion.sliding_menu;
+package com.example.vonlion.wooker;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,11 +8,8 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.slidingmenu.view.SlidingMenu;
 
 import org.json.JSONException;
 

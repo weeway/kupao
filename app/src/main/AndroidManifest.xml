@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.vonlion.sliding_menu">
+    package="com.example.vonlion.wooker">
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -30,29 +30,29 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="142d9acb0f492faaf2de9563b5b78a37" />
-        <activity android:name=".MainActivity" >
+        <activity android:name="com.example.vonlion.wooker.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main_interface"></activity>
-        <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".map"></activity>
-        <activity android:name=".Histroy"></activity>
-        <activity android:name=".Histroy_chart"></activity>
-        <activity android:name=".mydata"></activity>
-        <activity android:name=".Login"></activity>
-        <activity android:name=".Edit_data"></activity>
-        <activity android:name=".Edit_name"></activity>
-        <activity android:name=".Edit_photo"></activity>
-        <activity android:name=".Edit_height"></activity>
-        <activity android:name=".Edit_weight"></activity>
-        <activity android:name=".Edit_target"></activity>
-        <activity android:name=".Edit_location"></activity>
-        <activity android:name=".Edit_address"></activity>
-        <activity android:name=".Edit_mark"></activity>
+        <activity android:name="com.example.vonlion.wooker.main_interface"></activity>
+        <activity android:name="com.example.vonlion.wooker.RegisterActivity"></activity>
+        <activity android:name="com.example.vonlion.wooker.map"></activity>
+        <activity android:name="com.example.vonlion.wooker.Histroy"></activity>
+        <activity android:name="com.example.vonlion.wooker.Histroy_chart"></activity>
+        <activity android:name="com.example.vonlion.wooker.mydata"></activity>
+        <activity android:name="com.example.vonlion.wooker.Login"></activity>
+        <activity android:name="com.example.vonlion.wooker.Edit_data"></activity>
+        <activity android:name="com.example.vonlion.wooker.Edit_name"></activity>
+        <activity android:name="com.example.vonlion.wooker.Edit_photo"></activity>
+        <activity android:name="com.example.vonlion.wooker.Edit_height"></activity>
+        <activity android:name="com.example.vonlion.wooker.Edit_weight"></activity>
+        <activity android:name="com.example.vonlion.wooker.Edit_target"></activity>
+        <activity android:name="com.example.vonlion.wooker.Edit_location"></activity>
+        <activity android:name="com.example.vonlion.wooker.Edit_address"></activity>
+        <activity android:name="com.example.vonlion.wooker.Edit_mark"></activity>
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data

@@ -1,4 +1,4 @@
-package com.example.vonlion.sliding_menu;
+package com.example.vonlion.wooker;
 
 import org.junit.Test;
 
