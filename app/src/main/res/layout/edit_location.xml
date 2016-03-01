@@ -30,6 +30,7 @@
             android:onClick="change_alpha" />
 
         <Button
+            android:onClick="yesadress"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/img_right"
@@ -55,6 +56,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"/>
         <EditText
+            android:id="@+id/edadress"
+
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:textColorHint="#000000"

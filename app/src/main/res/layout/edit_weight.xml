@@ -30,6 +30,7 @@
             android:onClick="change_alpha" />
 
         <Button
+            android:onClick="yesweight"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/img_right"
@@ -49,6 +50,7 @@
         android:paddingRight="10dp"
         android:layout_marginTop="25dp">
         <TextView android:id="@+id/spinnerText2"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000000"
