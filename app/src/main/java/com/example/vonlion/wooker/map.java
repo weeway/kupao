@@ -568,7 +568,6 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
             builder.setTitle("确认" ) ;
             builder.setMessage("是否保存？" ) ;
             builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
-
                 public void onClick(DialogInterface dialog, int which) {
                     String time = tvShowTime.getText().toString();
                     String distance = Integer.toString(disFirstPart) + "." + Integer.toString(disSecondPart);
@@ -599,9 +598,18 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
                     intent.putExtra("date",starttime);
                     startActivity(intent);
                     overridePendingTransition(R.anim.lefttoright, R.anim.righttoleft);
+                    map.this.finish();
                 }
             } );
-            builder.setNegativeButton("否", null);
+            builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getApplication(),"返回主菜单",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(map.this,main_interface.class);
+                    startActivity(intent);
+                    map.this.finish();
+                }
+            });
             builder.show();
         }
     }
@@ -649,7 +657,6 @@ public class map extends Activity  implements LocationSource, AMap.OnMapScreenSh
     @Override
     public void onStop() {
         super.onStop();
-
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         Action viewAction = Action.newAction(

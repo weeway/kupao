@@ -57,10 +57,13 @@ public class Login extends Activity {
             }
         });
 
+        if(sharedPreferences.contains("username")) {
+            username.setText(sharedPreferences.getString("username", ""));
+            password.setText(sharedPreferences.getString("password", ""));
+        }
         if(sharedPreferences.contains("username")&&sharedPreferences.contains("password")
                 &&sharedPreferences.getBoolean("isCheck",false)){
-            username.setText(sharedPreferences.getString("username",""));
-            password.setText(sharedPreferences.getString("password",""));
+
             try {
                 change_roll(bt);
             } catch (IOException e) {
@@ -83,7 +86,6 @@ public class Login extends Activity {
     }
 
     //登录进入主界面
-
     public void change_roll(View v) throws ParseException, IOException, JSONException {
         final String name = this.username.getText().toString();
         final String pwd = this.password.getText().toString();
@@ -126,4 +128,9 @@ public class Login extends Activity {
         })).start();
     }
 
+    @Override
+    protected void onStop(){
+        super.onStop();
+        this.finish();
+    }
 }

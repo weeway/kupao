@@ -430,4 +430,10 @@ public class Histroy_chart extends Activity implements AMap.OnMapScreenShotListe
             bitmap.recycle();
         }
     }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        this.finish();
+    }
 }

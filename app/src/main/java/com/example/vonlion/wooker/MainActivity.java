@@ -26,4 +26,9 @@ public class MainActivity extends Activity{
         }, SPLASH_DISPLAY_LENGHT);
     }
 
+    @Override
+    protected void onStop(){
+        super.onStop();
+        this.finish();
+    }
 }

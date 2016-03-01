@@ -200,4 +200,9 @@ public class Histroy  extends Activity implements AdapterView.OnItemLongClickLis
         db.delete("charttb","username=? and starttime=?",new String[]{USER_NAME,startTimeFlag});
         db.delete("tracetb","username=? and starttime=?",new String[]{USER_NAME,startTimeFlag});
     }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        this.finish();
+    }
 }
