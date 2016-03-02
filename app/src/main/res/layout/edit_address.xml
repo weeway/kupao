@@ -30,6 +30,7 @@
             android:onClick="change_alpha" />
 
         <Button
+            android:onClick="yesage"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/img_right"
@@ -46,7 +47,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="地址"
+            android:text="年龄"
             android:textColor="#000000"
             android:textSize="17dp"
             android:layout_centerVertical="true"
@@ -55,6 +56,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"/>
         <EditText
+            android:id="@+id/edage"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:textColorHint="#000000"

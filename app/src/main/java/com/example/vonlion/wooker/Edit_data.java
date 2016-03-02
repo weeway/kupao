@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by fmq-pc on 2016/2/10.
@@ -17,46 +19,55 @@ public class Edit_data extends Activity {
     TextView height;
     TextView weight;
     TextView goal;
-    TextView adress1;
-    TextView adress2;
+    TextView adress;
+    TextView age;
     TextView signature;
-    String  USER_NAME;
+    String USER_NAME;
     @Override
 
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_data);
+       // Toast.makeText(Edit_data.this.getApplicationContext(), "111", Toast.LENGTH_SHORT).show();
         SharedPreferences share = getSharedPreferences("User_date",Login.MODE_PRIVATE);
         USER_NAME =share.getString("username", "");
 
-        nickname = (TextView) findViewById(R.id.nickname);
-        height = (TextView) findViewById(R.id.height);
-        weight = (TextView) findViewById(R.id.weight);
-        goal = (TextView) findViewById(R.id.goal);
-        adress1 = (TextView) findViewById(R.id.adress1);
-        adress2 = (TextView) findViewById(R.id.adress2);
-        signature = (TextView) findViewById(R.id.signature);
+        nickname = (TextView)findViewById(R.id.nickname);
+        height = (TextView)findViewById(R.id.height);
+        weight = (TextView)findViewById(R.id.weight);
+        goal = (TextView)findViewById(R.id.goal);
+        adress = (TextView)findViewById(R.id.adress);
+        age = (TextView)findViewById(R.id.age);
+        signature = (TextView)findViewById(R.id. signature);
+
+        DatabaseHelper database = new DatabaseHelper(this);
+        SQLiteDatabase db = database.getReadableDatabase();
+        Cursor cursor = db.query("userdata", null, "username like?", new String[]{USER_NAME}, null, null, "username");
+        if(cursor.getCount()!=0){
+            //Toast.makeText(Edit_data.this.getApplicationContext(), "222", Toast.LENGTH_SHORT).show();
 
 
+                  while(cursor.moveToNext()) {
+                      nickname.setText(cursor.getString(cursor.getColumnIndex("nickname")));
+                      height.setText(cursor.getString(cursor.getColumnIndex("height"))+"cm");
+                      weight.setText(cursor.getString(cursor.getColumnIndex("weight")) + "kg");
+                      goal.setText(cursor.getString(cursor.getColumnIndex("goal")) + "步");
+                      adress.setText(cursor.getString(cursor.getColumnIndex("adress")));
+                      age.setText(cursor.getString(cursor.getColumnIndex("age")));
+                      signature.setText(cursor.getString(cursor.getColumnIndex("signature")));
+                      //Toast.makeText(Edit_data.this.getApplicationContext(), "555", Toast.LENGTH_SHORT).show();
+                  }
+
+        }else{
+            //Toast.makeText(Edit_data.this.getApplicationContext(), "111", Toast.LENGTH_SHORT).show();
+        }
+        db.close();
+        cursor.close();
     }
 
     public void change_alpha(View v){
-        DatabaseHelper database = new DatabaseHelper(this);
-        SQLiteDatabase db = database.getReadableDatabase();
-        ContentValues cv = new ContentValues();
 
-        cv.put("name", USER_NAME);
-        cv.put("nickname",nickname.getText().toString());
-        cv.put("height",height.getText().toString());
-        cv.put("weight",weight.getText().toString());
-        cv.put("goal",goal.getText().toString());
-        cv.put("adress1",adress1.getText().toString());
-        cv.put("adress2",adress2.getText().toString());
-        cv.put("signature",signature.getText().toString());
-
-        db.insert("userdata", null, cv);
-        cv.clear();
         
         Intent intent = new Intent(this,main_interface.class);
 

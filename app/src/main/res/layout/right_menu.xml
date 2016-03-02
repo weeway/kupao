@@ -55,6 +55,7 @@
                 android:onClick="change_alpha0"/>
 
             <TextView
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/name"
@@ -95,7 +96,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:text="BMI"
+                        android:text="年龄"
                         android:textColor="#FFFFFF"/>
                     <TextView
                         android:layout_width="match_parent"
@@ -127,12 +128,12 @@
                         android:text="@string/weight"
                         android:textColor="#FFFFFF"/>
                     <TextView
-                        android:id="@+id/tvBMI"
+                        android:id="@+id/tvAge"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:text="@string/BMI"
+                        android:text="20"
                         android:textColor="#FFFFFF"/>
                     <TextView
                         android:id="@+id/tvTarget"

@@ -53,8 +53,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "height text,"
                 + "weight text,"
                 + "goal text,"
-                + "adress1 text,"
-                + "adress2 text,"
+                + "age text,"
+                + "adress text,"
                 + "signature text"
                 + ")";
         db.execSQL(sqldata);
